@@ -1,0 +1,637 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Link-Cut Tree · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="psegt.html" />
+    
+    
+    <link rel="prev" href="scapet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="bit.html">
+            
+                <a href="bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="segt.html">
+            
+                <a href="segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="splay.html">
+            
+                <a href="splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="treap.html">
+            
+                <a href="treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="scapet.html">
+            
+                <a href="scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6" data-path="lct.html">
+            
+                <a href="lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="psegt.html">
+            
+                <a href="psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="ptreap.html">
+            
+                <a href="ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="djs.html">
+            
+                <a href="djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="st.html">
+            
+                <a href="st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="kdt.html">
+            
+                <a href="kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="monoq.html">
+            
+                <a href="monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Link-Cut Tree</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="link-cut-tree">Link-Cut Tree</h1>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">30005</span>;
+
+<span class="hljs-keyword">struct</span> LinkCutTree {
+    <span class="hljs-keyword">struct</span> Node {
+        Node *c[<span class="hljs-number">2</span>], *fa, *pathFa;
+        <span class="hljs-keyword">int</span> val, max;
+        <span class="hljs-keyword">bool</span> rev;
+
+        Node() {}
+        Node(<span class="hljs-keyword">int</span> val) : val(val), max(val), rev(<span class="hljs-literal">false</span>), fa(<span class="hljs-literal">NULL</span>), pathFa(<span class="hljs-literal">NULL</span>), c() {}
+
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">relation</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> fa-&gt;c[<span class="hljs-number">1</span>] == <span class="hljs-keyword">this</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">maintain</span><span class="hljs-params">()</span> </span>{
+            max = val;
+            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">0</span>]) max = <span class="hljs-built_in">std</span>::max(max, c[<span class="hljs-number">0</span>]-&gt;max);
+            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">1</span>]) max = <span class="hljs-built_in">std</span>::max(max, c[<span class="hljs-number">1</span>]-&gt;max);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushDown</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (rev) {
+                <span class="hljs-built_in">std</span>::swap(c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>]);
+                <span class="hljs-keyword">if</span> (c[<span class="hljs-number">0</span>]) c[<span class="hljs-number">0</span>]-&gt;rev ^= <span class="hljs-number">1</span>;
+                <span class="hljs-keyword">if</span> (c[<span class="hljs-number">1</span>]) c[<span class="hljs-number">1</span>]-&gt;rev ^= <span class="hljs-number">1</span>;
+                rev = <span class="hljs-literal">false</span>;
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-built_in">std</span>::swap(pathFa, fa-&gt;pathFa);
+
+            Node *o = fa;
+            <span class="hljs-keyword">int</span> x = relation();
+
+            fa = o-&gt;fa;
+            <span class="hljs-keyword">if</span> (fa) fa-&gt;c[o-&gt;relation()] = <span class="hljs-keyword">this</span>;
+
+            o-&gt;c[x] = c[x ^ <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">if</span> (c[x ^ <span class="hljs-number">1</span>]) c[x ^ <span class="hljs-number">1</span>]-&gt;fa = o;
+
+            c[x ^ <span class="hljs-number">1</span>] = o;
+            o-&gt;fa = <span class="hljs-keyword">this</span>;
+
+            o-&gt;maintain();
+            maintain();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">splay</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">while</span> (fa) {
+                <span class="hljs-keyword">if</span> (fa-&gt;fa) fa-&gt;fa-&gt;pushDown();
+                fa-&gt;pushDown();
+                pushDown();
+
+                <span class="hljs-keyword">if</span> (!fa-&gt;fa) rotate();
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (fa-&gt;relation() == relation()) fa-&gt;rotate(), rotate();
+                <span class="hljs-keyword">else</span> rotate(), rotate();
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">evert</span><span class="hljs-params">()</span> </span>{
+            access();
+            splay();
+            rev ^= <span class="hljs-number">1</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">expose</span><span class="hljs-params">()</span> </span>{
+            splay();
+            pushDown();
+            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">1</span>]) {
+                <span class="hljs-built_in">std</span>::swap(c[<span class="hljs-number">1</span>]-&gt;fa, c[<span class="hljs-number">1</span>]-&gt;pathFa);
+                c[<span class="hljs-number">1</span>] = <span class="hljs-literal">NULL</span>;
+                maintain();
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">splice</span><span class="hljs-params">()</span> </span>{
+            splay();
+            <span class="hljs-keyword">if</span> (!pathFa) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+
+            pathFa-&gt;expose();
+            pathFa-&gt;c[<span class="hljs-number">1</span>] = <span class="hljs-keyword">this</span>;
+            <span class="hljs-built_in">std</span>::swap(fa, pathFa);
+            fa-&gt;maintain();
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">access</span><span class="hljs-params">()</span> </span>{
+            expose();
+            <span class="hljs-keyword">while</span> (splice());
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">()</span> </span>{
+            access();
+            splay();
+            <span class="hljs-keyword">return</span> max;
+        }
+    } *N[MAXN], _pool[MAXN], *_curr;
+
+    LinkCutTree() : _curr(_pool) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">makeTree</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> val)</span> </span>{
+        N[u] = <span class="hljs-keyword">new</span> (_curr++) Node(val);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">link</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+        N[v]-&gt;evert();
+        N[v]-&gt;pathFa = N[u];
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cut</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+        N[u]-&gt;evert();
+        N[v]-&gt;access();
+        N[v]-&gt;splay();
+        N[v]-&gt;pushDown();
+        N[v]-&gt;c[<span class="hljs-number">0</span>]-&gt;fa = <span class="hljs-literal">NULL</span>;
+        N[v]-&gt;c[<span class="hljs-number">0</span>] = <span class="hljs-literal">NULL</span>;
+        N[v]-&gt;maintain();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+        N[u]-&gt;evert();
+        <span class="hljs-keyword">return</span> N[v]-&gt;query();
+    }
+} lct;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="scapet.html" class="navigation navigation-prev " aria-label="Previous page: 替罪羊树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="psegt.html" class="navigation navigation-next " aria-label="Next page: 主席树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Link-Cut Tree","level":"1.3.6","depth":2,"next":{"title":"主席树","level":"1.3.7","depth":2,"path":"002DataStructure/psegt.md","ref":"./002DataStructure/psegt.md","articles":[]},"previous":{"title":"替罪羊树","level":"1.3.5","depth":2,"path":"002DataStructure/scapet.md","ref":"./002DataStructure/scapet.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/lct.md","mtime":"2018-11-08T10:39:57.428Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-08T12:07:18.550Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

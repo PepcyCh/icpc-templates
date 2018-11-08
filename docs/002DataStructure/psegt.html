@@ -1,0 +1,765 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>主席树 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="ptreap.html" />
+    
+    
+    <link rel="prev" href="lct.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="bit.html">
+            
+                <a href="bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="segt.html">
+            
+                <a href="segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="splay.html">
+            
+                <a href="splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="treap.html">
+            
+                <a href="treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="scapet.html">
+            
+                <a href="scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="lct.html">
+            
+                <a href="lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.7" data-path="psegt.html">
+            
+                <a href="psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="ptreap.html">
+            
+                <a href="ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="djs.html">
+            
+                <a href="djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="st.html">
+            
+                <a href="st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="kdt.html">
+            
+                <a href="kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="monoq.html">
+            
+                <a href="monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >主席树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4E3B;&#x5E2D;&#x6811;&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;persistent-segment-tree&#xFF09;">&#x4E3B;&#x5E2D;&#x6811;/&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;Persistent Segment Tree&#xFF09;</h1>
+<h3 id="&#x533A;&#x95F4;-k-&#x5C0F;&#x503C;">&#x533A;&#x95F4; $$k$$ &#x5C0F;&#x503C;</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
+<span class="hljs-keyword">struct</span> MemoryPool {
+    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *top;
+
+    MemoryPool() : top(mem) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">alloc</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">char</span> *res = top;
+        top += <span class="hljs-keyword">sizeof</span> (T);
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) res;
+    }
+};
+
+<span class="hljs-keyword">struct</span> PSegT {
+    <span class="hljs-keyword">struct</span> Node {
+        Node *lc, *rc;
+        <span class="hljs-keyword">int</span> cnt;
+        <span class="hljs-keyword">static</span> MemoryPool&lt;Node, MAXN * <span class="hljs-number">20</span>&gt; pool;
+
+        Node(<span class="hljs-keyword">int</span> cnt) : cnt(cnt), lc(<span class="hljs-literal">NULL</span>), rc(<span class="hljs-literal">NULL</span>) {}
+        Node(Node *lc = <span class="hljs-literal">NULL</span>, Node *rc = <span class="hljs-literal">NULL</span>) : lc(lc), rc(rc), cnt((lc ? lc-&gt;cnt : <span class="hljs-number">0</span>) + (rc ? rc-&gt;cnt : <span class="hljs-number">0</span>)) {}
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(size_t)</span> </span>{
+            <span class="hljs-keyword">return</span> pool.alloc();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushDown</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (lc &amp;&amp; rc) <span class="hljs-keyword">return</span>;
+            <span class="hljs-keyword">if</span> (!lc) lc = <span class="hljs-keyword">new</span> Node;
+            <span class="hljs-keyword">if</span> (!rc) rc = <span class="hljs-keyword">new</span> Node;
+        }
+
+        <span class="hljs-function">Node *<span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
+            <span class="hljs-keyword">if</span> (val == l &amp;&amp; val == r) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(cnt + <span class="hljs-number">1</span>);
+            pushDown();
+            <span class="hljs-keyword">int</span> mid = l + ((r - l) &gt;&gt; <span class="hljs-number">1</span>);
+            <span class="hljs-keyword">if</span> (val &lt;= mid) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(lc-&gt;insert(l, mid, val), rc);
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(lc, rc-&gt;insert(mid + <span class="hljs-number">1</span>, r, val));
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+            <span class="hljs-keyword">return</span> lc ? lc-&gt;cnt : <span class="hljs-number">0</span>;
+        }
+    } *root[MAXN];
+    <span class="hljs-keyword">int</span> n;
+
+    PSegT() : root() {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">this</span>-&gt;n = n;
+        root[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Node;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) root[i] = root[i - <span class="hljs-number">1</span>]-&gt;insert(<span class="hljs-number">1</span>, n, a[i]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> k)</span> </span>{
+        Node *L = root[l - <span class="hljs-number">1</span>], *R = root[r];
+        <span class="hljs-keyword">int</span> min = <span class="hljs-number">1</span>, max = n;
+        <span class="hljs-keyword">while</span> (min &lt; max) {
+            L-&gt;pushDown(), R-&gt;pushDown();
+            <span class="hljs-keyword">int</span> mid = min + (max - min) / <span class="hljs-number">2</span>, temp = R-&gt;rank() - L-&gt;rank();
+            <span class="hljs-keyword">if</span> (k &lt;= temp) L = L-&gt;lc, R = R-&gt;lc, max = mid;
+            <span class="hljs-keyword">else</span> L = L-&gt;rc, R = R-&gt;rc, k -= temp, min = mid + <span class="hljs-number">1</span>;
+        }
+        <span class="hljs-keyword">return</span> min;
+    }
+} pSegT;
+MemoryPool&lt;PSegT::Node, MAXN * <span class="hljs-number">20</span>&gt; PSegT::Node::pool;
+
+<span class="hljs-keyword">int</span> <span class="hljs-built_in">map</span>[MAXN];
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">discrete</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-built_in">std</span>::copy(a + <span class="hljs-number">1</span>, a + n + <span class="hljs-number">1</span>, <span class="hljs-built_in">map</span>);
+    <span class="hljs-built_in">std</span>::sort(<span class="hljs-built_in">map</span>, <span class="hljs-built_in">map</span> + n);
+    <span class="hljs-keyword">int</span> *end = <span class="hljs-built_in">std</span>::unique(<span class="hljs-built_in">map</span>, <span class="hljs-built_in">map</span> + n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)
+        a[i] = <span class="hljs-built_in">std</span>::lower_bound(<span class="hljs-built_in">map</span>, end, a[i]) - <span class="hljs-built_in">map</span> + <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, q;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;q);
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> a[MAXN];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;a[i]);
+    discrete(a, n);
+
+    pSegT.build(a, n);
+
+    <span class="hljs-keyword">while</span> (q--) {
+        <span class="hljs-keyword">int</span> l, r, k;
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;l, &amp;r, &amp;k);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">map</span>[pSegT.query(l, r, k)]);
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4;-k-&#x5C0F;&#x503C;">&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4; $$k$$ &#x5C0F;&#x503C;</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_LOG = <span class="hljs-number">18</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
+<span class="hljs-keyword">struct</span> MemoryPool {
+    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *top;
+
+    MemoryPool() : top(mem) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">alloc</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">char</span> *res = top;
+        top += <span class="hljs-keyword">sizeof</span> (T);
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) res;
+    }
+};
+
+<span class="hljs-keyword">struct</span> PSegT *null;
+<span class="hljs-keyword">struct</span> PSegT {
+    PSegT *lc, *rc;
+    <span class="hljs-keyword">int</span> cnt;
+    <span class="hljs-keyword">static</span> MemoryPool&lt;PSegT, MAXN * <span class="hljs-number">40</span>&gt; pool;
+
+    PSegT(<span class="hljs-keyword">int</span> cnt) : cnt(cnt), lc(null), rc(null) {}
+    PSegT(PSegT *lc, PSegT *rc) : lc(lc), rc(rc), cnt(lc-&gt;cnt + rc-&gt;cnt) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(size_t)</span> </span>{
+        <span class="hljs-keyword">return</span> pool.alloc();
+    }
+
+    <span class="hljs-function">PSegT *<span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
+        <span class="hljs-keyword">if</span> (val &lt; l || val &gt; r) <span class="hljs-keyword">return</span> null;
+        <span class="hljs-keyword">if</span> (val == l &amp;&amp; val == r) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PSegT(cnt + <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span> (val &lt;= mid) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PSegT(lc-&gt;insert(l, mid, val), rc);
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PSegT(lc, rc-&gt;insert(mid + <span class="hljs-number">1</span>, r, val));
+    }
+};
+MemoryPool&lt;PSegT, MAXN * <span class="hljs-number">40</span>&gt; PSegT::pool;
+
+<span class="hljs-keyword">struct</span> Edge;
+<span class="hljs-keyword">struct</span> Node;
+
+<span class="hljs-keyword">struct</span> Node {
+    Edge *e;
+    PSegT *seg;
+    Node *f[MAXN_LOG];
+    <span class="hljs-keyword">int</span> dep, val;
+} N[MAXN];
+
+<span class="hljs-keyword">struct</span> Edge {
+    Node *u, *v;
+    Edge *next;
+
+    Edge() {}
+    Edge(Node *u, Node *v) : u(u), v(v), next(u-&gt;e) {}
+} _pool[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_curr = _pool;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    N[u].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[u], &amp;N[v]);
+    N[v].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[v], &amp;N[u]);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+    null = <span class="hljs-keyword">new</span> PSegT(<span class="hljs-number">0</span>);
+    null-&gt;lc = null-&gt;rc = null;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node *u, <span class="hljs-keyword">bool</span> init = <span class="hljs-literal">true</span>)</span> </span>{
+    <span class="hljs-keyword">if</span> (init) {
+        u-&gt;f[<span class="hljs-number">0</span>] = u;
+        u-&gt;dep = <span class="hljs-number">1</span>;
+        u-&gt;seg = null-&gt;insert(<span class="hljs-number">0</span>, INT_MAX, u-&gt;val);
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; MAXN_LOG; i++) u-&gt;f[i] = u-&gt;f[i - <span class="hljs-number">1</span>]-&gt;f[i - <span class="hljs-number">1</span>];
+
+    <span class="hljs-keyword">for</span> (Edge *e = u-&gt;e; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (e-&gt;v != u-&gt;f[<span class="hljs-number">0</span>]) {
+        e-&gt;v-&gt;f[<span class="hljs-number">0</span>] = u;
+        e-&gt;v-&gt;dep = u-&gt;dep + <span class="hljs-number">1</span>;
+        e-&gt;v-&gt;seg = u-&gt;seg-&gt;insert(<span class="hljs-number">0</span>, INT_MAX, e-&gt;v-&gt;val);
+
+        dfs(e-&gt;v, <span class="hljs-literal">false</span>);
+    }
+}
+
+<span class="hljs-function">Node *<span class="hljs-title">lca</span><span class="hljs-params">(Node *u, Node *v)</span> </span>{
+    <span class="hljs-keyword">if</span> (u-&gt;dep &lt; v-&gt;dep) <span class="hljs-built_in">std</span>::swap(u, v);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = MAXN_LOG - <span class="hljs-number">1</span>; ~i; i--) {
+        <span class="hljs-keyword">if</span> (u-&gt;f[i]-&gt;dep &gt;= v-&gt;dep) u = u-&gt;f[i];
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = MAXN_LOG - <span class="hljs-number">1</span>; ~i; i--) {
+        <span class="hljs-keyword">if</span> (u-&gt;f[i] != v-&gt;f[i]) {
+            u = u-&gt;f[i];
+            v = v-&gt;f[i];
+        }
+    }
+
+    <span class="hljs-keyword">return</span> u == v ? u : u-&gt;f[<span class="hljs-number">0</span>];
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> k)</span> </span>{
+    Node *p = lca(&amp;N[u], &amp;N[v]);
+    PSegT *su = N[u].seg, *sv = N[v].seg;
+    PSegT *sp = p-&gt;seg, *sf = (p == p-&gt;f[<span class="hljs-number">0</span>] ? null : p-&gt;f[<span class="hljs-number">0</span>]-&gt;seg);
+
+    <span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>, r = INT_MAX;
+    <span class="hljs-keyword">while</span> (l &lt; r) {
+        <span class="hljs-keyword">int</span> mid = l + (r - l) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">int</span> temp = su-&gt;lc-&gt;cnt + sv-&gt;lc-&gt;cnt - sp-&gt;lc-&gt;cnt - sf-&gt;lc-&gt;cnt;
+        <span class="hljs-keyword">if</span> (k &lt;= temp) {
+            su = su-&gt;lc;
+            sv = sv-&gt;lc;
+            sp = sp-&gt;lc;
+            sf = sf-&gt;lc;
+            r = mid;
+        } <span class="hljs-keyword">else</span> {
+            k -= temp;
+            su = su-&gt;rc;
+            sv = sv-&gt;rc;
+            sp = sp-&gt;rc;
+            sf = sf-&gt;rc;
+            l = mid + <span class="hljs-number">1</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> l;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    init();
+
+    <span class="hljs-keyword">int</span> n, q;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;q);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;N[i].val);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, u, v; i &lt; n; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
+        addEdge(u, v);
+    }
+
+    dfs(&amp;N[<span class="hljs-number">1</span>]);
+
+    <span class="hljs-keyword">int</span> lastAns = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (q--) {
+        <span class="hljs-keyword">int</span> u, v, k;
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;k);
+        u ^= lastAns;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, lastAns = query(u, v, k));
+        q ? <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;&quot;</span>) : <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="lct.html" class="navigation navigation-prev " aria-label="Previous page: Link-Cut Tree">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="ptreap.html" class="navigation navigation-next " aria-label="Next page: 可持久化 Treap">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"主席树","level":"1.3.7","depth":2,"next":{"title":"可持久化 Treap","level":"1.3.8","depth":2,"path":"002DataStructure/ptreap.md","ref":"./002DataStructure/ptreap.md","articles":[]},"previous":{"title":"Link-Cut Tree","level":"1.3.6","depth":2,"path":"002DataStructure/lct.md","ref":"./002DataStructure/lct.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/psegt.md","mtime":"2018-11-08T11:26:34.830Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-08T12:07:18.550Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,723 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Splay · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="treap.html" />
+    
+    
+    <link rel="prev" href="segt.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="bit.html">
+            
+                <a href="bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="segt.html">
+            
+                <a href="segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.3" data-path="splay.html">
+            
+                <a href="splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="treap.html">
+            
+                <a href="treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="scapet.html">
+            
+                <a href="scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="lct.html">
+            
+                <a href="lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="psegt.html">
+            
+                <a href="psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="ptreap.html">
+            
+                <a href="ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="djs.html">
+            
+                <a href="djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="st.html">
+            
+                <a href="st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="kdt.html">
+            
+                <a href="kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="monoq.html">
+            
+                <a href="monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Splay</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4F38;&#x5C55;&#x6811;&#xFF08;splay&#xFF09;">&#x4F38;&#x5C55;&#x6811;&#xFF08;Splay&#xFF09;</h1>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
+<span class="hljs-keyword">struct</span> MemoryPool {
+    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *memTop, *del[SIZE], **delTop;
+
+    MemoryPool() : memTop(mem), delTop(del) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">alloc</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (delTop != del) <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) *--delTop;
+        <span class="hljs-keyword">char</span> *res = memTop;
+        memTop += <span class="hljs-keyword">sizeof</span> (T);
+        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span> </span>{
+        *delTop++ = (<span class="hljs-keyword">char</span> *) p;
+    }
+};
+
+<span class="hljs-keyword">struct</span> Splay {
+    <span class="hljs-keyword">struct</span> Node {
+        Node *c[<span class="hljs-number">2</span>], *fa, **root;
+        <span class="hljs-keyword">int</span> val, cnt, size;
+        <span class="hljs-keyword">static</span> MemoryPool&lt;Node, MAXN&gt; pool;
+
+        Node() {}
+        Node(Node **root, Node *fa, <span class="hljs-keyword">int</span> val) : val(val), size(<span class="hljs-number">1</span>), cnt(<span class="hljs-number">1</span>), c(), fa(fa), root(root) {}
+
+        ~Node() {
+            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">0</span>]) <span class="hljs-keyword">delete</span> c[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">1</span>]) <span class="hljs-keyword">delete</span> c[<span class="hljs-number">1</span>];
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(size_t)</span> </span>{
+            <span class="hljs-keyword">return</span> pool.alloc();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span> </span>{
+            pool.<span class="hljs-built_in">free</span>(p);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">maintain</span><span class="hljs-params">()</span> </span>{
+            size = (c[<span class="hljs-number">0</span>] ? c[<span class="hljs-number">0</span>]-&gt;size : <span class="hljs-number">0</span>) + cnt + (c[<span class="hljs-number">1</span>] ? c[<span class="hljs-number">1</span>]-&gt;size : <span class="hljs-number">0</span>);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">relation</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> fa-&gt;c[<span class="hljs-number">1</span>] == <span class="hljs-keyword">this</span>;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">()</span> </span>{
+            Node *o = fa;
+            <span class="hljs-keyword">int</span> x = relation();
+
+            fa = o-&gt;fa;
+            <span class="hljs-keyword">if</span> (fa) fa-&gt;c[o-&gt;relation()] = <span class="hljs-keyword">this</span>;
+
+            o-&gt;c[x] = c[x ^ <span class="hljs-number">1</span>];
+            <span class="hljs-keyword">if</span> (c[x ^ <span class="hljs-number">1</span>]) c[x ^ <span class="hljs-number">1</span>]-&gt;fa = o;
+
+            c[x ^ <span class="hljs-number">1</span>] = o;
+            o-&gt;fa = <span class="hljs-keyword">this</span>;
+
+            o-&gt;maintain();
+            maintain();
+
+            <span class="hljs-keyword">if</span> (!fa) *root = <span class="hljs-keyword">this</span>;
+        }
+
+        <span class="hljs-function">Node *<span class="hljs-title">splay</span><span class="hljs-params">(Node *targetFa = <span class="hljs-literal">NULL</span>)</span> </span>{
+            <span class="hljs-keyword">while</span> (fa != targetFa) {
+                <span class="hljs-keyword">if</span> (fa-&gt;fa == targetFa) rotate();
+                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (relation() == fa-&gt;relation()) fa-&gt;rotate(), rotate();
+                <span class="hljs-keyword">else</span> rotate(), rotate();
+            }
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+        }
+
+        <span class="hljs-function">Node *<span class="hljs-title">pred</span><span class="hljs-params">()</span> </span>{
+            Node *u = c[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">while</span> (u-&gt;c[<span class="hljs-number">1</span>]) u = u-&gt;c[<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">return</span> u;
+        }
+
+        <span class="hljs-function">Node *<span class="hljs-title">succ</span><span class="hljs-params">()</span> </span>{
+            Node *u = c[<span class="hljs-number">1</span>];
+            <span class="hljs-keyword">while</span> (u-&gt;c[<span class="hljs-number">0</span>]) u = u-&gt;c[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">return</span> u;
+        }
+    } *root;
+
+    Splay() : root(<span class="hljs-literal">NULL</span>) {}
+
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Node *u)</span> </span>{
+        <span class="hljs-keyword">return</span> u ? u-&gt;size : <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+        insert(INT_MIN);
+        insert(INT_MAX);
+    }
+
+    <span class="hljs-function">Node *<span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node **u = &amp;root, *fa = <span class="hljs-literal">NULL</span>;
+
+        <span class="hljs-keyword">while</span> (*u &amp;&amp; (*u)-&gt;val != val) {
+            fa = *u;
+            fa-&gt;size++;
+            u = &amp;(*u)-&gt;c[val &gt; (*u)-&gt;val];
+        }
+
+        <span class="hljs-keyword">if</span> (*u) {
+            ++(*u)-&gt;cnt;
+            ++(*u)-&gt;size;
+        } <span class="hljs-keyword">else</span> {
+            (*u) = <span class="hljs-keyword">new</span> Node(&amp;root, fa, val);
+        }
+
+        <span class="hljs-keyword">return</span> (*u)-&gt;splay();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">erase</span><span class="hljs-params">(Node *u)</span> </span>{
+        Node *pred = u-&gt;pred(), *succ = u-&gt;succ();
+        pred-&gt;splay();
+        succ-&gt;splay(pred);
+
+        <span class="hljs-keyword">if</span> (u-&gt;cnt &gt; <span class="hljs-number">1</span>) {
+            --u-&gt;cnt;
+            --u-&gt;size;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">delete</span> succ-&gt;c[<span class="hljs-number">0</span>];
+            succ-&gt;c[<span class="hljs-number">0</span>] = <span class="hljs-literal">NULL</span>;
+        }
+
+        pred-&gt;size--;
+        succ-&gt;size--;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">erase</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node *u = find(val);
+        <span class="hljs-keyword">if</span> (u) erase(u);
+    }
+
+    <span class="hljs-function">Node *<span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node *u = root;
+        <span class="hljs-keyword">while</span> (u &amp;&amp; u-&gt;val != val) u = u-&gt;c[val &gt; u-&gt;val];
+        <span class="hljs-keyword">if</span> (u) <span class="hljs-keyword">return</span> u-&gt;splay();
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+    }
+
+    <span class="hljs-function">Node *<span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span> </span>{
+        Node *u = root;
+        <span class="hljs-keyword">while</span> (k &lt; size(u-&gt;c[<span class="hljs-number">0</span>]) || k &gt;= size(u-&gt;c[<span class="hljs-number">0</span>]) + u-&gt;cnt) {
+            <span class="hljs-keyword">if</span> (k &lt; size(u-&gt;c[<span class="hljs-number">0</span>])) u = u-&gt;c[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">else</span> {
+                k -= size(u-&gt;c[<span class="hljs-number">0</span>]) + u-&gt;cnt;
+                u = u-&gt;c[<span class="hljs-number">1</span>];
+            }
+        }
+        <span class="hljs-keyword">return</span> u-&gt;splay();
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node *u = find(val);
+        <span class="hljs-keyword">if</span> (!u) {
+            u = insert(val);
+            <span class="hljs-keyword">int</span> res = size(u-&gt;c[<span class="hljs-number">0</span>]);
+            erase(u);
+            <span class="hljs-keyword">return</span> res;
+        }
+        <span class="hljs-keyword">return</span> size(u-&gt;c[<span class="hljs-number">0</span>]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pred</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node *u = find(val);
+        <span class="hljs-keyword">if</span> (!u) {
+            u = insert(val);
+            <span class="hljs-keyword">int</span> res = u-&gt;pred()-&gt;val;
+            erase(u);
+            <span class="hljs-keyword">return</span> res;
+        }
+        <span class="hljs-keyword">return</span> u-&gt;pred()-&gt;val;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">succ</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+        Node *u = find(val);
+        <span class="hljs-keyword">if</span> (!u) {
+            u = insert(val);
+            <span class="hljs-keyword">int</span> res = u-&gt;succ()-&gt;val;
+            erase(u);
+            <span class="hljs-keyword">return</span> res;
+        }
+        <span class="hljs-keyword">return</span> u-&gt;succ()-&gt;val;
+    }
+} splay;
+MemoryPool&lt;Splay::Node, MAXN&gt; Splay::Node::pool;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    splay.init();
+
+    <span class="hljs-keyword">int</span> n;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+
+    <span class="hljs-keyword">while</span> (n--) {
+        <span class="hljs-keyword">int</span> op, x;
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;op, &amp;x);
+
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) splay.insert(x);
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>) splay.erase(x);
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">3</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.rank(x));
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">4</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.select(x)-&gt;val);
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">5</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.pred(x));
+        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">6</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.succ(x));
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="segt.html" class="navigation navigation-prev " aria-label="Previous page: 线段树">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="treap.html" class="navigation navigation-next " aria-label="Next page: Treap(Split & Merge)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Splay","level":"1.3.3","depth":2,"next":{"title":"Treap(Split & Merge)","level":"1.3.4","depth":2,"path":"002DataStructure/treap.md","ref":"./002DataStructure/treap.md","articles":[]},"previous":{"title":"线段树","level":"1.3.2","depth":2,"path":"002DataStructure/segt.md","ref":"./002DataStructure/segt.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/splay.md","mtime":"2018-11-08T11:17:55.529Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-08T12:07:18.550Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
