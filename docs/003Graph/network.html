@@ -1,0 +1,862 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>网络流 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="costnet.html" />
+    
+    
+    <link rel="prev" href="tsplit.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../002DataStructure/">
+            
+                <a href="../002DataStructure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../002DataStructure/bit.html">
+            
+                <a href="../002DataStructure/bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002DataStructure/segt.html">
+            
+                <a href="../002DataStructure/segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../002DataStructure/splay.html">
+            
+                <a href="../002DataStructure/splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../002DataStructure/treap.html">
+            
+                <a href="../002DataStructure/treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../002DataStructure/scapet.html">
+            
+                <a href="../002DataStructure/scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../002DataStructure/lct.html">
+            
+                <a href="../002DataStructure/lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../002DataStructure/psegt.html">
+            
+                <a href="../002DataStructure/psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../002DataStructure/ptreap.html">
+            
+                <a href="../002DataStructure/ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../002DataStructure/djs.html">
+            
+                <a href="../002DataStructure/djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../002DataStructure/st.html">
+            
+                <a href="../002DataStructure/st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../002DataStructure/kdt.html">
+            
+                <a href="../002DataStructure/kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../002DataStructure/monoq.html">
+            
+                <a href="../002DataStructure/monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="sssp.html">
+            
+                <a href="sssp.html">
+            
+                    
+                    单源最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kthsp.html">
+            
+                <a href="kthsp.html">
+            
+                    
+                    两点间 k 短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="steiner.html">
+            
+                <a href="steiner.html">
+            
+                    
+                    斯坦纳树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="gsp.html">
+            
+                <a href="gsp.html">
+            
+                    
+                    全局最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="pd.html">
+            
+                <a href="pd.html">
+            
+                    
+                    点分治
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="tsplit.html">
+            
+                <a href="tsplit.html">
+            
+                    
+                    树链剖分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.7" data-path="network.html">
+            
+                <a href="network.html">
+            
+                    
+                    网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="costnet.html">
+            
+                <a href="costnet.html">
+            
+                    
+                    费用流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="lunet.html">
+            
+                <a href="lunet.html">
+            
+                    
+                    上下界网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="tarjan.html">
+            
+                <a href="tarjan.html">
+            
+                    
+                    Tarjan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="vtree.html">
+            
+                <a href="vtree.html">
+            
+                    
+                    虚树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >网络流</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x7F51;&#x7EDC;&#x6D41;">&#x7F51;&#x7EDC;&#x6D41;</h1>
+<p>Dinic &#x4E0E; ISAP&#xFF0C;&#x4EE5;&#x53CA;&#x6700;&#x5C0F;&#x5272;&#x8F93;&#x51FA;&#x65B9;&#x6848;&#x3002;</p>
+<h3 id="dinic">Dinic</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1000005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">4000005</span>;
+
+<span class="hljs-keyword">struct</span> Edge;
+<span class="hljs-keyword">struct</span> Node;
+
+<span class="hljs-keyword">struct</span> Node {
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; e; <span class="hljs-comment">// use Edge* when sparse graph</span>
+    Edge *curr;
+    <span class="hljs-keyword">int</span> level;
+} N[MAXN];
+
+<span class="hljs-keyword">struct</span> Edge {
+    Node *u,*v;
+    <span class="hljs-keyword">int</span> cap, flow, rev;
+
+    Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> cap, <span class="hljs-keyword">int</span> rev) : u(u), v(v), cap(cap), flow(<span class="hljs-number">0</span>), rev(rev) {}
+};
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> cap)</span> </span>{
+    N[u].e.emplace_back(&amp;N[u], &amp;N[v], cap, N[v].e.size());
+    N[v].e.emplace_back(&amp;N[v], &amp;N[u], <span class="hljs-number">0</span>, N[u].e.size() - <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-keyword">namespace</span> Dinic {
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">level</span><span class="hljs-params">(Node *s, Node *t, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].level = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
+        <span class="hljs-keyword">while</span> (!q.empty()) q.pop();
+        q.push(s);
+        s-&gt;level = <span class="hljs-number">1</span>;
+
+        <span class="hljs-keyword">while</span> (!q.empty()) {
+            Node *u = q.front();
+            q.pop();
+
+            <span class="hljs-keyword">for</span> (Edge *e = &amp;u-&gt;e.front(); e &lt;= &amp;u-&gt;e.back(); e++) {
+                <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == <span class="hljs-number">0</span>) {
+                    e-&gt;v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
+                    <span class="hljs-keyword">if</span> (e-&gt;v == t) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                    q.push(e-&gt;v);
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findPath</span><span class="hljs-params">(Node *u, Node *t, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
+        <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
+
+        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e &lt;= &amp;u-&gt;e.back(); e++) {
+            <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == u-&gt;level + <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">int</span> flow = findPath(e-&gt;v, t, <span class="hljs-built_in">std</span>::min(limit, e-&gt;cap - e-&gt;flow));
+                <span class="hljs-keyword">if</span> (flow &gt; <span class="hljs-number">0</span>) {
+                    e-&gt;flow += flow;
+                    e-&gt;v-&gt;e[e-&gt;rev].flow -= flow;
+                    <span class="hljs-keyword">return</span> flow;
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">while</span> (level(&amp;N[s], &amp;N[t], n)) {
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].curr = &amp;N[i].e.front();
+            <span class="hljs-keyword">int</span> flow;
+            <span class="hljs-keyword">while</span> ((flow = findPath(&amp;N[s], &amp;N[t])) &gt; <span class="hljs-number">0</span>) res += flow;
+        }
+
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m, s, t;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;n, &amp;m, &amp;s, &amp;t);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, w; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;w);
+        addEdge(u, v, w);
+    }
+
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, Dinic::solve(s, t, n));
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="isap">ISAP</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">105</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">5005</span>;
+
+<span class="hljs-keyword">struct</span> Edge;
+<span class="hljs-keyword">struct</span> Node {
+    Edge *e, *curr; <span class="hljs-comment">// use std::vector&lt;Edge&gt; when dense graph</span>
+    <span class="hljs-keyword">int</span> dist;
+} N[MAXN];
+
+<span class="hljs-keyword">struct</span> Edge {
+    Node *u, *v;
+    Edge *next, *rev;
+    <span class="hljs-keyword">int</span> cap, flow;
+
+    Edge() {}
+    Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> cap) : u(u), v(v), cap(cap), flow(<span class="hljs-number">0</span>), next(u-&gt;e) {}
+} _pool[MAXM &lt;&lt; <span class="hljs-number">1</span>], *_curr = _pool;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> cap)</span> </span>{
+    N[u].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[u], &amp;N[v], cap);
+    N[v].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[v], &amp;N[u], <span class="hljs-number">0</span>);
+    N[u].e-&gt;rev = N[v].e;
+    N[v].e-&gt;rev = N[u].e;
+}
+
+<span class="hljs-keyword">namespace</span> ISAP {
+    <span class="hljs-keyword">int</span> cnt[MAXN], n;
+    Node *s, *t;
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">flow</span><span class="hljs-params">(Node *u, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
+        <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
+
+        <span class="hljs-keyword">int</span> temp = limit;
+        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (u-&gt;dist == e-&gt;v-&gt;dist + <span class="hljs-number">1</span> &amp;&amp; e-&gt;cap &gt; e-&gt;flow) {
+            <span class="hljs-keyword">int</span> f = flow(e-&gt;v, <span class="hljs-built_in">std</span>::min(temp, e-&gt;cap - e-&gt;flow));
+            e-&gt;flow += f;
+            e-&gt;rev-&gt;flow -= f;
+            temp -= f;
+            <span class="hljs-keyword">if</span> (!temp) <span class="hljs-keyword">return</span> limit;
+        }
+
+        <span class="hljs-keyword">if</span> (!(--cnt[u-&gt;dist++])) s-&gt;dist = n + <span class="hljs-number">1</span>;
+        ++cnt[u-&gt;dist];
+        u-&gt;curr = u-&gt;e;
+
+        <span class="hljs-keyword">return</span> limit - temp;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
+        ISAP::n = n;
+        ISAP::s = &amp;N[s];
+        ISAP::t = &amp;N[t];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
+            N[i].curr = N[i].e;
+            N[i].dist = <span class="hljs-number">0</span>;
+            cnt[i] = <span class="hljs-number">0</span>;
+        }
+        cnt[<span class="hljs-number">0</span>] = n;
+
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (N[s].dist &lt;= n) res += flow(&amp;N[s]);
+        <span class="hljs-keyword">return</span> res;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m, s, t;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;n, &amp;m, &amp;s, &amp;t);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, c; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;c);
+        addEdge(u, v, c);
+    }
+
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ans = ISAP::solve(s, t, n);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, ans);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="&#x6700;&#x5C0F;&#x5272;&#x8F93;&#x51FA;&#x65B9;&#x6848;">&#x6700;&#x5C0F;&#x5272;&#x8F93;&#x51FA;&#x65B9;&#x6848;</h3>
+<pre><code class="lang-c++"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; cuts;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
+    <span class="hljs-keyword">while</span> (!q.empty()) q.pop();
+    q.push(&amp;N[s]);
+    N[s].vis = <span class="hljs-literal">true</span>;
+
+    <span class="hljs-keyword">while</span> (!q.empty()) {
+        Node *u = q.front();
+        q.pop();
+
+        <span class="hljs-keyword">for</span> (Edge e : u-&gt;e) <span class="hljs-keyword">if</span> (e.cap &gt; e.flow &amp;&amp; !e.v-&gt;vis) {
+            e.v-&gt;vis = <span class="hljs-literal">true</span>;
+            q.push(e.v);
+        }
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-keyword">if</span> (N[i].vis) <span class="hljs-keyword">for</span> (Edge e : N[i].e) {
+        <span class="hljs-keyword">if</span> (e.cap == e.flow &amp;&amp; e.cap &gt; <span class="hljs-number">0</span> &amp;&amp; !e.v-&gt;vis) {
+            cust.push_back(e);
+        }
+    }
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="tsplit.html" class="navigation navigation-prev " aria-label="Previous page: 树链剖分">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="costnet.html" class="navigation navigation-next " aria-label="Next page: 费用流">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"网络流","level":"1.4.7","depth":2,"next":{"title":"费用流","level":"1.4.8","depth":2,"path":"003Graph/costnet.md","ref":"./003Graph/costnet.md","articles":[]},"previous":{"title":"树链剖分","level":"1.4.6","depth":2,"path":"003Graph/tsplit.md","ref":"./003Graph/tsplit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/network.md","mtime":"2018-11-09T10:41:21.603Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-09T11:47:30.339Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

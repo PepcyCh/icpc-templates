@@ -1,0 +1,965 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Tarjan · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="vtree.html" />
+    
+    
+    <link rel="prev" href="lunet.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../002DataStructure/">
+            
+                <a href="../002DataStructure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../002DataStructure/bit.html">
+            
+                <a href="../002DataStructure/bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002DataStructure/segt.html">
+            
+                <a href="../002DataStructure/segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../002DataStructure/splay.html">
+            
+                <a href="../002DataStructure/splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../002DataStructure/treap.html">
+            
+                <a href="../002DataStructure/treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../002DataStructure/scapet.html">
+            
+                <a href="../002DataStructure/scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../002DataStructure/lct.html">
+            
+                <a href="../002DataStructure/lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../002DataStructure/psegt.html">
+            
+                <a href="../002DataStructure/psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../002DataStructure/ptreap.html">
+            
+                <a href="../002DataStructure/ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../002DataStructure/djs.html">
+            
+                <a href="../002DataStructure/djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../002DataStructure/st.html">
+            
+                <a href="../002DataStructure/st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../002DataStructure/kdt.html">
+            
+                <a href="../002DataStructure/kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../002DataStructure/monoq.html">
+            
+                <a href="../002DataStructure/monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="sssp.html">
+            
+                <a href="sssp.html">
+            
+                    
+                    单源最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kthsp.html">
+            
+                <a href="kthsp.html">
+            
+                    
+                    两点间 k 短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="steiner.html">
+            
+                <a href="steiner.html">
+            
+                    
+                    斯坦纳树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="gsp.html">
+            
+                <a href="gsp.html">
+            
+                    
+                    全局最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="pd.html">
+            
+                <a href="pd.html">
+            
+                    
+                    点分治
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="tsplit.html">
+            
+                <a href="tsplit.html">
+            
+                    
+                    树链剖分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="network.html">
+            
+                <a href="network.html">
+            
+                    
+                    网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="costnet.html">
+            
+                <a href="costnet.html">
+            
+                    
+                    费用流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="lunet.html">
+            
+                <a href="lunet.html">
+            
+                    
+                    上下界网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.10" data-path="tarjan.html">
+            
+                <a href="tarjan.html">
+            
+                    
+                    Tarjan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="vtree.html">
+            
+                <a href="vtree.html">
+            
+                    
+                    虚树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Tarjan</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="tarjan">Tarjan</h1>
+<p>&#x4E09;&#x4E2A;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x4E0E;&#x5BF9;&#x5E94;&#x7684; Tarjan &#x7B97;&#x6CD5;&#x3002;</p>
+<h3 id="&#x6709;&#x5411;&#x56FE;&#x627E;&#x5F3A;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;">&#x6709;&#x5411;&#x56FE;&#x627E;&#x5F3A;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stack&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">500005</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-keyword">struct</span> Edge {
+    T *u, *v;
+    Edge *next;
+
+    Edge() {}
+    Edge(T *u, T *v) : u(u), v(v), next(u-&gt;e) {}
+};
+
+<span class="hljs-keyword">struct</span> Comp {
+    Edge&lt;Comp&gt; *e;
+    <span class="hljs-keyword">int</span> size;
+} C[MAXN];
+Edge&lt;Comp&gt; _poolC[MAXM], *_currC = _poolC;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(Comp *u, Comp *v)</span> </span>{
+    u-&gt;e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(u, v);
+}
+
+<span class="hljs-keyword">struct</span> Node {
+    Edge&lt;Node&gt; *e;
+    Comp *c;
+    <span class="hljs-keyword">int</span> dfn, low;
+    <span class="hljs-keyword">bool</span> ins;
+} N[MAXN];
+Edge&lt;Node&gt; _poolN[MAXM], *_currN = _poolN;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    N[u].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[u], &amp;N[v]);
+}
+
+<span class="hljs-keyword">namespace</span> Tarjan {
+    <span class="hljs-keyword">int</span> dfsClock, compCnt;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Node *&gt; s;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node *u)</span> </span>{
+        u-&gt;dfn = u-&gt;low = ++dfsClock;
+        s.push(u);
+        u-&gt;ins = <span class="hljs-literal">true</span>;
+
+        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = u-&gt;e; e; e = e-&gt;next) {
+            <span class="hljs-keyword">if</span> (!e-&gt;v-&gt;dfn) {
+                dfs(e-&gt;v);
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;low);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e-&gt;v-&gt;ins) {
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;dfn);
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (u-&gt;dfn == u-&gt;low) {
+            Comp *c = &amp;C[++compCnt];
+            Node *v;
+
+            <span class="hljs-keyword">do</span> {
+                v = s.top();
+                s.pop();
+                v-&gt;ins = <span class="hljs-literal">false</span>;
+                v-&gt;c = c;
+                c-&gt;size++;
+            } <span class="hljs-keyword">while</span> (u != v);
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">findSCC</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        dfsClock = compCnt = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (!s.empty()) s.pop();
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (!N[i].dfn) dfs(&amp;N[i]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rebuild</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = _poolN; e != _currN; e++) <span class="hljs-keyword">if</span> (e-&gt;u-&gt;c != e-&gt;v-&gt;c) addEdge(e-&gt;u-&gt;c, e-&gt;v-&gt;c);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
+        addEdge(u, v);
+    }
+
+    Tarjan::findSCC(n);
+    Tarjan::rebuild();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="&#x65E0;&#x5411;&#x56FE;&#x627E;&#x8FB9;&#x53CC;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;">&#x65E0;&#x5411;&#x56FE;&#x627E;&#x8FB9;&#x53CC;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">300005</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-keyword">struct</span> Edge {
+    T *u, *v;
+    Edge *next;
+
+    Edge() {}
+    Edge(T *u, T *v) : u(u), v(v), next(u-&gt;e) {}
+};
+
+<span class="hljs-keyword">struct</span> Comp {
+    Edge&lt;Comp&gt; *e;
+    <span class="hljs-keyword">int</span> dist;
+} C[MAXN];
+Edge&lt;Comp&gt; _poolC[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_currC = _poolC;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdgeC</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    C[u].e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(&amp;C[u], &amp;C[v]);
+    C[v].e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(&amp;C[v], &amp;C[u]);
+}
+
+<span class="hljs-keyword">struct</span> Node {
+    Edge&lt;Node&gt; *e;
+    <span class="hljs-keyword">int</span> dfn, low;
+} N[MAXN];
+Edge&lt;Node&gt; _poolN[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_currN = _poolN;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdgeN</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    N[u].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[u], &amp;N[v]);
+    N[v].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[v], &amp;N[u]);
+}
+
+<span class="hljs-keyword">namespace</span> Tarjan {
+    <span class="hljs-keyword">struct</span> DJS {
+        <span class="hljs-keyword">int</span> f[MAXN];
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) f[i] = i;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+            <span class="hljs-keyword">return</span> x == f[x] ? x : f[x] = find(f[x]);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{
+            f[find(x)] = find(y);
+        }
+    } djs;
+
+    <span class="hljs-keyword">int</span> dfsClock;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&lt;Node&gt; *&gt; bridges;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node *u, Node *fa = <span class="hljs-literal">NULL</span>)</span> </span>{
+        u-&gt;dfn = ++dfsClock;
+        u-&gt;low = u-&gt;dfn;
+
+        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = u-&gt;e; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (e-&gt;v != fa) {
+            <span class="hljs-keyword">if</span> (e-&gt;v-&gt;dfn) {
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;dfn);
+            } <span class="hljs-keyword">else</span> {
+                dfs(e-&gt;v, u);
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;low);
+                <span class="hljs-keyword">if</span> (e-&gt;v-&gt;low &gt; u-&gt;dfn) {
+                    bridges.push_back(e);
+                } <span class="hljs-keyword">else</span> {
+                    djs.merge(u - N, e-&gt;v - N);
+                }
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">findECC</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        djs.init(n);
+        dfsClock = <span class="hljs-number">0</span>;
+        dfs(&amp;N[<span class="hljs-number">1</span>]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rebuild</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> e : bridges) {
+            <span class="hljs-keyword">int</span> x = djs.find(e-&gt;u - N);
+            <span class="hljs-keyword">int</span> y = djs.find(e-&gt;v - N);
+            <span class="hljs-keyword">if</span> (x != y) addEdgeC(x, y);
+        }
+    }
+} <span class="hljs-comment">// namespace Tarjan</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
+        addEdgeN(u, v);
+    }
+
+    Tarjan::findECC(n);
+    Tarjan::rebuild();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="&#x65E0;&#x5411;&#x56FE;&#x627E;&#x70B9;&#x53CC;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;">&#x65E0;&#x5411;&#x56FE;&#x627E;&#x70B9;&#x53CC;&#x8FDE;&#x901A;&#x5206;&#x91CF;&#x5E76;&#x7F29;&#x70B9;&#x5EFA;&#x56FE;</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stack&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">300005</span>;
+
+<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+<span class="hljs-keyword">struct</span> Edge {
+    T *u, *v;
+    Edge *next;
+
+    Edge() {}
+    Edge(T *u, T *v) : u(u), v(v), next(u-&gt;e) {}
+};
+
+<span class="hljs-keyword">struct</span> Comp {
+    Edge&lt;Comp&gt; *e;
+} C[MAXN];
+Edge&lt;Comp&gt; _poolC[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_currC = _poolC;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(Comp *u, Comp *v)</span> </span>{
+    u-&gt;e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(u, v);
+    v-&gt;e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(v, u);
+}
+
+<span class="hljs-keyword">struct</span> Node {
+    Edge&lt;Node&gt; *e;
+    Comp *c; <span class="hljs-comment">// a cut&apos;s comp is meaningless</span>
+    <span class="hljs-keyword">int</span> dfn, low;
+    <span class="hljs-keyword">bool</span> isCut;
+} N[MAXN];
+Edge&lt;Node&gt; _poolN[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_currN = _poolN;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+    N[u].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[u], &amp;N[v]);
+    N[v].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[v], &amp;N[u]);
+}
+
+<span class="hljs-keyword">namespace</span> Tarjan {
+    <span class="hljs-keyword">int</span> dfsClock, compCnt;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Edge&lt;Node&gt; *&gt; s;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Node *&gt; cuts;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node *u, Node *fa = <span class="hljs-literal">NULL</span>)</span> </span>{
+        u-&gt;dfn = ++dfsClock;
+        u-&gt;low = u-&gt;dfn;
+        <span class="hljs-keyword">int</span> size = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = u-&gt;e; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (e-&gt;v != fa) {
+            s.push(e);
+
+            <span class="hljs-keyword">if</span> (e-&gt;v-&gt;dfn) {
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;dfn);
+            } <span class="hljs-keyword">else</span> {
+                ++size;
+                dfs(e-&gt;v, u);
+                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;low);
+                <span class="hljs-keyword">if</span> (e-&gt;v-&gt;low &gt;= u-&gt;dfn) {
+                    u-&gt;isCut = <span class="hljs-literal">true</span>;
+                    cuts.push_back(u);
+
+                    Comp *c = &amp;C[++compCnt];
+                    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+                        Edge&lt;Node&gt; *t = s.top();
+                        s.pop();
+
+                        <span class="hljs-keyword">if</span> (t-&gt;u-&gt;c != c) t-&gt;u-&gt;c = c;
+                        <span class="hljs-keyword">if</span> (t-&gt;v-&gt;c != c) t-&gt;v-&gt;c = c;
+
+                        <span class="hljs-keyword">if</span> (t-&gt;u == u &amp;&amp; t-&gt;v == e-&gt;v) <span class="hljs-keyword">break</span>;
+                    }
+                }
+            }
+        }
+
+        <span class="hljs-keyword">if</span> (!fa &amp;&amp; size &gt; <span class="hljs-number">1</span>) {
+            cuts.push_back(u);
+            u-&gt;isCut = <span class="hljs-literal">true</span>;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">findVCC</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        dfsClock = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> (!s.empty()) s.pop();
+        dfs(&amp;N[<span class="hljs-number">1</span>]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rebuild</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = _poolN; e &lt; _currN; e++) <span class="hljs-keyword">if</span> (e-&gt;u-&gt;c != e-&gt;v-&gt;c) addEdge(e-&gt;u-&gt;c, e-&gt;v-&gt;c);
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
+        addEdge(u, v);
+    }
+
+    Tarjan::findVCC(n);
+    Tarjan::rebuild();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="lunet.html" class="navigation navigation-prev " aria-label="Previous page: 上下界网络流">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="vtree.html" class="navigation navigation-next " aria-label="Next page: 虚树">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Tarjan","level":"1.4.10","depth":2,"next":{"title":"虚树","level":"1.4.11","depth":2,"path":"003Graph/vtree.md","ref":"./003Graph/vtree.md","articles":[]},"previous":{"title":"上下界网络流","level":"1.4.9","depth":2,"path":"003Graph/lunet.md","ref":"./003Graph/lunet.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/tarjan.md","mtime":"2018-11-09T10:41:02.028Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-09T11:47:30.339Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
