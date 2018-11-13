@@ -2,7 +2,8 @@
     "title": "Pepcy's Templates for OI and ACM-ICPC",
     "author": "Pepcy CHEN (CHEN Yuwen)",
     "language": "zh-hans",
+    "root": "./content",
     "plugins": [
-        "mathjax"
+        "katex"
     ]
 }

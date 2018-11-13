@@ -60,11 +60,10 @@ struct ScapegoatTree {
         }
 
         void maintain() {
-            size = !isDeled + (c[0] ? c[0]->size : 0) + (c[1] ? c[1]->size : 0);
+            size = 1 + (c[0] ? c[0]->size : 0) + (c[1] ? c[1]->size : 0);
             valid = !isDeled + (c[0] ? c[0]->valid : 0) + (c[1] ? c[1]->valid : 0);
         }
     } *root;
-    static Node *null;
 
     void dfs(Node *u, std::vector<Node *> &vec) {
         if (!u) return;
