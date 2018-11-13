@@ -1,0 +1,997 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>欧拉筛 · Pepcy's Templates for OI and ACM-ICPC</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Pepcy CHEN (CHEN Yuwen)">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="sums.html" />
+    
+    
+    <link rel="prev" href="inv.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../002DataStructure/">
+            
+                <a href="../002DataStructure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../002DataStructure/bit.html">
+            
+                <a href="../002DataStructure/bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002DataStructure/segt.html">
+            
+                <a href="../002DataStructure/segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../002DataStructure/splay.html">
+            
+                <a href="../002DataStructure/splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../002DataStructure/treap.html">
+            
+                <a href="../002DataStructure/treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../002DataStructure/scapet.html">
+            
+                <a href="../002DataStructure/scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../002DataStructure/lct.html">
+            
+                <a href="../002DataStructure/lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../002DataStructure/psegt.html">
+            
+                <a href="../002DataStructure/psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../002DataStructure/ptreap.html">
+            
+                <a href="../002DataStructure/ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../002DataStructure/djs.html">
+            
+                <a href="../002DataStructure/djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../002DataStructure/st.html">
+            
+                <a href="../002DataStructure/st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../002DataStructure/kdt.html">
+            
+                <a href="../002DataStructure/kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../002DataStructure/monoq.html">
+            
+                <a href="../002DataStructure/monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../003Graph/sssp.html">
+            
+                <a href="../003Graph/sssp.html">
+            
+                    
+                    单源最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../003Graph/kthsp.html">
+            
+                <a href="../003Graph/kthsp.html">
+            
+                    
+                    两点间 k 短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../003Graph/steiner.html">
+            
+                <a href="../003Graph/steiner.html">
+            
+                    
+                    斯坦纳树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../003Graph/gsp.html">
+            
+                <a href="../003Graph/gsp.html">
+            
+                    
+                    全局最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../003Graph/pd.html">
+            
+                <a href="../003Graph/pd.html">
+            
+                    
+                    点分治
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../003Graph/tsplit.html">
+            
+                <a href="../003Graph/tsplit.html">
+            
+                    
+                    树链剖分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../003Graph/network.html">
+            
+                <a href="../003Graph/network.html">
+            
+                    
+                    网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../003Graph/costnet.html">
+            
+                <a href="../003Graph/costnet.html">
+            
+                    
+                    费用流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../003Graph/lunet.html">
+            
+                <a href="../003Graph/lunet.html">
+            
+                    
+                    上下界网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../003Graph/tarjan.html">
+            
+                <a href="../003Graph/tarjan.html">
+            
+                    
+                    Tarjan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../003Graph/vtree.html">
+            
+                <a href="../003Graph/vtree.html">
+            
+                    
+                    虚树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../004String/hash.html">
+            
+                <a href="../004String/hash.html">
+            
+                    
+                    Hash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../004String/kmp.html">
+            
+                <a href="../004String/kmp.html">
+            
+                    
+                    KMP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../004String/sa.html">
+            
+                <a href="../004String/sa.html">
+            
+                    
+                    后缀数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../004String/sam.html">
+            
+                <a href="../004String/sam.html">
+            
+                    
+                    后缀自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../004String/acam.html">
+            
+                <a href="../004String/acam.html">
+            
+                    
+                    AC 自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../004String/manacher.html">
+            
+                <a href="../004String/manacher.html">
+            
+                    
+                    Manacher
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../004String/pam.html">
+            
+                <a href="../004String/pam.html">
+            
+                    
+                    回文树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="combi.html">
+            
+                <a href="combi.html">
+            
+                    
+                    组合数与 Lucas 定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="inv.html">
+            
+                <a href="inv.html">
+            
+                    
+                    线性预处理逆元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.3" data-path="seive.html">
+            
+                <a href="seive.html">
+            
+                    
+                    欧拉筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="sums.html">
+            
+                <a href="sums.html">
+            
+                    
+                    杜教筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="crt.html">
+            
+                <a href="crt.html">
+            
+                    
+                    中国剩余定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="bsgs.html">
+            
+                <a href="bsgs.html">
+            
+                    
+                    BSGS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="lb.html">
+            
+                <a href="lb.html">
+            
+                    
+                    线性基
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="guass.html">
+            
+                <a href="guass.html">
+            
+                    
+                    高斯消元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="mr.html">
+            
+                <a href="mr.html">
+            
+                    
+                    Miller-Rabin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="pr.html">
+            
+                <a href="pr.html">
+            
+                    
+                    Pollard's Rho
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.11" data-path="fft.html">
+            
+                <a href="fft.html">
+            
+                    
+                    快速傅立叶变换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.12" data-path="root.html">
+            
+                <a href="root.html">
+            
+                    
+                    原根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.13" data-path="lr.html">
+            
+                <a href="lr.html">
+            
+                    
+                    常系数线性齐次递推
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.14" data-path="lagrange.html">
+            
+                <a href="lagrange.html">
+            
+                    
+                    拉格朗日插值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >欧拉筛</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x6B27;&#x62C9;&#x7B5B;&#xFF08;euler-seive&#xFF09;">&#x6B27;&#x62C9;&#x7B5B;&#xFF08;Euler Seive&#xFF09;</h1>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">10000005</span>;
+
+<span class="hljs-keyword">int</span> prime[MAXN], primeCnt, mu[MAXN], phi[MAXN], d[MAXN];
+<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> s[MAXN];
+<span class="hljs-keyword">bool</span> notPrime[MAXN];
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">eulerSieve</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> minFact[MAXN], minPow[MAXN];
+
+    notPrime[<span class="hljs-number">0</span>] = notPrime[<span class="hljs-number">1</span>] = <span class="hljs-literal">true</span>;
+    mu[<span class="hljs-number">1</span>] = phi[<span class="hljs-number">1</span>] = d[<span class="hljs-number">1</span>] = s[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+    minFact[<span class="hljs-number">1</span>] = minPow[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt; MAXN; i++) {
+        <span class="hljs-keyword">if</span> (!notPrime[i]) {
+            prime[primeCnt++] = i;
+            mu[i] = <span class="hljs-number">-1</span>;
+            phi[i] = i - <span class="hljs-number">1</span>;
+            d[i] = <span class="hljs-number">2</span>;
+            s[i] = i + <span class="hljs-number">1</span>;
+            minFact[i] = i;
+            minPow[i] = <span class="hljs-number">1</span>;
+        }
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; primeCnt &amp;&amp; i * prime[j] &lt; MAXN; j++) {
+            notPrime[i * prime[j]] = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">if</span> (i % prime[j] == <span class="hljs-number">0</span>) {
+                mu[i * prime[j]] = <span class="hljs-number">0</span>;
+                phi[i * prime[j]] = phi[i] * prime[j];
+                d[i * prime[j]] = d[i] / (minPow[i] + <span class="hljs-number">1</span>) * (minPow[i] + <span class="hljs-number">2</span>);
+                <span class="hljs-keyword">if</span> (i == minFact[i]) {
+                    s[i * prime[j]] = s[i] + i * prime[j];
+                } <span class="hljs-keyword">else</span> {
+                    s[i * prime[j]] = s[i / minFact[i]] * s[prime[j] * minFact[i]];
+                }
+                minPow[i * prime[j]] = minPow[i] + <span class="hljs-number">1</span>;
+                minFact[i * prime[j]] = minFact[i] * prime[j];
+                <span class="hljs-keyword">break</span>;
+            }
+            mu[i * prime[j]] = -mu[i];
+            phi[i * prime[j]] = phi[i] * (prime[j] - <span class="hljs-number">1</span>);
+            d[i * prime[j]] = d[i] * <span class="hljs-number">2</span>;
+            s[i * prime[j]] = s[i] * s[prime[j]];
+            minPow[i * prime[j]] = <span class="hljs-number">1</span>;
+            minFact[i * prime[j]] = prime[j];
+        }
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    eulerSieve();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="inv.html" class="navigation navigation-prev " aria-label="Previous page: 线性预处理逆元">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="sums.html" class="navigation navigation-next " aria-label="Next page: 杜教筛">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"欧拉筛","level":"1.6.3","depth":2,"next":{"title":"杜教筛","level":"1.6.4","depth":2,"path":"005Math/sums.md","ref":"./005Math/sums.md","articles":[]},"previous":{"title":"线性预处理逆元","level":"1.6.2","depth":2,"path":"005Math/inv.md","ref":"./005Math/inv.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/seive.md","mtime":"2018-11-13T03:20:35.355Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-13T05:01:42.130Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

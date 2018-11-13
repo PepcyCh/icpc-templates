@@ -1,0 +1,1619 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>快速傅立叶变换 · Pepcy's Templates for OI and ACM-ICPC</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Pepcy CHEN (CHEN Yuwen)">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="root.html" />
+    
+    
+    <link rel="prev" href="pr.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../002DataStructure/">
+            
+                <a href="../002DataStructure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../002DataStructure/bit.html">
+            
+                <a href="../002DataStructure/bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002DataStructure/segt.html">
+            
+                <a href="../002DataStructure/segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../002DataStructure/splay.html">
+            
+                <a href="../002DataStructure/splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../002DataStructure/treap.html">
+            
+                <a href="../002DataStructure/treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../002DataStructure/scapet.html">
+            
+                <a href="../002DataStructure/scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../002DataStructure/lct.html">
+            
+                <a href="../002DataStructure/lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../002DataStructure/psegt.html">
+            
+                <a href="../002DataStructure/psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../002DataStructure/ptreap.html">
+            
+                <a href="../002DataStructure/ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../002DataStructure/djs.html">
+            
+                <a href="../002DataStructure/djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../002DataStructure/st.html">
+            
+                <a href="../002DataStructure/st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../002DataStructure/kdt.html">
+            
+                <a href="../002DataStructure/kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../002DataStructure/monoq.html">
+            
+                <a href="../002DataStructure/monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../003Graph/sssp.html">
+            
+                <a href="../003Graph/sssp.html">
+            
+                    
+                    单源最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../003Graph/kthsp.html">
+            
+                <a href="../003Graph/kthsp.html">
+            
+                    
+                    两点间 k 短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../003Graph/steiner.html">
+            
+                <a href="../003Graph/steiner.html">
+            
+                    
+                    斯坦纳树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../003Graph/gsp.html">
+            
+                <a href="../003Graph/gsp.html">
+            
+                    
+                    全局最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../003Graph/pd.html">
+            
+                <a href="../003Graph/pd.html">
+            
+                    
+                    点分治
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../003Graph/tsplit.html">
+            
+                <a href="../003Graph/tsplit.html">
+            
+                    
+                    树链剖分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../003Graph/network.html">
+            
+                <a href="../003Graph/network.html">
+            
+                    
+                    网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../003Graph/costnet.html">
+            
+                <a href="../003Graph/costnet.html">
+            
+                    
+                    费用流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../003Graph/lunet.html">
+            
+                <a href="../003Graph/lunet.html">
+            
+                    
+                    上下界网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../003Graph/tarjan.html">
+            
+                <a href="../003Graph/tarjan.html">
+            
+                    
+                    Tarjan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../003Graph/vtree.html">
+            
+                <a href="../003Graph/vtree.html">
+            
+                    
+                    虚树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../004String/hash.html">
+            
+                <a href="../004String/hash.html">
+            
+                    
+                    Hash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../004String/kmp.html">
+            
+                <a href="../004String/kmp.html">
+            
+                    
+                    KMP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../004String/sa.html">
+            
+                <a href="../004String/sa.html">
+            
+                    
+                    后缀数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../004String/sam.html">
+            
+                <a href="../004String/sam.html">
+            
+                    
+                    后缀自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../004String/acam.html">
+            
+                <a href="../004String/acam.html">
+            
+                    
+                    AC 自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../004String/manacher.html">
+            
+                <a href="../004String/manacher.html">
+            
+                    
+                    Manacher
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../004String/pam.html">
+            
+                <a href="../004String/pam.html">
+            
+                    
+                    回文树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="combi.html">
+            
+                <a href="combi.html">
+            
+                    
+                    组合数与 Lucas 定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="inv.html">
+            
+                <a href="inv.html">
+            
+                    
+                    线性预处理逆元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="seive.html">
+            
+                <a href="seive.html">
+            
+                    
+                    欧拉筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="sums.html">
+            
+                <a href="sums.html">
+            
+                    
+                    杜教筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="crt.html">
+            
+                <a href="crt.html">
+            
+                    
+                    中国剩余定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="bsgs.html">
+            
+                <a href="bsgs.html">
+            
+                    
+                    BSGS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="lb.html">
+            
+                <a href="lb.html">
+            
+                    
+                    线性基
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="guass.html">
+            
+                <a href="guass.html">
+            
+                    
+                    高斯消元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="mr.html">
+            
+                <a href="mr.html">
+            
+                    
+                    Miller-Rabin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="pr.html">
+            
+                <a href="pr.html">
+            
+                    
+                    Pollard's Rho
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.6.11" data-path="fft.html">
+            
+                <a href="fft.html">
+            
+                    
+                    快速傅立叶变换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.12" data-path="root.html">
+            
+                <a href="root.html">
+            
+                    
+                    原根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.13" data-path="lr.html">
+            
+                <a href="lr.html">
+            
+                    
+                    常系数线性齐次递推
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.14" data-path="lagrange.html">
+            
+                <a href="lagrange.html">
+            
+                    
+                    拉格朗日插值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../006Geometry/">
+            
+                <a href="../006Geometry/">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >快速傅立叶变换</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5FEB;&#x901F;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;&#xFF08;fast-fourier-transformation&#xFF09;">&#x5FEB;&#x901F;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;&#xFF08;Fast Fourier Transformation&#xFF09;</h1>
+<h3 id="fft">FFT</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_EXTEND = <span class="hljs-number">262144</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> PI = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">acos</span>(<span class="hljs-number">-1.0</span>);
+
+<span class="hljs-keyword">struct</span> Complex {
+    <span class="hljs-keyword">double</span> r, i;
+
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : r(r), i(i) {}
+
+    <span class="hljs-function">Complex <span class="hljs-title">conj</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> Complex(r, -i);
+    }
+
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(r + rhs.r, i + rhs.i);
+    }
+    Complex &amp;<span class="hljs-keyword">operator</span>+=(<span class="hljs-keyword">const</span> Complex &amp;rhs) {
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span> = *<span class="hljs-keyword">this</span> + rhs;
+    }
+
+    Complex <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(r - rhs.r, i - rhs.i);
+    }
+
+    Complex <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
+    }
+    Complex &amp;<span class="hljs-keyword">operator</span>*=(<span class="hljs-keyword">const</span> Complex &amp;rhs) {
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span> = *<span class="hljs-keyword">this</span> * rhs;
+    }
+
+    Complex <span class="hljs-keyword">operator</span>/(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(r / rhs, i / rhs);
+    }
+    Complex &amp;<span class="hljs-keyword">operator</span>/=(<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> rhs) {
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span> = *<span class="hljs-keyword">this</span> / rhs;
+    }
+};
+
+<span class="hljs-keyword">namespace</span> FFT {
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">262144</span>;
+
+    Complex omega[N], omegaInv[N];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            omega[i] = Complex(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cos</span>(<span class="hljs-number">2</span> * PI * i / N), <span class="hljs-built_in">std</span>::<span class="hljs-built_in">sin</span>(<span class="hljs-number">2</span> * PI * i / N));
+            omegaInv[i] = omega[i].conj();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">extend</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (res &lt; n) res &lt;&lt;= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">if</span> (i &lt; j) <span class="hljs-built_in">std</span>::swap(a[i], a[j]);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = n &gt;&gt; <span class="hljs-number">1</span>; (j ^= l) &lt; l; l &gt;&gt;= <span class="hljs-number">1</span>) {}
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transform</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n, Complex *omega)</span> </span>{
+        reverse(a, n);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">2</span>; l &lt;= n; l &lt;&lt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">int</span> hl = l &gt;&gt; <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (Complex *x = a; x != a + n; x += l) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hl; i++) {
+                    Complex t = omega[N / l * i] * x[i + hl];
+                    x[i + hl] = x[i] - t;
+                    x[i] += t;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dft</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omega);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">idft</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omegaInv);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) a[i] /= n;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    <span class="hljs-keyword">static</span> Complex a[MAXN_EXTEND], b[MAXN_EXTEND];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lf&quot;</span>, &amp;a[i].r);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= m; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lf&quot;</span>, &amp;b[i].r);
+
+    FFT::init();
+    <span class="hljs-keyword">int</span> N = FFT::extend(n + m + <span class="hljs-number">1</span>);
+
+    FFT::dft(a, N);
+    FFT::dft(b, N);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) a[i] *= b[i];
+    FFT::idft(a, N);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n + m + <span class="hljs-number">1</span>; i++)
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.0lf%c&quot;</span>, a[i].r + <span class="hljs-number">0.001</span>, <span class="hljs-string">&quot; \n&quot;</span>[i == n + m]);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="&#x4E24;&#x6B21;-dft-&#x7684;&#x591A;&#x9879;&#x5F0F;&#x4E58;&#x6CD5;">&#x4E24;&#x6B21; DFT &#x7684;&#x591A;&#x9879;&#x5F0F;&#x4E58;&#x6CD5;</h3>
+<pre><code class="lang-c++">#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;algorithm&gt;
+
+const int MAXN = 262144;
+const double PI = std::acos(-1.0);
+
+struct Complex {
+    double r, i;
+
+    Complex(double r = 0, double i = 0) : r(r), i(i) {}
+
+    Complex conj() const {
+        return Complex(r, -i);
+    }
+
+    Complex operator+(const Complex &amp;rhs) const {
+        return Complex(r + rhs.r, i + rhs.i);
+    }
+    Complex &amp;operator+=(const Complex &amp;rhs) {
+        return *this = *this + rhs;
+    }
+
+    Complex operator-(const Complex &amp;rhs) const {
+        return Complex(r - rhs.r, i - rhs.i);
+    }
+
+    Complex operator*(const Complex &amp;rhs) const {
+        return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
+    }
+    Complex &amp;operator*=(const Complex &amp;rhs) {
+        return *this = *this * rhs;
+    }
+
+    Complex operator/(const double rhs) const {
+        return Complex(r / rhs, i / rhs);
+    }
+    Complex &amp;operator/=(const double rhs) {
+        return *this = *this / rhs;
+    }
+};
+
+namespace FFT {
+    static const int N = 262144;
+
+    Complex omega[N], omegaInv[N];
+
+    void init() {
+        for (int i = 0; i &lt; N; i++) {
+            omega[i] = Complex(std::cos(2 * PI * i / N), std::sin(2 * PI * i / N));
+            omegaInv[i] = omega[i].conj();
+        }
+    }
+
+    int extend(int n) {
+        int res = 1;
+        while (res &lt; n) res &lt;&lt;= 1;
+        return res;
+    }
+
+    void reverse(Complex *a, int n) {
+        for (int i = 0, j = 0; i &lt; n; i++) {
+            if (i &lt; j) std::swap(a[i], a[j]);
+            for (int l = n &gt;&gt; 1; (j ^= l) &lt; l; l &gt;&gt;= 1) {}
+        }
+    }
+
+    void transform(Complex *a, int n, Complex *omega) {
+        reverse(a, n);
+
+        for (int l = 2; l &lt;= n; l &lt;&lt;= 1) {
+            int hl = l &gt;&gt; 1;
+            for (Complex *x = a; x != a + n; x += l) {
+                for (int i = 0; i &lt; hl; i++) {
+                    Complex t = omega[N / l * i] * x[i + hl];
+                    x[i + hl] = x[i] - t;
+                    x[i] += t;
+                }
+            }
+        }
+    }
+
+    void dft(Complex *a, int n) {
+        transform(a, n, omega);
+    }
+
+    void idft(Complex *a, int n) {
+        transform(a, n, omegaInv);
+        for (int i = 0; i &lt; n; i++) a[i] /= n;
+    }
+}
+
+int main() {
+    FFT::init();
+
+    int n, m;
+    scanf(&quot;%d %d&quot;, &amp;n, &amp;m);
+
+    static Complex a[MAXN], b[MAXN];
+
+    for (int i = 0, x; i &lt;= n; i++) {
+        scanf(&quot;%d&quot;, &amp;x);
+        a[i] = Complex(x, 0);
+    }
+
+    for (int i = 0, x; i &lt;= m; i++) {
+        scanf(&quot;%d&quot;, &amp;x);
+        a[i] += Complex(0, x);
+    }
+
+    int len = n + m + 1;
+    int N = FFT::extend(len);
+
+    FFT::dft(a, N);
+    for (int i = 1; i &lt; N; i++) {
+        double x1 = a[i].r, y1 = a[i].i;
+        double x2 = a[N - i].r, y2 = a[N - i].i;
+        Complex t1((x1 + x2) * 0.5, (y1 - y2) * 0.5);
+        Complex t2((y1 + y2) * 0.5, (x2 - x1) * 0.5);
+        b[i] = t1 * t2;
+    }
+    b[0] = a[0].r * a[0].i;
+    FFT::idft(b, N);
+
+    for (int i = 0; i &lt; len; i++)
+        printf(&quot;%d%c&quot;, (int) (round(b[i].r)), &quot; \n&quot;[i == len - 1]);
+
+    return 0;
+}
+</code></pre>
+<h3 id="&#x4EFB;&#x610F;&#x6A21;&#x6570;-fft">&#x4EFB;&#x610F;&#x6A21;&#x6570; FFT</h3>
+<pre><code class="lang-c++">#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;algorithm&gt;
+
+const int MAXN = 262144;
+const int MOD = 1000000007;
+const long double PI = std::acos(-1.0);
+
+struct Complex {
+    long double r, i;
+
+    Complex(long double r = 0, long double i = 0) : r(r), i(i) {}
+
+    Complex conj() const {
+        return Complex(r, -i);
+    }
+
+    Complex operator+(const Complex &amp;rhs) const {
+        return Complex(r + rhs.r, i + rhs.i);
+    }
+    Complex &amp;operator+=(const Complex &amp;rhs) {
+        return *this = *this + rhs;
+    }
+
+    Complex operator-(const Complex &amp;rhs) const {
+        return Complex(r - rhs.r, i - rhs.i);
+    }
+    Complex &amp;operator-=(const Complex &amp;rhs) {
+        return *this = *this - rhs;
+    }
+
+    Complex operator*(const Complex &amp;rhs) const {
+        return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
+    }
+    Complex &amp;operator*=(const Complex &amp;rhs) {
+        return *this = *this * rhs;
+    }
+
+    Complex operator/(const long double rhs) const {
+        return Complex(r / rhs, i / rhs);
+    }
+    Complex &amp;operator/=(const long double rhs) {
+        return *this = *this / rhs;
+    }
+};
+
+namespace FFT {
+    static const int N = 262144;
+
+    Complex omega[N], omegaInv[N];
+
+    void init() {
+        for (int i = 0; i &lt; N; i++) {
+            omega[i] = Complex(std::cos(2 * PI * i / N), std::sin(2 * PI * i / N));
+            omegaInv[i] = omega[i].conj();
+        }
+    }
+
+    int extend(int n) {
+        int res = 1;
+        while (res &lt; n) res &lt;&lt;= 1;
+        return res;
+    }
+
+    void reverse(Complex *a, int n) {
+        for (int i = 0, j = 0; i &lt; n; i++) {
+            if (i &lt; j) std::swap(a[i], a[j]);
+            for (int l = n &gt;&gt; 1; (j ^= l) &lt; l; l &gt;&gt;= 1) {}
+        }
+    }
+
+    void transform(Complex *a, int n, Complex *omega) {
+        reverse(a, n);
+
+        for (int l = 2; l &lt;= n; l &lt;&lt;= 1) {
+            int hl = l &gt;&gt; 1;
+            for (Complex *x = a; x != a + n; x += l) {
+                for (int i = 0; i &lt; hl; i++) {
+                    Complex t = omega[N / l * i] * x[i + hl];
+                    x[i + hl] = x[i] - t;
+                    x[i] += t;
+                }
+            }
+        }
+    }
+
+    void dft(Complex *a, int n) {
+        transform(a, n, omega);
+    }
+
+    void idft(Complex *a, int n) {
+        transform(a, n, omegaInv);
+        for (int i = 0; i &lt; n; i++) a[i] /= n;
+    }
+}
+
+void lowAccuracyModMul(int *a, int *b, int n, int *res) {
+    static Complex A[MAXN], B[MAXN];
+    for (int i = 0; i &lt; n; i++) A[i] = Complex(a[i], b[i]);
+    FFT::dft(A, n);
+    for (int i = 1; i &lt; n; i++) {
+        long double x1 = A[i].r, y1 = A[i].i;
+        long double x2 = A[n - i].r, y2 = A[n - i].i;
+        Complex t1((x1 + x2) * 0.5, (y1 - y2) * 0.5);
+        Complex t2((y1 + y2) * 0.5, (x2 - x1) * 0.5);
+        B[i] = t1 * t2;
+    }
+    B[0] = A[0].r * A[0].i;
+    FFT::idft(B, n);
+    for (int i = 0; i &lt; n; i++)
+        res[i] = ((long long) (B[i].r + 0.5)) % MOD;
+}
+
+void modMul(int *a, int *b, int n, int *res) {
+    static int a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
+    static const int M = 1000;
+
+    for (int i = 0; i &lt; n; i++) {
+        a0[i] = a[i] / M;
+        b0[i] = b[i] / M;
+    }
+    lowAccuracyModMul(a0, b0, n, a0);
+    for (int i = 0; i &lt; n; i++) {
+        res[i] = 1ll * a0[i] * M * M % MOD;
+        a1[i] = a[i] % M;
+        b1[i] = b[i] % M;
+    }
+    lowAccuracyModMul(a1, b1, n, a1);
+    for (int i = 0; i &lt; n; i++) {
+        res[i] += a1[i];
+        res[i] &gt;= MOD ? res[i] -= MOD : 0;
+
+        a0[i] = (a0[i] + a1[i]) % MOD;
+        a1[i] = a[i] / M + a[i] % M;
+        b1[i] = b[i] / M + b[i] % M;
+    }
+    lowAccuracyModMul(a1, b1, n, a1);
+    for (int i = 0; i &lt; n; i++)
+        res[i] = (1ll * M * (a1[i] - a0[i] + MOD) + res[i]) % MOD;
+}
+
+int main() {
+    FFT::init();
+
+    int n, m;
+    scanf(&quot;%d %d&quot;, &amp;n, &amp;m);
+
+    static int a[MAXN], b[MAXN], ans[MAXN];
+    for (int i = 0; i &lt;= n; i++) scanf(&quot;%d&quot;, &amp;a[i]);
+    for (int i = 0; i &lt;= m; i++) scanf(&quot;%d&quot;, &amp;b[i]);
+    for (int i = 0; i &lt;= n; i++) a[i] &lt; 0 ? a[i] += MOD : 0;
+    for (int i = 0; i &lt;= m; i++) b[i] &lt; 0 ? b[i] += MOD : 0;
+
+    int len = n + m + 1;
+    int p = FFT::extend(len);
+    modMul(a, b, p, ans);
+    for (int i = 0; i &lt; len; i++) printf(&quot;%d%c&quot;, ans[i], &quot; \n&quot;[i == len - 1]);
+
+    return 0;
+}
+</code></pre>
+<h3 id="ntt-number-theoretic-transformation">NTT (Number Theoretic Transformation)</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_EXTEND = <span class="hljs-number">262144</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD = <span class="hljs-number">998244353</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> G = <span class="hljs-number">3</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">pow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n)</span> </span>{
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (; n; n &gt;&gt;= <span class="hljs-number">1</span>, a = a * a % MOD) <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>) res = res * a % MOD;
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> &amp;x, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> &amp;y)</span> </span>{
+    <span class="hljs-keyword">if</span> (!b) x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">else</span> exgcd(b, a % b, y, x), y -= x * (a / b);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">inv</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> x)</span> </span>{
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res, temp;
+    exgcd(x, MOD, res, temp);
+    <span class="hljs-keyword">return</span> (res % MOD + MOD) % MOD;
+}
+
+<span class="hljs-keyword">namespace</span> NTT {
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">262144</span>;
+
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> omega[N], omegaInv[N];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> g = <span class="hljs-built_in">pow</span>(G, (MOD - <span class="hljs-number">1</span>) / N), ig = inv(g);
+        omega[<span class="hljs-number">0</span>] = omegaInv[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++) {
+            omega[i] = omega[i - <span class="hljs-number">1</span>] * g % MOD;
+            omegaInv[i] = omegaInv[i - <span class="hljs-number">1</span>] * ig % MOD;
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">extend</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (res &lt; n) res &lt;&lt;= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">if</span> (i &lt; j) <span class="hljs-built_in">std</span>::swap(a[i], a[j]);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = n &gt;&gt; <span class="hljs-number">1</span>; (j ^= l) &lt; l; l &gt;&gt;= <span class="hljs-number">1</span>) {}
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *omega)</span> </span>{
+        reverse(a, n);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">2</span>; l &lt;= n; l &lt;&lt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">int</span> hl = l &gt;&gt; <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *x = a; x != a + n; x += l) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hl; i++) {
+                    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t = omega[N / l * i] * x[i + hl] % MOD;
+                    x[i + hl] = (x[i] - t + MOD) % MOD;
+                    x[i] += t;
+                    x[i] &gt;= MOD ? x[i] -= MOD : <span class="hljs-number">0</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dft</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omega);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">idft</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omegaInv);
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t = inv(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) (a[i] *= t) %= MOD;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a[MAXN_EXTEND], b[MAXN_EXTEND];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;a[i]);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= m; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;b[i]);
+
+    NTT::init();
+    <span class="hljs-keyword">int</span> N = NTT::extend(n + m + <span class="hljs-number">1</span>);
+
+    NTT::dft(a, N);
+    NTT::dft(b, N);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) (a[i] *= b[i]) %= MOD;
+    NTT::idft(a, N);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n + m + <span class="hljs-number">1</span>; i++)  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld%c&quot;</span>, a[i], <span class="hljs-string">&quot; \n&quot;</span>[i == n + m]);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h3 id="ntt-&#x6A21;&#x6570;&#x53CA;&#x539F;&#x6839;&#x8868;">NTT &#x6A21;&#x6570;&#x53CA;&#x539F;&#x6839;&#x8868;</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><msup><mover accent="true"><mn>2</mn><mo>&#x2D9;</mo></mover><mi>k</mi></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r \dot 2 ^ k + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.8813em;"></span><span class="strut bottom" style="height:0.96463em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mord"><span class="mord accent"><span class="vlist"><span style="top:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span><span class="mord mathrm">2</span></span><span style="top:-0.21344000000000002em;margin-left:0em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span><span class="accent-body"><span>&#x2D9;</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span>&#x200B;</span></span></span><span class="msupsub"><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight" style="margin-right:0.03148em;">k</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span>&#x200B;</span></span></span></span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span></th>
+<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span></span></span></span></th>
+<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span></span></th>
+<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi></mrow><annotation encoding="application/x-tex">g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">g</span></span></span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">97</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>9</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">193</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">9</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">6</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">257</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">8</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>6</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">7681</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>2</mn><mn>2</mn><mn>8</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">12289</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">8</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>0</mn><mn>9</mn><mn>6</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">40961</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">13</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn><mn>5</mn><mn>5</mn><mn>3</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">65537</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">6</span><span class="mord mathrm">5</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">6</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>8</mn><mn>6</mn><mn>4</mn><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">786433</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">8</span><span class="mord mathrm">6</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>8</mn></mrow><annotation encoding="application/x-tex">18</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">8</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mn>7</mn><mn>6</mn><mn>7</mn><mn>1</mn><mn>6</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">5767169</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">19</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>3</mn><mn>4</mn><mn>0</mn><mn>0</mn><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">7340033</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">3</span><span class="mord mathrm">4</span><span class="mord mathrm">0</span><span class="mord mathrm">0</span><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>3</mn><mn>0</mn><mn>6</mn><mn>8</mn><mn>6</mn><mn>7</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">23068673</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">21</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn><mn>4</mn><mn>8</mn><mn>5</mn><mn>7</mn><mn>6</mn><mn>0</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">104857601</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">8</span><span class="mord mathrm">5</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">22</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>6</mn><mn>7</mn><mn>7</mn><mn>7</mn><mn>2</mn><mn>1</mn><mn>6</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">167772161</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>6</mn><mn>9</mn><mn>7</mn><mn>6</mn><mn>2</mn><mn>0</mn><mn>4</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">469762049</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">6</span><span class="mord mathrm">9</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">26</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">6</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn><mn>9</mn><mn>8</mn><mn>2</mn><mn>4</mn><mn>4</mn><mn>3</mn><mn>5</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">998244353</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span><span class="mord mathrm">9</span><span class="mord mathrm">8</span><span class="mord mathrm">2</span><span class="mord mathrm">4</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">110</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span><span class="mord mathrm">0</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">23</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn><mn>0</mn><mn>4</mn><mn>5</mn><mn>3</mn><mn>5</mn><mn>8</mn><mn>0</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">1004535809</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>7</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">479</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">7</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">21</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>1</mn><mn>3</mn><mn>2</mn><mn>6</mn><mn>5</mn><mn>9</mn><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">2013265921</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">6</span><span class="mord mathrm">5</span><span class="mord mathrm">9</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">1</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn><mn>8</mn><mn>1</mn><mn>7</mn><mn>0</mn><mn>1</mn><mn>3</mn><mn>7</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">2281701377</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span><span class="mord mathrm">7</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>2</mn><mn>2</mn><mn>1</mn><mn>2</mn><mn>2</mn><mn>5</mn><mn>4</mn><mn>7</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">3221225473</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">5</span><span class="mord mathrm">4</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">30</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">0</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>5</mn><mn>1</mn><mn>6</mn><mn>1</mn><mn>9</mn><mn>2</mn><mn>7</mn><mn>6</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">75161927681</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">5</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">9</span><span class="mord mathrm">2</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">35</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>7</mn><mn>3</mn><mn>0</mn><mn>9</mn><mn>4</mn><mn>1</mn><mn>1</mn><mn>3</mn><mn>2</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">77309411329</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span><span class="mord mathrm">4</span><span class="mord mathrm">1</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">33</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>6</mn><mn>1</mn><mn>5</mn><mn>8</mn><mn>4</mn><mn>3</mn><mn>0</mn><mn>2</mn><mn>0</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">206158430209</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">36</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">6</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">22</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span></span></span></span></td>
+</tr>
+<tr>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>6</mn><mn>1</mn><mn>5</mn><mn>8</mn><mn>4</mn><mn>3</mn><mn>0</mn><mn>2</mn><mn>0</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">2061584302081</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">37</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="pr.html" class="navigation navigation-prev " aria-label="Previous page: Pollard's Rho">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="root.html" class="navigation navigation-next " aria-label="Next page: 原根">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"快速傅立叶变换","level":"1.6.11","depth":2,"next":{"title":"原根","level":"1.6.12","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"Pollard's Rho","level":"1.6.10","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/fft.md","mtime":"2018-11-13T04:59:34.571Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-13T05:01:42.130Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
