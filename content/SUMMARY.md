@@ -58,5 +58,16 @@
     * [拉格朗日插值](./005Math/lagrange.md)
 
 * [计算几何](./006Geometry/README.md)
+    * [旋转卡壳](./006Geometry/rc.md)
+    * [半平面交](./006Geometry/hpi.md)
+    * [k 次圆覆盖](./006Geometry/kcc.md)
+    * [点相关](./006Geometry/point.md)
+    * [Deluanay 三角剖分与平面欧几里得距离最小生成树](./006Geometry/deluanay.md)
+    * [三维凸包](./006Geometry/tdch.md)
 
 * [其他](./007Others/README.md)
+    * [Java 高精度](./007Others/javabi.md)
+    * [2-SAT](./007Others/tsat.md)
+    * [三维偏序](./007Others/tdpo.md)
+    * [O(1) 取模乘](./007Others/modmul.md)
+    * [IO 优化](./007Others/fio.md)

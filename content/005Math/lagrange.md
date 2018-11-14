@@ -1,5 +1,7 @@
 # 拉格朗日插值（Lagrange Interpolation Polynomial）
 
+输入为 $$n$$ 次多项式在 $$x = 0, 1,..., n$$ 的值。
+
 ```c++
 #include <cstdio>
 

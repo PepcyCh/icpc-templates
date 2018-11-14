@@ -1,0 +1,1385 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Deluanay 三角剖分与平面欧几里得距离最小生成树 · Pepcy's Templates for OI and ACM-ICPC</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Pepcy CHEN (CHEN Yuwen)">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="tdch.html" />
+    
+    
+    <link rel="prev" href="point.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
+            
+                <a href="../001VimConfig/">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
+            
+                <a href="../001VimConfig/vimrc.html">
+            
+                    
+                    Vim 配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../002DataStructure/">
+            
+                <a href="../002DataStructure/">
+            
+                    
+                    数据结构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../002DataStructure/bit.html">
+            
+                <a href="../002DataStructure/bit.html">
+            
+                    
+                    树状数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../002DataStructure/segt.html">
+            
+                <a href="../002DataStructure/segt.html">
+            
+                    
+                    线段树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../002DataStructure/splay.html">
+            
+                <a href="../002DataStructure/splay.html">
+            
+                    
+                    Splay
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../002DataStructure/treap.html">
+            
+                <a href="../002DataStructure/treap.html">
+            
+                    
+                    Treap(Split & Merge)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../002DataStructure/scapet.html">
+            
+                <a href="../002DataStructure/scapet.html">
+            
+                    
+                    替罪羊树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../002DataStructure/lct.html">
+            
+                <a href="../002DataStructure/lct.html">
+            
+                    
+                    Link-Cut Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../002DataStructure/psegt.html">
+            
+                <a href="../002DataStructure/psegt.html">
+            
+                    
+                    主席树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../002DataStructure/ptreap.html">
+            
+                <a href="../002DataStructure/ptreap.html">
+            
+                    
+                    可持久化 Treap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../002DataStructure/djs.html">
+            
+                <a href="../002DataStructure/djs.html">
+            
+                    
+                    并查集
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../002DataStructure/st.html">
+            
+                <a href="../002DataStructure/st.html">
+            
+                    
+                    Sparse Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.11" data-path="../002DataStructure/kdt.html">
+            
+                <a href="../002DataStructure/kdt.html">
+            
+                    
+                    K-d Tree
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.12" data-path="../002DataStructure/monoq.html">
+            
+                <a href="../002DataStructure/monoq.html">
+            
+                    
+                    单调队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../003Graph/">
+            
+                <a href="../003Graph/">
+            
+                    
+                    树与图
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../003Graph/sssp.html">
+            
+                <a href="../003Graph/sssp.html">
+            
+                    
+                    单源最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../003Graph/kthsp.html">
+            
+                <a href="../003Graph/kthsp.html">
+            
+                    
+                    两点间 k 短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../003Graph/steiner.html">
+            
+                <a href="../003Graph/steiner.html">
+            
+                    
+                    斯坦纳树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../003Graph/gsp.html">
+            
+                <a href="../003Graph/gsp.html">
+            
+                    
+                    全局最短路
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../003Graph/pd.html">
+            
+                <a href="../003Graph/pd.html">
+            
+                    
+                    点分治
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../003Graph/tsplit.html">
+            
+                <a href="../003Graph/tsplit.html">
+            
+                    
+                    树链剖分
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../003Graph/network.html">
+            
+                <a href="../003Graph/network.html">
+            
+                    
+                    网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../003Graph/costnet.html">
+            
+                <a href="../003Graph/costnet.html">
+            
+                    
+                    费用流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../003Graph/lunet.html">
+            
+                <a href="../003Graph/lunet.html">
+            
+                    
+                    上下界网络流
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.10" data-path="../003Graph/tarjan.html">
+            
+                <a href="../003Graph/tarjan.html">
+            
+                    
+                    Tarjan
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.11" data-path="../003Graph/vtree.html">
+            
+                <a href="../003Graph/vtree.html">
+            
+                    
+                    虚树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../004String/">
+            
+                <a href="../004String/">
+            
+                    
+                    字符串
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../004String/hash.html">
+            
+                <a href="../004String/hash.html">
+            
+                    
+                    Hash
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../004String/kmp.html">
+            
+                <a href="../004String/kmp.html">
+            
+                    
+                    KMP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../004String/sa.html">
+            
+                <a href="../004String/sa.html">
+            
+                    
+                    后缀数组
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../004String/sam.html">
+            
+                <a href="../004String/sam.html">
+            
+                    
+                    后缀自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../004String/acam.html">
+            
+                <a href="../004String/acam.html">
+            
+                    
+                    AC 自动机
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../004String/manacher.html">
+            
+                <a href="../004String/manacher.html">
+            
+                    
+                    Manacher
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../004String/pam.html">
+            
+                <a href="../004String/pam.html">
+            
+                    
+                    回文树
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../005Math/">
+            
+                <a href="../005Math/">
+            
+                    
+                    数学
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../005Math/combi.html">
+            
+                <a href="../005Math/combi.html">
+            
+                    
+                    组合数与 Lucas 定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../005Math/inv.html">
+            
+                <a href="../005Math/inv.html">
+            
+                    
+                    线性预处理逆元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../005Math/seive.html">
+            
+                <a href="../005Math/seive.html">
+            
+                    
+                    欧拉筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../005Math/sums.html">
+            
+                <a href="../005Math/sums.html">
+            
+                    
+                    杜教筛
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../005Math/crt.html">
+            
+                <a href="../005Math/crt.html">
+            
+                    
+                    中国剩余定理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../005Math/bsgs.html">
+            
+                <a href="../005Math/bsgs.html">
+            
+                    
+                    BSGS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../005Math/lb.html">
+            
+                <a href="../005Math/lb.html">
+            
+                    
+                    线性基
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../005Math/guass.html">
+            
+                <a href="../005Math/guass.html">
+            
+                    
+                    高斯消元
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../005Math/mr.html">
+            
+                <a href="../005Math/mr.html">
+            
+                    
+                    Miller-Rabin
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../005Math/pr.html">
+            
+                <a href="../005Math/pr.html">
+            
+                    
+                    Pollard's Rho
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.11" data-path="../005Math/fft.html">
+            
+                <a href="../005Math/fft.html">
+            
+                    
+                    快速傅立叶变换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.12" data-path="../005Math/root.html">
+            
+                <a href="../005Math/root.html">
+            
+                    
+                    原根
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.13" data-path="../005Math/lr.html">
+            
+                <a href="../005Math/lr.html">
+            
+                    
+                    常系数线性齐次递推
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.14" data-path="../005Math/lagrange.html">
+            
+                <a href="../005Math/lagrange.html">
+            
+                    
+                    拉格朗日插值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    计算几何
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="rc.html">
+            
+                <a href="rc.html">
+            
+                    
+                    旋转卡壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="hpi.html">
+            
+                <a href="hpi.html">
+            
+                    
+                    半平面交
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="kcc.html">
+            
+                <a href="kcc.html">
+            
+                    
+                    k 次圆覆盖
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="point.html">
+            
+                <a href="point.html">
+            
+                    
+                    点相关
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7.5" data-path="deluanay.html">
+            
+                <a href="deluanay.html">
+            
+                    
+                    Deluanay 三角剖分与平面欧几里得距离最小生成树
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="tdch.html">
+            
+                <a href="tdch.html">
+            
+                    
+                    三维凸包
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../007Others/">
+            
+                <a href="../007Others/">
+            
+                    
+                    其他
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../007Others/javabi.html">
+            
+                <a href="../007Others/javabi.html">
+            
+                    
+                    Java 高精度
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../007Others/tsat.html">
+            
+                <a href="../007Others/tsat.html">
+            
+                    
+                    2-SAT
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../007Others/tdpo.html">
+            
+                <a href="../007Others/tdpo.html">
+            
+                    
+                    三维偏序
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../007Others/modmul.html">
+            
+                <a href="../007Others/modmul.html">
+            
+                    
+                    O(1) 取模乘
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../007Others/fio.html">
+            
+                <a href="../007Others/fio.html">
+            
+                    
+                    IO 优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Deluanay 三角剖分与平面欧几里得距离最小生成树</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="deluanay-&#x4E09;&#x89D2;&#x5256;&#x5206;&#x4E0E;&#x5E73;&#x9762;&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x8DDD;&#x79BB;&#x6700;&#x5C0F;&#x751F;&#x6210;&#x6811;">Deluanay &#x4E09;&#x89D2;&#x5256;&#x5206;&#x4E0E;&#x5E73;&#x9762;&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x8DDD;&#x79BB;&#x6700;&#x5C0F;&#x751F;&#x6210;&#x6811;</h1>
+<pre><code class="lang-c++">#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;set&gt;
+#include &lt;list&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+const int MAXN = 100005;
+const double EPS = 1e-9;
+
+int dcmp(double a, double b = 0) {
+    double d = a - b;
+    return std::abs(d) &lt;= EPS ? 0 : (d &gt; 0 ? 1 : -1);
+}
+
+double sqr(double x) {
+    return x * x;
+}
+
+struct Point {
+    double x, y;
+    int id;
+
+    Point(double x = 0, double y = 0, int id = -1) : x(x), y(y), id(id) {}
+
+    bool operator&lt;(const Point &amp;rhs) const {
+        return dcmp(x, rhs.x) == 0 ? y &lt; rhs.y : x &lt; rhs.x;
+    }
+
+    Point operator+(const Point &amp;rhs) const {
+        return Point(x + rhs.x, y + rhs.y);
+    }
+    Point operator-(const Point &amp;rhs) const {
+        return Point(x - rhs.x, y - rhs.y);
+    }
+
+    friend double dot(const Point &amp;a, const Point &amp;b) {
+        return a.x * b.x + a.y * b.y;
+    }
+    friend double cross(const Point &amp;a, const Point &amp;b) {
+        return a.x * b.y - a.y * b.x;
+    }
+
+    friend double dist(const Point &amp;a, const Point &amp;b) {
+        return std::sqrt(sqr(a.x - b.x) + sqr(a.y - b.y));
+    }
+    friend double distSqr(const Point &amp;a, const Point &amp;b) {
+        return sqr(a.x - b.x) + sqr(a.y - b.y);
+    }
+} P[MAXN];
+
+namespace Deluanay {
+
+struct Point3D {
+    double x, y, z;
+
+    Point3D(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z) {}
+    Point3D(const Point &amp;p) : x(p.x), y(p.y), z(sqr(p.x) + sqr(p.y)) {}
+
+    friend Point3D operator-(const Point3D &amp;a, const Point3D &amp;b) {
+        return Point3D(a.x - b.x, a.y - b.y, a.z - b.z);
+    }
+
+    friend double dot(const Point3D &amp;a, const Point3D &amp;b) {
+        return a.x * b.x + a.y * b.y + a.z * b.z;
+    }
+    friend Point3D cross(const Point3D &amp;a, const Point3D &amp;b) {
+        return Point3D(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+    }
+    friend double mix(const Point3D &amp;a, const Point3D &amp;b, const Point3D &amp;c) {
+        return dot(a, cross(b, c));
+    }
+};
+
+struct Edge {
+    int id;
+    std::list&lt;Edge&gt;::iterator c;
+
+    Edge(int id = 0) : id(id) {}
+};
+
+bool doesPointInCircle(const Point &amp;a, Point b, Point c, const Point &amp;p) {
+    if (cross(b - a, c - a) &lt; 0) std::swap(b, c);
+    Point3D a3(a), b3(b), c3(c), p3(p);
+    b3 = b3 - a3, c3 = c3 - a3, p3 = p3 - a3;
+    return dcmp(mix(p3, b3, c3)) &lt; 0;
+}
+
+bool hasIntersection(const Point &amp;a, const Point &amp;b, const Point &amp;c, const Point &amp;d) {
+    return dcmp(cross(c - a, b - a)) * dcmp(cross(b - a, d - a)) &gt; 0 &amp;&amp;
+           dcmp(cross(a - c, d - c)) * dcmp(cross(d - c, b - c)) &gt; 0;
+}
+
+std::list&lt;Edge&gt; head[MAXN];
+Point p[MAXN];
+int n, rename[MAXN];
+
+void addEdge(int u, int v) {
+    head[u].push_front(Edge(v));
+    head[v].push_front(Edge(u));
+    head[u].begin()-&gt;c = head[v].begin();
+    head[v].begin()-&gt;c = head[u].begin();
+}
+
+void divide(int l, int r) {
+    if (r - l &lt;= 2) {
+        for (int i = l; i &lt;= r; i++) for (int j = i + 1; j &lt;= r; j++) addEdge(i, j);
+        return;
+    }
+
+    int mid = l + ((r - l) &gt;&gt; 1);
+    divide(l, mid);
+    divide(mid + 1, r);
+
+    int nowl = l, nowr = r;
+    for (bool updated = true; updated; ) {
+        updated = false;
+        Point ptL = p[nowl], ptR = p[nowr];
+        for (auto i : head[nowl]) {
+            Point t = p[i.id];
+            double v = cross(ptL - ptR, t - ptR);
+            if (dcmp(v) &gt; 0 || (!dcmp(v) &amp;&amp; distSqr(ptR, t) &lt; distSqr(ptR, ptL))) {
+                nowl = i.id;
+                updated = true;
+                break;
+            }
+        }
+        if (updated) continue;
+        for (auto i : head[nowr]) {
+            Point t = p[i.id];
+            double v = cross(ptR - ptL, t - ptL);
+            if (dcmp(v) &lt; 0 || (!dcmp(v) &amp;&amp; distSqr(ptL, t) &lt; distSqr(ptL, ptR))) {
+                nowr = i.id;
+                updated = true;
+                break;
+            }
+        }
+    }
+
+    addEdge(nowl, nowr);
+    while (true) {
+        Point ptL = p[nowl], ptR = p[nowr];
+        int ch = -1, side = 0;
+        for (auto i : head[nowl]) {
+            Point t = p[i.id];
+            if (dcmp(cross(ptR - ptL, t - ptL)) &gt; 0
+                    &amp;&amp; (ch == -1 || doesPointInCircle(ptL, ptR, p[ch], t))) {
+                ch = i.id;
+                side = -1;
+            }
+        }
+        for (auto i : head[nowr]) {
+            Point t = p[i.id];
+            if (dcmp(cross(t - ptR, ptL - ptR)) &gt; 0
+                    &amp;&amp; (ch == -1 || doesPointInCircle(ptL, ptR, p[ch], t))) {
+                ch = i.id;
+                side = 1;
+            }
+        }
+
+        if (ch == -1) break;
+        if (side == -1) {
+            for (auto it = head[nowl].begin(); it != head[nowl].end(); ) {
+                if (hasIntersection(ptL, p[it-&gt;id], ptR, p[ch])) {
+                    head[it-&gt;id].erase(it-&gt;c);
+                    head[nowl].erase(it++);
+                } else {
+                    it++;
+                }
+            }
+            nowl = ch;
+            addEdge(nowl, nowr);
+        } else {
+            for (auto it = head[nowr].begin(); it != head[nowr].end(); ) {
+                if (hasIntersection(ptR, p[it-&gt;id], ptL, p[ch])) {
+                    head[it-&gt;id].erase(it-&gt;c);
+                    head[nowr].erase(it++);
+                } else {
+                    it++;
+                }
+            }
+            nowr = ch;
+            addEdge(nowl, nowr);
+        }
+    }
+}
+
+bool isParallel(const Point &amp;a, const Point &amp;b, const Point &amp;c) {
+    return !dcmp(cross(b - a, c - a));
+}
+
+void getEdge(std::vector&lt;std::pair&lt;int, int&gt; &gt; &amp;ret) {
+    ret.reserve(n);
+    static std::set&lt;std::pair&lt;int, int&gt; &gt; vis;
+    vis.clear();
+
+    for (int i = 0; i &lt; n; i++) for (auto j : head[i]) {
+        if (j.id &lt; i) continue;
+        Point now = p[j.id];
+        for (auto k : head[i]) {
+            if (k.id &lt; i) continue;
+            if (isParallel(p[i], p[j.id], p[k.id])
+                    &amp;&amp; distSqr(p[k.id], p[i]) &lt; distSqr(now, p[i]))
+                now = p[k.id];
+        }
+        if (vis.find(std::make_pair(p[i].id, now.id)) == vis.end()) {
+            vis.insert(std::make_pair(p[i].id, now.id));
+            ret.push_back(std::make_pair(p[i].id, now.id));
+        }
+    }
+}
+
+void init(int n, Point *P) {
+    std::copy(P, P + n, p);
+    std::sort(p, p + n);
+    for (int i = 0; i &lt; n; i++) rename[p[i].id] = i;
+    Deluanay::n = n;
+    divide(0, n - 1);
+}
+
+void split(int n, Point *P, std::vector&lt;std::pair&lt;int, int&gt; &gt; &amp;ret) {
+    for (int i = 0; i &lt; n; i++) P[i].id = i;
+    init(n, P);
+    getEdge(ret);
+}
+
+} // namespace Deluanay
+
+namespace Kruskal {
+
+struct UFS {
+    int f[MAXN];
+
+    void init(int n) {
+        for (int i = 1; i &lt;= n; i++) f[i] = i;
+    }
+
+    int find(int x) {
+        return x == f[x] ? x : f[x] = find(f[x]);
+    }
+
+    void merge(int x, int y) {
+        f[find(y)] = find(x);
+    }
+
+    bool test(int x, int y) {
+        return find(x) == find(y);
+    }
+} ufs;
+
+struct Edge {
+    int u, v;
+    double w;
+
+    Edge(int u, int v, double w) : u(u), v(v), w(w) {}
+};
+std::vector&lt;Edge&gt; edges;
+
+double solve(int n) {
+    std::sort(edges.begin(), edges.end(), [](const Edge &amp;a, const Edge &amp;b){return a.w &lt; b.w;});
+    ufs.init(n);
+
+    double ans = 0;
+    int added = 0;
+    for (auto e : edges) if (!ufs.test(e.u, e.v)) {
+        ufs.merge(e.u, e.v);
+        ans += e.w;
+        if (++added == n - 1) break;
+    }
+
+    return ans;
+}
+
+} // namespace Kruskal
+
+int main() {
+    int n;
+    scanf(&quot;%d&quot;, &amp;n);
+    for (int i = 0; i &lt; n; i++) scanf(&quot;%lf %lf&quot;, &amp;P[i].x, &amp;P[i].y);
+
+    static std::vector&lt;std::pair&lt;int, int&gt; &gt; edges;
+    Deluanay::split(n, P, edges);
+
+    for (auto e : edges) Kruskal::edges.emplace_back(e.first + 1, e.second + 1, dist(P[e.first], P[e.second]));
+    double ans = Kruskal::solve(n);
+    printf(&quot;%lld\n&quot;, ans);
+
+    return 0;
+}
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="point.html" class="navigation navigation-prev " aria-label="Previous page: 点相关">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="tdch.html" class="navigation navigation-next " aria-label="Next page: 三维凸包">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"next":{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},"previous":{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/deluanay.md","mtime":"2018-11-14T08:33:11.991Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T08:58:09.083Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
