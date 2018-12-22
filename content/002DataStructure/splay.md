@@ -63,8 +63,11 @@ struct Splay {
     }
 
     void init() {
-        insert(INT_MIN);
-        insert(INT_MAX);
+        root = new Node(NULL, INT_MIN);
+        root->c[1] = new Node(root, INT_MAX);
+        root->c[1]->pred = root;
+        root->succ = root->c[1];
+        root->maintain();
     }
 
     void rotate(Node *u) {
