@@ -129,7 +129,6 @@ struct Splay {
     }
 
     void erase(Node *u) {
-        Node *&predd = u->pred, *&succ = u->succ;
         splay(u->pred);
         splay(u->succ, u->pred);
 
