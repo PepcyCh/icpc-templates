@@ -27,12 +27,12 @@ struct MemoryPool {
 
 struct Splay {
     struct Node {
-        Node *c[2], *fa, **root;
+        Node *c[2], *fa, *pred, *succ;
         int val, cnt, size;
         static MemoryPool<Node, MAXN> pool;
 
         Node() {}
-        Node(Node **root, Node *fa, int val) : val(val), size(1), cnt(1), c(), fa(fa), root(root) {}
+        Node(Node *fa, int val) : val(val), size(1), cnt(1), c(), fa(fa), pred(NULL), succ(NULL) {}
 
         ~Node() {
             if (c[0]) delete c[0];
@@ -54,46 +54,6 @@ struct Splay {
         int relation() {
             return fa->c[1] == this;
         }
-
-        void rotate() {
-            Node *o = fa;
-            int x = relation();
-
-            fa = o->fa;
-            if (fa) fa->c[o->relation()] = this;
-
-            o->c[x] = c[x ^ 1];
-            if (c[x ^ 1]) c[x ^ 1]->fa = o;
-
-            c[x ^ 1] = o;
-            o->fa = this;
-
-            o->maintain();
-            maintain();
-
-            if (!fa) *root = this;
-        }
-
-        Node *splay(Node *targetFa = NULL) {
-            while (fa != targetFa) {
-                if (fa->fa == targetFa) rotate();
-                else if (relation() == fa->relation()) fa->rotate(), rotate();
-                else rotate(), rotate();
-            }
-            return this;
-        }
-
-        Node *pred() {
-            Node *u = c[0];
-            while (u->c[1]) u = u->c[1];
-            return u;
-        }
-
-        Node *succ() {
-            Node *u = c[1];
-            while (u->c[0]) u = u->c[0];
-            return u;
-        }
     } *root;
 
     Splay() : root(NULL) {}
@@ -105,6 +65,34 @@ struct Splay {
     void init() {
         insert(INT_MIN);
         insert(INT_MAX);
+    }
+
+    void rotate(Node *u) {
+        Node *o = u->fa;
+        int x = u->relation();
+
+        u->fa = o->fa;
+        if (u->fa) u->fa->c[o->relation()] = u;
+
+        o->c[x] = u->c[x ^ 1];
+        if (u->c[x ^ 1]) u->c[x ^ 1]->fa = o;
+
+        u->c[x ^ 1] = o;
+        o->fa = u;
+
+        o->maintain();
+        u->maintain();
+
+        if (!u->fa) root = u;
+    }
+
+    Node *splay(Node *u, Node *targetFa = NULL) {
+        while (u->fa != targetFa) {
+            if (u->fa->fa == targetFa) rotate(u);
+            else if (u->relation() == u->fa->relation()) rotate(u->fa), rotate(u);
+            else rotate(u), rotate(u);
+        }
+        return u;
     }
 
     Node *insert(int val) {
@@ -120,27 +108,43 @@ struct Splay {
             ++(*u)->cnt;
             ++(*u)->size;
         } else {
-            (*u) = new Node(&root, fa, val);
+            (*u) = new Node(fa, val);
+
+            if (fa) {
+                if ((*u)->relation()) {
+                    (*u)->succ = fa->succ;
+                    (*u)->pred = fa;
+                    if (fa->succ) fa->succ->pred = *u;
+                    fa->succ = *u;
+                } else {
+                    (*u)->pred = fa->pred;
+                    (*u)->succ = fa;
+                    if (fa->pred) fa->pred->succ = *u;
+                    fa->pred = *u;
+                }
+            }
         }
 
-        return (*u)->splay();
+        return splay(*u);
     }
 
     void erase(Node *u) {
-        Node *pred = u->pred(), *succ = u->succ();
-        pred->splay();
-        succ->splay(pred);
+        Node *&predd = u->pred, *&succ = u->succ;
+        splay(u->pred);
+        splay(u->succ, u->pred);
 
         if (u->cnt > 1) {
             --u->cnt;
             --u->size;
         } else {
-            delete succ->c[0];
-            succ->c[0] = NULL;
+            delete u->succ->c[0];
+            u->succ->c[0] = NULL;
+            u->pred->succ = u->succ;
+            u->succ->pred = u->pred;
         }
 
-        pred->size--;
-        succ->size--;
+        --u->pred->size;
+        --u->succ->size;
     }
     void erase(int val) {
         Node *u = find(val);
@@ -150,7 +154,7 @@ struct Splay {
     Node *find(int val) {
         Node *u = root;
         while (u && u->val != val) u = u->c[val > u->val];
-        if (u) return u->splay();
+        if (u) return splay(u);
         else return NULL;
     }
 
@@ -163,7 +167,7 @@ struct Splay {
                 u = u->c[1];
             }
         }
-        return u->splay();
+        return splay(u);
     }
 
     int rank(int val) {
@@ -181,24 +185,25 @@ struct Splay {
         Node *u = find(val);
         if (!u) {
             u = insert(val);
-            int res = u->pred()->val;
+            int res = u->pred->val;
             erase(u);
             return res;
         }
-        return u->pred()->val;
+        return u->pred->val;
     }
 
     int succ(int val) {
         Node *u = find(val);
         if (!u) {
             u = insert(val);
-            int res = u->succ()->val;
+            int res = u->succ->val;
             erase(u);
             return res;
         }
-        return u->succ()->val;
+        return u->succ->val;
     }
 } splay;
+
 MemoryPool<Splay::Node, MAXN> Splay::Node::pool;
 
 int main() {

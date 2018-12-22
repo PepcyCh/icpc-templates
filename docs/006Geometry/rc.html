@@ -1027,8 +1027,8 @@ struct Point {
     Point(double x = 0, double y = 0) : x(x), y(y) {}
 
     void print() {
-        if (fabs(x) &lt;= EPS) x = 0;
-        if (fabs(y) &lt;= EPS) y = 0;
+        if (std::abs(x) &lt;= EPS) x = 0;
+        if (std::abs(y) &lt;= EPS) y = 0;
         printf(&quot;%.5f %.5f\n&quot;, x, y);
     }
 
@@ -1041,7 +1041,7 @@ struct Point {
         else if (x &lt;= 0 &amp;&amp; y &gt; 0) sx = -1, sy = -1;
         else sx = 1, sy = -1;
 
-        return Point(sx * X, sy * sqrt(1 - X * X));
+        return Point(X * sx, std::sqrt(1 - X * X) * sy);
     }
 
     bool operator&lt;(const Point &amp;another) const {
@@ -1195,7 +1195,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"旋转卡壳","level":"1.7.1","depth":2,"next":{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},"previous":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/rc.md","mtime":"2018-11-14T08:25:53.700Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T08:58:09.083Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"旋转卡壳","level":"1.7.1","depth":2,"next":{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},"previous":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/rc.md","mtime":"2018-12-22T07:13:27.897Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-22T07:13:53.449Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

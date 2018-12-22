@@ -4,12 +4,14 @@
 #include <cstdio>
 #include <queue>
 
+template <typename T, typename Cmp = std::less<T> > // maximum by default
 struct MonoQueue {
-    std::deque<int> q, m;
+    std::deque<T> q, m;
+    Cmp cmp;
 
     void push(int x) {
         q.push_back(x);
-        while (!m.empty() && m.back() < x) m.pop_back();
+        while (!m.empty() && cmp(m.back(), x)) m.pop_back();
         m.push_back(x);
     }
 
@@ -26,7 +28,7 @@ struct MonoQueue {
     int top() {
         return m.front();
     }
-} mq;
+};
 
 int main() {
 

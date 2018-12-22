@@ -15,8 +15,8 @@ struct Point {
     Point(double x = 0, double y = 0) : x(x), y(y) {}
     
     void print() {
-        if (fabs(x) <= EPS) x = 0;
-        if (fabs(y) <= EPS) y = 0;
+        if (std::abs(x) <= EPS) x = 0;
+        if (std::abs(y) <= EPS) y = 0;
         printf("%.5f %.5f\n", x, y);
     }
     
@@ -29,7 +29,7 @@ struct Point {
         else if (x <= 0 && y > 0) sx = -1, sy = -1;
         else sx = 1, sy = -1;
         
-        return Point(sx * X, sy * sqrt(1 - X * X));
+        return Point(X * sx, std::sqrt(1 - X * X) * sy);
     }
     
     bool operator<(const Point &another) const {

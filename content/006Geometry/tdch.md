@@ -158,7 +158,7 @@ bool getConvexHull(int n) {
     for (int i = 0; i < ch.size(); i++) if (!ch[i].judged) {
         static std::vector<Face> f;
         f.clear();
-        for (int j = 0; j < ch.size(); j++) if (!ch[j].judged && same(i, j)) {
+        for (int j = 0; j < ch.size(); j++) if (same(i, j) && !ch[j].judged) {
             f.push_back(ch[j]);
             ch[j].judged = true;
         }

@@ -1013,213 +1013,213 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x4E09;&#x7EF4;&#x51F8;&#x5305;">&#x4E09;&#x7EF4;&#x51F8;&#x5305;</h1>
-<pre><code class="lang-c++">#include &lt;cstdio&gt;
-#include &lt;cmath&gt;
-#include &lt;cstring&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-const int MAXN = 505;
-const double EPS = 1e-9;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">505</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> EPS = <span class="hljs-number">1e-9</span>;
 
-int dcmp(double a, double b = 0) {
-    double d = a - b;
-    return std::abs(d) &lt;= EPS ? 0 : (d &gt; 0 ? 1 : -1);
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dcmp</span><span class="hljs-params">(<span class="hljs-keyword">double</span> a, <span class="hljs-keyword">double</span> b = <span class="hljs-number">0</span>)</span> </span>{
+    <span class="hljs-keyword">double</span> d = a - b;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">abs</span>(d) &lt;= EPS ? <span class="hljs-number">0</span> : (d &gt; <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>);
 }
 
-double asqrt(double x) {
-    return x &lt;= EPS ? 0 : std::sqrt(x);
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">asqrt</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span> </span>{
+    <span class="hljs-keyword">return</span> x &lt;= EPS ? <span class="hljs-number">0</span> : <span class="hljs-built_in">std</span>::<span class="hljs-built_in">sqrt</span>(x);
 }
-double sqr(double x) {
-    return x * x;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">sqr</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span> </span>{
+    <span class="hljs-keyword">return</span> x * x;
 }
 
-struct Point {
-    double x, y, z;
+<span class="hljs-keyword">struct</span> Point {
+    <span class="hljs-keyword">double</span> x, y, z;
 
-    Point(double x = 0, double y = 0, double z = 0) : x(x), y(y), z(z) {}
+    Point(<span class="hljs-keyword">double</span> x = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> y = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> z = <span class="hljs-number">0</span>) : x(x), y(y), z(z) {}
 
-    Point operator+(const Point &amp;rhs) const {
-        return Point(x + rhs.x, y + rhs.y, z + rhs.z);
+    Point <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Point &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Point(x + rhs.x, y + rhs.y, z + rhs.z);
     }
-    Point operator-(const Point &amp;rhs) const {
-        return Point(x - rhs.x, y - rhs.y, z - rhs.z);
+    Point <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">const</span> Point &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Point(x - rhs.x, y - rhs.y, z - rhs.z);
     }
-    bool operator==(const Point &amp;rhs) const {
-        return !dcmp(x, rhs.x) &amp;&amp; !dcmp(y, rhs.y) &amp;&amp; !dcmp(z, rhs.z);
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-keyword">const</span> Point &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> !dcmp(x, rhs.x) &amp;&amp; !dcmp(y, rhs.y) &amp;&amp; !dcmp(z, rhs.z);
     }
-    bool operator&lt;(const Point &amp;rhs) const {
-        if (dcmp(x, rhs.x)) return x &lt; rhs.x;
-        if (dcmp(y, rhs.y)) return y &lt; rhs.y;
-        return z &lt; rhs.z;
-    }
-
-    friend double dot(const Point &amp;a, const Point &amp;b) {
-        return a.x * b.x + a.y * b.y + a.z * b.z;
-    }
-    friend Point cross(const Point &amp;a, const Point &amp;b) {
-        return Point(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
-    }
-    friend double mix(const Point &amp;a, const Point &amp;b, const Point &amp;c) {
-        return dot(a, cross(b, c));
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> Point &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">if</span> (dcmp(x, rhs.x)) <span class="hljs-keyword">return</span> x &lt; rhs.x;
+        <span class="hljs-keyword">if</span> (dcmp(y, rhs.y)) <span class="hljs-keyword">return</span> y &lt; rhs.y;
+        <span class="hljs-keyword">return</span> z &lt; rhs.z;
     }
 
-    double length() const {
-        return std::sqrt(sqr(x) + sqr(y) + sqr(z));
+    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">double</span> <span class="hljs-title">dot</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Point &amp;a, <span class="hljs-keyword">const</span> Point &amp;b)</span> </span>{
+        <span class="hljs-keyword">return</span> a.x * b.x + a.y * b.y + a.z * b.z;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">friend</span> Point <span class="hljs-title">cross</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Point &amp;a, <span class="hljs-keyword">const</span> Point &amp;b)</span> </span>{
+        <span class="hljs-keyword">return</span> Point(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">double</span> <span class="hljs-title">mix</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Point &amp;a, <span class="hljs-keyword">const</span> Point &amp;b, <span class="hljs-keyword">const</span> Point &amp;c)</span> </span>{
+        <span class="hljs-keyword">return</span> dot(a, cross(b, c));
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">length</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">sqrt</span>(sqr(x) + sqr(y) + sqr(z));
     }
 } P[MAXN];
 
-double volumn(const Point &amp;a, const Point &amp;b, const Point &amp;c, const Point &amp;d) {
-    return mix(b - a, c - a, d - a) / 6.0;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">volumn</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Point &amp;a, <span class="hljs-keyword">const</span> Point &amp;b, <span class="hljs-keyword">const</span> Point &amp;c, <span class="hljs-keyword">const</span> Point &amp;d)</span> </span>{
+    <span class="hljs-keyword">return</span> mix(b - a, c - a, d - a) / <span class="hljs-number">6.0</span>;
 }
 
-bool doesPointOnLine(const Point &amp;p, const Point &amp;s, const Point &amp;t) {
-    return dcmp(cross(p - s, t - s).length()) == 0;
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">doesPointOnLine</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Point &amp;p, <span class="hljs-keyword">const</span> Point &amp;s, <span class="hljs-keyword">const</span> Point &amp;t)</span> </span>{
+    <span class="hljs-keyword">return</span> dcmp(cross(p - s, t - s).length()) == <span class="hljs-number">0</span>;
 }
 
-namespace ConvexHull3D {
+<span class="hljs-keyword">namespace</span> ConvexHull3D {
 
-struct Face {
-    int a, b, c;
-    bool judged;
+<span class="hljs-keyword">struct</span> Face {
+    <span class="hljs-keyword">int</span> a, b, c;
+    <span class="hljs-keyword">bool</span> judged;
 
-    Face(int a = 0, int b = 0, int c = 0) : a(a), b(b), c(c), judged(false) {}
+    Face(<span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> b = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>) : a(a), b(b), c(c), judged(<span class="hljs-literal">false</span>) {}
 
-    int &amp;operator[](int i) {
-        return i == 0 ? a : (i == 1 ? b : c);
+    <span class="hljs-keyword">int</span> &amp;<span class="hljs-keyword">operator</span>[](<span class="hljs-keyword">int</span> i) {
+        <span class="hljs-keyword">return</span> i == <span class="hljs-number">0</span> ? a : (i == <span class="hljs-number">1</span> ? b : c);
     }
-    const int &amp;operator[](int i) const {
-        return i == 0 ? a : (i == 1 ? b : c);
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;<span class="hljs-keyword">operator</span>[](<span class="hljs-keyword">int</span> i) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> i == <span class="hljs-number">0</span> ? a : (i == <span class="hljs-number">1</span> ? b : c);
     }
 };
-std::vector&lt;Face&gt; ch;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Face&gt; ch;
 
-bool same(int a, int b) {
-    return !dcmp(volumn(P[ch[a][0]], P[ch[a][1]], P[ch[a][2]], P[ch[b][0]]))
-        &amp;&amp; !dcmp(volumn(P[ch[a][0]], P[ch[a][1]], P[ch[a][2]], P[ch[b][1]]))
-        &amp;&amp; !dcmp(volumn(P[ch[a][0]], P[ch[a][1]], P[ch[a][2]], P[ch[b][2]]));
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">same</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">return</span> !dcmp(volumn(P[ch[a][<span class="hljs-number">0</span>]], P[ch[a][<span class="hljs-number">1</span>]], P[ch[a][<span class="hljs-number">2</span>]], P[ch[b][<span class="hljs-number">0</span>]]))
+        &amp;&amp; !dcmp(volumn(P[ch[a][<span class="hljs-number">0</span>]], P[ch[a][<span class="hljs-number">1</span>]], P[ch[a][<span class="hljs-number">2</span>]], P[ch[b][<span class="hljs-number">1</span>]]))
+        &amp;&amp; !dcmp(volumn(P[ch[a][<span class="hljs-number">0</span>]], P[ch[a][<span class="hljs-number">1</span>]], P[ch[a][<span class="hljs-number">2</span>]], P[ch[b][<span class="hljs-number">2</span>]]));
 }
 
-bool doesFaceHaveEdge(const Face &amp;f, int s, int t) {
-    for (int i = 0; i &lt; 3; i++) {
-        if (f[i] == s &amp;&amp; f[(i + 1) % 3] == t) return true;
-        if (f[i] == t &amp;&amp; f[(i + 1) % 3] == s) return true;
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">doesFaceHaveEdge</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Face &amp;f, <span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) {
+        <span class="hljs-keyword">if</span> (f[i] == s &amp;&amp; f[(i + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] == t) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span> (f[i] == t &amp;&amp; f[(i + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>] == s) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
     }
-    return false;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
 }
 
-bool find(int n) {
-    for (int i = 2; i &lt; n; i++) {
-        if (doesPointOnLine(P[i], P[0], P[1])) continue;
-        std::swap(P[2], P[i]);
-        for (int j = i + 1; j &lt; n; j++) {
-            if (dcmp(volumn(P[0], P[1], P[2], P[j]))) {
-                std::swap(P[3], P[j]);
-                ch.emplace_back(0, 1, 2);
-                ch.emplace_back(0, 2, 1);
-                return true;
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (doesPointOnLine(P[i], P[<span class="hljs-number">0</span>], P[<span class="hljs-number">1</span>])) <span class="hljs-keyword">continue</span>;
+        <span class="hljs-built_in">std</span>::swap(P[<span class="hljs-number">2</span>], P[i]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++) {
+            <span class="hljs-keyword">if</span> (dcmp(volumn(P[<span class="hljs-number">0</span>], P[<span class="hljs-number">1</span>], P[<span class="hljs-number">2</span>], P[j]))) {
+                <span class="hljs-built_in">std</span>::swap(P[<span class="hljs-number">3</span>], P[j]);
+                ch.emplace_back(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+                ch.emplace_back(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
             }
         }
     }
-    return false;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
 }
 
-int mark[MAXN][MAXN];
+<span class="hljs-keyword">int</span> mark[MAXN][MAXN];
 
-void add(int pi, int &amp;cnt) {
-    static std::vector&lt;Face&gt; temp;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pi, <span class="hljs-keyword">int</span> &amp;cnt)</span> </span>{
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Face&gt; temp;
     temp.clear();
 
     ++cnt;
-    for (auto f : ch) {
-        int a = f[0], b = f[1], c = f[2];
-        if (dcmp(volumn(P[pi], P[a], P[b], P[c])) &lt; 0) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> f : ch) {
+        <span class="hljs-keyword">int</span> a = f[<span class="hljs-number">0</span>], b = f[<span class="hljs-number">1</span>], c = f[<span class="hljs-number">2</span>];
+        <span class="hljs-keyword">if</span> (dcmp(volumn(P[pi], P[a], P[b], P[c])) &lt; <span class="hljs-number">0</span>) {
             mark[a][b] = mark[b][a] = cnt;
             mark[a][c] = mark[c][a] = cnt;
             mark[b][c] = mark[c][b] = cnt;
-        } else {
+        } <span class="hljs-keyword">else</span> {
             temp.push_back(f);
         }
     }
     ch = temp;
-    for (auto f : temp) {
-        int a = f[0], b = f[1], c = f[2];
-        if (mark[a][b] == cnt) ch.emplace_back(b, a, pi);
-        if (mark[b][c] == cnt) ch.emplace_back(c, b, pi);
-        if (mark[c][a] == cnt) ch.emplace_back(a, c, pi);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> f : temp) {
+        <span class="hljs-keyword">int</span> a = f[<span class="hljs-number">0</span>], b = f[<span class="hljs-number">1</span>], c = f[<span class="hljs-number">2</span>];
+        <span class="hljs-keyword">if</span> (mark[a][b] == cnt) ch.emplace_back(b, a, pi);
+        <span class="hljs-keyword">if</span> (mark[b][c] == cnt) ch.emplace_back(c, b, pi);
+        <span class="hljs-keyword">if</span> (mark[c][a] == cnt) ch.emplace_back(a, c, pi);
     }
 }
 
-bool getConvexHull(int n) {
-    std::sort(P, P + n);
-    n = std::unique(P, P + n) - P;
-    std::random_shuffle(P, P + n);
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">getConvexHull</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-built_in">std</span>::sort(P, P + n);
+    n = <span class="hljs-built_in">std</span>::unique(P, P + n) - P;
+    <span class="hljs-built_in">std</span>::random_shuffle(P, P + n);
 
-    if (find(n)) {
-        memset(mark, 0, sizeof (mark));
-        int cnt = 0;
-        for (int i = 3; i &lt; n; i++) add(i, cnt);
-    } else {
-        return false;
+    <span class="hljs-keyword">if</span> (find(n)) {
+        <span class="hljs-built_in">memset</span>(mark, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> (mark));
+        <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">3</span>; i &lt; n; i++) add(i, cnt);
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
 
-    // E, F, V: The number of edges, faces and vertices when each face is a triangle
-    // EE, FF, VV: The number of edges, faces and vertices after dealing with co-planar triangles
-    int F = ch.size(), V = (4 + F) / 2, E = V + F - 2;
-    int FF = 0, EE = E;
-    for (int i = 0; i &lt; ch.size(); i++) if (!ch[i].judged) {
-        static std::vector&lt;Face&gt; f;
+    <span class="hljs-comment">// E, F, V: The number of edges, faces and vertices when each face is a triangle</span>
+    <span class="hljs-comment">// EE, FF, VV: The number of edges, faces and vertices after dealing with co-planar triangles</span>
+    <span class="hljs-keyword">int</span> F = ch.size(), V = (<span class="hljs-number">4</span> + F) / <span class="hljs-number">2</span>, E = V + F - <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">int</span> FF = <span class="hljs-number">0</span>, EE = E;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ch.size(); i++) <span class="hljs-keyword">if</span> (!ch[i].judged) {
+        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Face&gt; f;
         f.clear();
-        for (int j = 0; j &lt; ch.size(); j++) if (!ch[j].judged &amp;&amp; same(i, j)) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; ch.size(); j++) <span class="hljs-keyword">if</span> (same(i, j) &amp;&amp; !ch[j].judged) {
             f.push_back(ch[j]);
-            ch[j].judged = true;
+            ch[j].judged = <span class="hljs-literal">true</span>;
         }
-        for (int j = 0; j &lt; f.size(); j++) for (int k = 0; k &lt; 3; k++) for (int l = 0; l &lt; j; l++)
-            if (doesFaceHaveEdge(f[l], f[j][k], f[j][(k + 1) % 3])) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; f.size(); j++) <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">3</span>; k++) <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">0</span>; l &lt; j; l++)
+            <span class="hljs-keyword">if</span> (doesFaceHaveEdge(f[l], f[j][k], f[j][(k + <span class="hljs-number">1</span>) % <span class="hljs-number">3</span>])) {
                 --EE;
-                break;
+                <span class="hljs-keyword">break</span>;
             }
         ++FF;
     }
-    int VV = EE + 2 - FF;
+    <span class="hljs-keyword">int</span> VV = EE + <span class="hljs-number">2</span> - FF;
 
-    double area = 0; // surface area
-    for (auto f : ch) {
-        Point p = cross(P[f[0]] - P[f[1]], P[f[2]] - P[f[1]]);
-        area += p.length() / 2.0;
+    <span class="hljs-keyword">double</span> area = <span class="hljs-number">0</span>; <span class="hljs-comment">// surface area</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> f : ch) {
+        Point p = cross(P[f[<span class="hljs-number">0</span>]] - P[f[<span class="hljs-number">1</span>]], P[f[<span class="hljs-number">2</span>]] - P[f[<span class="hljs-number">1</span>]]);
+        area += p.length() / <span class="hljs-number">2.0</span>;
     }
 
-    double vol = 0; // volumn
-    const Point &amp;vp = P[ch[0][0]];
-    for (auto f : ch) vol += std::abs(volumn(vp, P[f[0]], P[f[1]], P[f[2]]));
+    <span class="hljs-keyword">double</span> vol = <span class="hljs-number">0</span>; <span class="hljs-comment">// volumn</span>
+    <span class="hljs-keyword">const</span> Point &amp;vp = P[ch[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> f : ch) vol += <span class="hljs-built_in">std</span>::<span class="hljs-built_in">abs</span>(volumn(vp, P[f[<span class="hljs-number">0</span>]], P[f[<span class="hljs-number">1</span>]], P[f[<span class="hljs-number">2</span>]]));
 
-    return true;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
 }
 
-} // namespace ConvexHull3D
+} <span class="hljs-comment">// namespace ConvexHull3D</span>
 
-int main() {
-    int n;
-    scanf(&quot;%d&quot;, &amp;n);
-    for (int i = 0; i &lt; n; i++) scanf(&quot;%lf %lf %lf&quot;, &amp;P[i].x, &amp;P[i].y, &amp;P[i].z);
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lf %lf %lf&quot;</span>, &amp;P[i].x, &amp;P[i].y, &amp;P[i].z);
 
-    // Deal with co-linear points
-    static bool banned[MAXN];
-    for (int i = 0; i &lt; n; i++) if (!banned[i]) for (int j = 0; j &lt; i; j++) if (!banned[j]) {
-        static std::vector&lt;std::pair&lt;Point, int&gt; &gt; l;
+    <span class="hljs-comment">// Deal with co-linear points</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> banned[MAXN];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-keyword">if</span> (!banned[i]) <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; i; j++) <span class="hljs-keyword">if</span> (!banned[j]) {
+        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::pair&lt;Point, <span class="hljs-keyword">int</span>&gt; &gt; l;
         l.clear();
-        for (int k = 0; k &lt; n; k++) if (!banned[k] &amp;&amp; doesPointOnLine(P[k], P[i], P[j]))
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; n; k++) <span class="hljs-keyword">if</span> (!banned[k] &amp;&amp; doesPointOnLine(P[k], P[i], P[j]))
             l.emplace_back(P[k], k);
-        std::sort(l.begin(), l.end());
-        for (int k = 1; k &lt; l.size() - 1; k++) banned[l[k].second] = true;
+        <span class="hljs-built_in">std</span>::sort(l.begin(), l.end());
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; k &lt; l.size() - <span class="hljs-number">1</span>; k++) banned[l[k].second] = <span class="hljs-literal">true</span>;
     }
 
-    int p = 0;
-    for (int i = 0; i &lt; n; i++) if (!banned[i]) P[p++] = P[i];
+    <span class="hljs-keyword">int</span> p = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-keyword">if</span> (!banned[i]) P[p++] = P[i];
 
     ConvexHull3D::getConvexHull(p);
 
-    return 0;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
 
@@ -1265,7 +1265,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"三维凸包","level":"1.7.6","depth":2,"next":{"title":"其他","level":"1.8","depth":1,"path":"007Others/README.md","ref":"./007Others/README.md","articles":[{"title":"Java 高精度","level":"1.8.1","depth":2,"path":"007Others/javabi.md","ref":"./007Others/javabi.md","articles":[]},{"title":"2-SAT","level":"1.8.2","depth":2,"path":"007Others/tsat.md","ref":"./007Others/tsat.md","articles":[]},{"title":"三维偏序","level":"1.8.3","depth":2,"path":"007Others/tdpo.md","ref":"./007Others/tdpo.md","articles":[]},{"title":"O(1) 取模乘","level":"1.8.4","depth":2,"path":"007Others/modmul.md","ref":"./007Others/modmul.md","articles":[]},{"title":"IO 优化","level":"1.8.5","depth":2,"path":"007Others/fio.md","ref":"./007Others/fio.md","articles":[]}]},"previous":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/tdch.md","mtime":"2018-11-14T08:37:06.521Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-11-14T08:58:09.083Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"三维凸包","level":"1.7.6","depth":2,"next":{"title":"其他","level":"1.8","depth":1,"path":"007Others/README.md","ref":"./007Others/README.md","articles":[{"title":"Java 高精度","level":"1.8.1","depth":2,"path":"007Others/javabi.md","ref":"./007Others/javabi.md","articles":[]},{"title":"2-SAT","level":"1.8.2","depth":2,"path":"007Others/tsat.md","ref":"./007Others/tsat.md","articles":[]},{"title":"三维偏序","level":"1.8.3","depth":2,"path":"007Others/tdpo.md","ref":"./007Others/tdpo.md","articles":[]},{"title":"O(1) 取模乘","level":"1.8.4","depth":2,"path":"007Others/modmul.md","ref":"./007Others/modmul.md","articles":[]},{"title":"IO 优化","level":"1.8.5","depth":2,"path":"007Others/fio.md","ref":"./007Others/fio.md","articles":[]}]},"previous":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/tdch.md","mtime":"2018-12-22T06:57:46.584Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-22T07:13:53.449Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

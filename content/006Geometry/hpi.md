@@ -9,10 +9,9 @@
 const int MAXN = 305;
 const double EPS = 1e-14;
 
-int dcmp(double x) {
-    if (fabs(x) <= EPS) return 0;
-    if (x > EPS) return 1;
-    return -1;
+int dcmp(double a, double b = 0) {
+    double d = a - b;
+    return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
 struct Point {
@@ -40,7 +39,7 @@ struct Line {
     
     Line() {}
     Line(const Point &p, const Point &v) : p(p), v(v) {
-        slop = atan2(v.y, v.x);
+        slop = std::atan2(v.y, v.x);
     }
     
     Point getVal(double t) const {
@@ -63,7 +62,7 @@ int n;
 int halfplaneIntersection() {
     int cnt = 0;
     L[cnt++] = L[0];
-    for (int i = 1; i <= n; i++) if (dcmp(L[i].slop - L[i - 1].slop)) L[cnt++] = L[i];
+    for (int i = 1; i <= n; i++) if (dcmp(L[i].slop, L[i - 1].slop)) L[cnt++] = L[i];
     std::sort(L, L + cnt);
     
     static Line q[MAXN];
