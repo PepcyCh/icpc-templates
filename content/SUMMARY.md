@@ -64,6 +64,7 @@
     * [点相关](./006Geometry/point.md)
     * [Deluanay 三角剖分与平面欧几里得距离最小生成树](./006Geometry/deluanay.md)
     * [三维凸包](./006Geometry/tdch.md)
+    * [动态半凸壳](./006Geometry/dhch.md)
 
 * [其他](./007Others/README.md)
     * [Java 高精度](./007Others/javabi.md)
