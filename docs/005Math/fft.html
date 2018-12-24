@@ -1536,172 +1536,302 @@ int main() {
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
+<h3 id="&#x4E09;&#x6A21;&#x6570;-ntt">&#x4E09;&#x6A21;&#x6570; NTT</h3>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_EXTEND = <span class="hljs-number">262144</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD[<span class="hljs-number">3</span>] = {<span class="hljs-number">998244353</span>, <span class="hljs-number">1004535809</span>, <span class="hljs-number">469762049</span>};
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> G[<span class="hljs-number">3</span>] = {<span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>};
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">qpow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> p)</span> </span>{
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (; n; n &gt;&gt;= <span class="hljs-number">1</span>, a = a * a % p) <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>) res = res * a % p;
+    <span class="hljs-keyword">return</span> res;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">inv</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> x, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> p)</span> </span>{
+    <span class="hljs-keyword">return</span> qpow(x, p - <span class="hljs-number">2</span>, p);
+}
+
+<span class="hljs-keyword">namespace</span> NTT {
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">262144</span>;
+
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> omega[<span class="hljs-number">3</span>][N], omegaInv[<span class="hljs-number">3</span>][N];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> _ = <span class="hljs-number">0</span>; _ &lt; <span class="hljs-number">3</span>; _++) {
+            <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> g = qpow(G[_], (MOD[_] - <span class="hljs-number">1</span>) / N, MOD[_]), ig = inv(g, MOD[_]);
+            omega[_][<span class="hljs-number">0</span>] = omegaInv[_][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++) {
+                omega[_][i] = omega[_][i - <span class="hljs-number">1</span>] * g % MOD[_];
+                omegaInv[_][i] = omegaInv[_][i - <span class="hljs-number">1</span>] * ig % MOD[_];
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">extend</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (res &lt; n) res &lt;&lt;= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">if</span> (i &lt; j) <span class="hljs-built_in">std</span>::swap(a[i], a[j]);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = n &gt;&gt; <span class="hljs-number">1</span>; (j ^= l) &lt; l; l &gt;&gt;= <span class="hljs-number">1</span>) {}
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transform</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *omega, <span class="hljs-keyword">int</span> MOD)</span> </span>{
+        reverse(a, n);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">2</span>; l &lt;= n; l &lt;&lt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">int</span> hl = l &gt;&gt; <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *x = a; x != a + n; x += l) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hl; i++) {
+                    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t = omega[N / l * i] * x[i + hl] % MOD;
+                    x[i + hl] = (x[i] - t + MOD) % MOD;
+                    x[i] += t;
+                    x[i] &gt;= MOD ? x[i] -= MOD : <span class="hljs-number">0</span>;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dft</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> _)</span> </span>{
+        transform(a, n, omega[_], MOD[_]);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">idft</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> _)</span> </span>{
+        transform(a, n, omegaInv[_], MOD[_]);
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t = inv(n, MOD[_]);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) a[i] = a[i] * t % MOD[_];
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">mul</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> p)</span> </span>{
+    <span class="hljs-keyword">return</span> (a * b - (<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>) (a / (<span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span>) p * b + <span class="hljs-number">1e-3</span>) * p + p) % p;
+}
+
+<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a[<span class="hljs-number">3</span>][MAXN_EXTEND], b[<span class="hljs-number">3</span>][MAXN_EXTEND], ans[MAXN_EXTEND];
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">CRT</span><span class="hljs-params">(<span class="hljs-keyword">int</span> N, <span class="hljs-keyword">int</span> P)</span> </span>{
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> M = <span class="hljs-number">1l</span>l * MOD[<span class="hljs-number">0</span>] * MOD[<span class="hljs-number">1</span>];
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> temp = <span class="hljs-number">0</span>;
+        temp += mul(a[<span class="hljs-number">0</span>][i] * MOD[<span class="hljs-number">1</span>] % M, inv(MOD[<span class="hljs-number">1</span>], MOD[<span class="hljs-number">0</span>]), M);
+        temp &gt;= M ? temp -= M : <span class="hljs-number">0</span>;
+        temp += mul(a[<span class="hljs-number">1</span>][i] * MOD[<span class="hljs-number">0</span>] % M, inv(MOD[<span class="hljs-number">0</span>], MOD[<span class="hljs-number">1</span>]), M);
+        temp &gt;= M ? temp -= M : <span class="hljs-number">0</span>;
+
+        a[<span class="hljs-number">1</span>][i] = temp;
+    }
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++){
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> temp = (a[<span class="hljs-number">2</span>][i] - a[<span class="hljs-number">1</span>][i] % MOD[<span class="hljs-number">2</span>] + MOD[<span class="hljs-number">2</span>]) % MOD[<span class="hljs-number">2</span>] * inv(M % MOD[<span class="hljs-number">2</span>], MOD[<span class="hljs-number">2</span>]) % MOD[<span class="hljs-number">2</span>];
+        ans[i] = M % P * temp % P + a[<span class="hljs-number">1</span>][i] % P;
+        ans[i] &gt;= P ? ans[i] -= P : <span class="hljs-number">0</span>;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m, P;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;n, &amp;m, &amp;P);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, x; i &lt;= n; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;x);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> _ = <span class="hljs-number">0</span>; _ &lt; <span class="hljs-number">3</span>; _++) a[_][i] = (x + P) % MOD[_];
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, x; i &lt;= m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;x);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> _ = <span class="hljs-number">0</span>; _ &lt; <span class="hljs-number">3</span>; _++) b[_][i] = (x + P) % MOD[_];
+    }
+
+    NTT::init();
+    <span class="hljs-keyword">int</span> N = NTT::extend(n + m + <span class="hljs-number">1</span>);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> _ = <span class="hljs-number">0</span>; _ &lt; <span class="hljs-number">3</span>; _++) {
+        NTT::dft(a[_], N, _);
+        NTT::dft(b[_], N, _);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) a[_][i] = a[_][i] * b[_][i] % MOD[_];
+        NTT::idft(a[_], N, _);
+    }
+
+    CRT(N, P);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n + m + <span class="hljs-number">1</span>; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld%c&quot;</span>, ans[i], <span class="hljs-string">&quot; \n&quot;</span>[i == n + m]);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
 <h3 id="ntt-&#x6A21;&#x6570;&#x53CA;&#x539F;&#x6839;&#x8868;">NTT &#x6A21;&#x6570;&#x53CA;&#x539F;&#x6839;&#x8868;</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>&#x22C5;</mo><msup><mn>2</mn><mi>k</mi></msup><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r \cdot 2 ^ k + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.849108em;"></span><span class="strut bottom" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span><span class="mbin">&#x22C5;</span><span class="mord"><span class="mord mathrm">2</span><span class="msupsub"><span class="vlist"><span style="top:-0.363em;margin-right:0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span><span class="reset-textstyle scriptstyle uncramped mtight"><span class="mord mathit mtight" style="margin-right:0.03148em;">k</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span style="font-size:0em;">&#x200B;</span></span>&#x200B;</span></span></span></span><span class="mbin">+</span><span class="mord mathrm">1</span></span></span></span></th>
-<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.02778em;">r</span></span></span></span></th>
-<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.69444em;"></span><span class="strut bottom" style="height:0.69444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03148em;">k</span></span></span></span></th>
-<th style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi></mrow><annotation encoding="application/x-tex">g</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit" style="margin-right:0.03588em;">g</span></span></span></span></th>
+<th style="text-align:left">r 2 ^ k + 1</th>
+<th style="text-align:left">r</th>
+<th style="text-align:left">k</th>
+<th style="text-align:left">g</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">17</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">97</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left">97</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">5</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>9</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">193</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">9</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">6</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left">193</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">5</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">257</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">8</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">257</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>6</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">7681</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left">7681</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">17</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>2</mn><mn>2</mn><mn>8</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">12289</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">8</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">2</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left">12289</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">11</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>0</mn><mn>9</mn><mn>6</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">40961</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">13</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">40961</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn><mn>5</mn><mn>5</mn><mn>3</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">65537</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">6</span><span class="mord mathrm">5</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">6</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">65537</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">16</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>8</mn><mn>6</mn><mn>4</mn><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">786433</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">8</span><span class="mord mathrm">6</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>8</mn></mrow><annotation encoding="application/x-tex">18</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">8</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span></span></span></span></td>
+<td style="text-align:left">786433</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">18</td>
+<td style="text-align:left">10</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mn>7</mn><mn>6</mn><mn>7</mn><mn>1</mn><mn>6</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">5767169</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">19</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">5767169</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">19</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>3</mn><mn>4</mn><mn>0</mn><mn>0</mn><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">7340033</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">3</span><span class="mord mathrm">4</span><span class="mord mathrm">0</span><span class="mord mathrm">0</span><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">7340033</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">20</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>3</mn><mn>0</mn><mn>6</mn><mn>8</mn><mn>6</mn><mn>7</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">23068673</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">11</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">21</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">23068673</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">21</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn><mn>4</mn><mn>8</mn><mn>5</mn><mn>7</mn><mn>6</mn><mn>0</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">104857601</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">8</span><span class="mord mathrm">5</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">22</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">104857601</td>
+<td style="text-align:left">25</td>
+<td style="text-align:left">22</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>6</mn><mn>7</mn><mn>7</mn><mn>7</mn><mn>2</mn><mn>1</mn><mn>6</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">167772161</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">25</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">167772161</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">25</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>6</mn><mn>9</mn><mn>7</mn><mn>6</mn><mn>2</mn><mn>0</mn><mn>4</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">469762049</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">6</span><span class="mord mathrm">9</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">26</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">6</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">469762049</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">26</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn><mn>9</mn><mn>8</mn><mn>2</mn><mn>4</mn><mn>4</mn><mn>3</mn><mn>5</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">998244353</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span><span class="mord mathrm">9</span><span class="mord mathrm">8</span><span class="mord mathrm">2</span><span class="mord mathrm">4</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>1</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">110</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">1</span><span class="mord mathrm">0</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">23</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">998244353</td>
+<td style="text-align:left">110</td>
+<td style="text-align:left">23</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>0</mn><mn>0</mn><mn>4</mn><mn>5</mn><mn>3</mn><mn>5</mn><mn>8</mn><mn>0</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">1004535809</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">0</span><span class="mord mathrm">0</span><span class="mord mathrm">4</span><span class="mord mathrm">5</span><span class="mord mathrm">3</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mn>7</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">479</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">4</span><span class="mord mathrm">7</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">21</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">1004535809</td>
+<td style="text-align:left">479</td>
+<td style="text-align:left">21</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>1</mn><mn>3</mn><mn>2</mn><mn>6</mn><mn>5</mn><mn>9</mn><mn>2</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">2013265921</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">6</span><span class="mord mathrm">5</span><span class="mord mathrm">9</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">1</span></span></span></span></td>
+<td style="text-align:left">2013265921</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">27</td>
+<td style="text-align:left">31</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn><mn>8</mn><mn>1</mn><mn>7</mn><mn>0</mn><mn>1</mn><mn>3</mn><mn>7</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">2281701377</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span><span class="mord mathrm">7</span><span class="mord mathrm">0</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">7</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">17</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">27</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">2281701377</td>
+<td style="text-align:left">17</td>
+<td style="text-align:left">27</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>2</mn><mn>2</mn><mn>1</mn><mn>2</mn><mn>2</mn><mn>5</mn><mn>4</mn><mn>7</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">3221225473</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">1</span><span class="mord mathrm">2</span><span class="mord mathrm">2</span><span class="mord mathrm">5</span><span class="mord mathrm">4</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>0</mn></mrow><annotation encoding="application/x-tex">30</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">0</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">5</span></span></span></span></td>
+<td style="text-align:left">3221225473</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">30</td>
+<td style="text-align:left">5</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>5</mn><mn>1</mn><mn>6</mn><mn>1</mn><mn>9</mn><mn>2</mn><mn>7</mn><mn>6</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">75161927681</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">5</span><span class="mord mathrm">1</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">9</span><span class="mord mathrm">2</span><span class="mord mathrm">7</span><span class="mord mathrm">6</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">35</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
+<td style="text-align:left">75161927681</td>
+<td style="text-align:left">35</td>
+<td style="text-align:left">31</td>
+<td style="text-align:left">3</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mn>7</mn><mn>3</mn><mn>0</mn><mn>9</mn><mn>4</mn><mn>1</mn><mn>1</mn><mn>3</mn><mn>2</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">77309411329</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span><span class="mord mathrm">7</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span><span class="mord mathrm">4</span><span class="mord mathrm">1</span><span class="mord mathrm">1</span><span class="mord mathrm">3</span><span class="mord mathrm">2</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>9</mn></mrow><annotation encoding="application/x-tex">9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>3</mn></mrow><annotation encoding="application/x-tex">33</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left">77309411329</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">33</td>
+<td style="text-align:left">7</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>6</mn><mn>1</mn><mn>5</mn><mn>8</mn><mn>4</mn><mn>3</mn><mn>0</mn><mn>2</mn><mn>0</mn><mn>9</mn></mrow><annotation encoding="application/x-tex">206158430209</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">9</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>6</mn></mrow><annotation encoding="application/x-tex">36</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">6</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>2</mn></mrow><annotation encoding="application/x-tex">22</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">2</span></span></span></span></td>
+<td style="text-align:left">206158430209</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">36</td>
+<td style="text-align:left">22</td>
 </tr>
 <tr>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mn>0</mn><mn>6</mn><mn>1</mn><mn>5</mn><mn>8</mn><mn>4</mn><mn>3</mn><mn>0</mn><mn>2</mn><mn>0</mn><mn>8</mn><mn>1</mn></mrow><annotation encoding="application/x-tex">2061584302081</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">6</span><span class="mord mathrm">1</span><span class="mord mathrm">5</span><span class="mord mathrm">8</span><span class="mord mathrm">4</span><span class="mord mathrm">3</span><span class="mord mathrm">0</span><span class="mord mathrm">2</span><span class="mord mathrm">0</span><span class="mord mathrm">8</span><span class="mord mathrm">1</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mn>5</mn></mrow><annotation encoding="application/x-tex">15</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">1</span><span class="mord mathrm">5</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mn>7</mn></mrow><annotation encoding="application/x-tex">37</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">3</span><span class="mord mathrm">7</span></span></span></span></td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.64444em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathrm">7</span></span></span></span></td>
+<td style="text-align:left">2061584302081</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">37</td>
+<td style="text-align:left">7</td>
 </tr>
 </tbody>
 </table>
@@ -1748,7 +1878,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"快速傅立叶变换","level":"1.6.11","depth":2,"next":{"title":"原根","level":"1.6.12","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"Pollard's Rho","level":"1.6.10","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/fft.md","mtime":"2018-12-23T06:00:09.264Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-23T06:00:48.978Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"快速傅立叶变换","level":"1.6.11","depth":2,"next":{"title":"原根","level":"1.6.12","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"Pollard's Rho","level":"1.6.10","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/fft.md","mtime":"2018-12-24T03:28:13.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-24T03:29:18.160Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

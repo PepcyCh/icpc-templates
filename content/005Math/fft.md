@@ -522,33 +522,166 @@ int main() {
 }
 ```
 
+### 三模数 NTT
+
+```c++
+#include <cstdio>
+#include <algorithm>
+
+const int MAXN = 100005;
+const int MAXN_EXTEND = 262144;
+const int MOD[3] = {998244353, 1004535809, 469762049};
+const int G[3] = {3, 3, 3};
+
+long long qpow(long long a, long long n, long long p) {
+    long long res = 1;
+    for (; n; n >>= 1, a = a * a % p) if (n & 1) res = res * a % p;
+    return res;
+}
+
+long long inv(long long x, long long p) {
+    return qpow(x, p - 2, p);
+}
+
+namespace NTT {
+    static const int N = 262144;
+
+    long long omega[3][N], omegaInv[3][N];
+
+    void init() {
+        for (int _ = 0; _ < 3; _++) {
+            long long g = qpow(G[_], (MOD[_] - 1) / N, MOD[_]), ig = inv(g, MOD[_]);
+            omega[_][0] = omegaInv[_][0] = 1;
+            for (int i = 1; i < N; i++) {
+                omega[_][i] = omega[_][i - 1] * g % MOD[_];
+                omegaInv[_][i] = omegaInv[_][i - 1] * ig % MOD[_];
+            }
+        }
+    }
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
+    void reverse(long long *a, int n) {
+        for (int i = 0, j = 0; i < n; i++) {
+            if (i < j) std::swap(a[i], a[j]);
+            for (int l = n >> 1; (j ^= l) < l; l >>= 1) {}
+        }
+    }
+
+    void transform(long long *a, int n, long long *omega, int MOD) {
+        reverse(a, n);
+
+        for (int l = 2; l <= n; l <<= 1) {
+            int hl = l >> 1;
+            for (long long *x = a; x != a + n; x += l) {
+                for (int i = 0; i < hl; i++) {
+                    long long t = omega[N / l * i] * x[i + hl] % MOD;
+                    x[i + hl] = (x[i] - t + MOD) % MOD;
+                    x[i] += t;
+                    x[i] >= MOD ? x[i] -= MOD : 0;
+                }
+            }
+        }
+    }
+
+    void dft(long long *a, int n, int _) {
+        transform(a, n, omega[_], MOD[_]);
+    }
+
+    void idft(long long *a, int n, int _) {
+        transform(a, n, omegaInv[_], MOD[_]);
+        long long t = inv(n, MOD[_]);
+        for (int i = 0; i < n; i++) a[i] = a[i] * t % MOD[_];
+    }
+}
+
+long long mul(long long a, long long b, long long p) {
+    return (a * b - (long long) (a / (long double) p * b + 1e-3) * p + p) % p;
+}
+
+long long a[3][MAXN_EXTEND], b[3][MAXN_EXTEND], ans[MAXN_EXTEND];
+
+void CRT(int N, int P) {
+    long long M = 1ll * MOD[0] * MOD[1];
+
+    for (int i = 0; i < N; i++) {
+        long long temp = 0;
+        temp += mul(a[0][i] * MOD[1] % M, inv(MOD[1], MOD[0]), M);
+        temp >= M ? temp -= M : 0;
+        temp += mul(a[1][i] * MOD[0] % M, inv(MOD[0], MOD[1]), M);
+        temp >= M ? temp -= M : 0;
+
+        a[1][i] = temp;
+    }
+
+    for (int i = 0; i < N; i++){
+        long long temp = (a[2][i] - a[1][i] % MOD[2] + MOD[2]) % MOD[2] * inv(M % MOD[2], MOD[2]) % MOD[2];
+        ans[i] = M % P * temp % P + a[1][i] % P;
+        ans[i] >= P ? ans[i] -= P : 0;
+    }
+}
+
+int main() {
+    int n, m, P;
+    scanf("%d %d %d", &n, &m, &P);
+
+    for (int i = 0, x; i <= n; i++) {
+        scanf("%d", &x);
+        for (int _ = 0; _ < 3; _++) a[_][i] = (x + P) % MOD[_];
+    }
+    for (int i = 0, x; i <= m; i++) {
+        scanf("%d", &x);
+        for (int _ = 0; _ < 3; _++) b[_][i] = (x + P) % MOD[_];
+    }
+
+    NTT::init();
+    int N = NTT::extend(n + m + 1);
+
+    for (int _ = 0; _ < 3; _++) {
+        NTT::dft(a[_], N, _);
+        NTT::dft(b[_], N, _);
+        for (int i = 0; i < N; i++) a[_][i] = a[_][i] * b[_][i] % MOD[_];
+        NTT::idft(a[_], N, _);
+    }
+
+    CRT(N, P);
+    for (int i = 0; i < n + m + 1; i++) printf("%lld%c", ans[i], " \n"[i == n + m]);
+
+    return 0;
+}
+```
+
 ### NTT 模数及原根表
 
-| $$r \cdot 2 ^ k + 1$$ | $$r$$ | $$k$$ | $$g$$ |
+| r 2 ^ k + 1 | r | k | g |
 |:---|:---|:---|:---|
-| $$3$$ | $$1$$ | $$1$$ | $$2$$ | 
-| $$5$$ | $$1$$ | $$2$$ | $$2$$ | 
-| $$17$$ | $$1$$ | $$4$$ | $$3$$ | 
-| $$97$$ | $$3$$ | $$5$$ | $$5$$ | 
-| $$193$$ | $$3$$ | $$6$$ | $$5$$ | 
-| $$257$$ | $$1$$ | $$8$$ | $$3$$ | 
-| $$7681$$ | $$15$$ | $$9$$ | $$17$$ | 
-| $$12289$$ | $$3$$ | $$12$$ | $$11$$ | 
-| $$40961$$ | $$5$$ | $$13$$ | $$3$$ | 
-| $$65537$$ | $$1$$ | $$16$$ | $$3$$ | 
-| $$786433$$ | $$3$$ | $$18$$ | $$10$$ | 
-| $$5767169$$ | $$11$$ | $$19$$ | $$3$$ | 
-| $$7340033$$ | $$7$$ | $$20$$ | $$3$$ | 
-| $$23068673$$ | $$11$$ | $$21$$ | $$3$$ | 
-| $$104857601$$ | $$25$$ | $$22$$ | $$3$$ | 
-| $$167772161$$ | $$5$$ | $$25$$ | $$3$$ | 
-| $$469762049$$ | $$7$$ | $$26$$ | $$3$$ | 
-| $$998244353$$ | $$110$$ | $$23$$ | $$3$$ | 
-| $$1004535809$$ | $$479$$ | $$21$$ | $$3$$ | 
-| $$2013265921$$ | $$15$$ | $$27$$ | $$31$$ | 
-| $$2281701377$$ | $$17$$ | $$27$$ | $$3$$ | 
-| $$3221225473$$ | $$3$$ | $$30$$ | $$5$$ | 
-| $$75161927681$$ | $$35$$ | $$31$$ | $$3$$ | 
-| $$77309411329$$ | $$9$$ | $$33$$ | $$7$$ | 
-| $$206158430209$$ | $$3$$ | $$36$$ | $$22$$ | 
-| $$2061584302081$$ | $$15$$ | $$37$$ | $$7$$ | 
+| 3 | 1 | 1 | 2 | 
+| 5 | 1 | 2 | 2 | 
+| 17 | 1 | 4 | 3 | 
+| 97 | 3 | 5 | 5 | 
+| 193 | 3 | 6 | 5 | 
+| 257 | 1 | 8 | 3 | 
+| 7681 | 15 | 9 | 17 | 
+| 12289 | 3 | 12 | 11 | 
+| 40961 | 5 | 13 | 3 | 
+| 65537 | 1 | 16 | 3 | 
+| 786433 | 3 | 18 | 10 | 
+| 5767169 | 11 | 19 | 3 | 
+| 7340033 | 7 | 20 | 3 | 
+| 23068673 | 11 | 21 | 3 | 
+| 104857601 | 25 | 22 | 3 | 
+| 167772161 | 5 | 25 | 3 | 
+| 469762049 | 7 | 26 | 3 | 
+| 998244353 | 110 | 23 | 3 | 
+| 1004535809 | 479 | 21 | 3 | 
+| 2013265921 | 15 | 27 | 31 | 
+| 2281701377 | 17 | 27 | 3 | 
+| 3221225473 | 3 | 30 | 5 | 
+| 75161927681 | 35 | 31 | 3 | 
+| 77309411329 | 9 | 33 | 7 | 
+| 206158430209 | 3 | 36 | 22 | 
+| 2061584302081 | 15 | 37 | 7 | 
