@@ -429,21 +429,14 @@ const int MAXN_EXTEND = 262144;
 const int MOD = 998244353;
 const int G = 3;
 
-long long pow(long long a, long long n) {
+long long qpow(long long a, long long n) {
     long long res = 1;
     for (; n; n >>= 1, a = a * a % MOD) if (n & 1) res = res * a % MOD;
     return res;
 }
 
-void exgcd(long long a, long long b, long long &x, long long &y) {
-    if (!b) x = 1, y = 0;
-    else exgcd(b, a % b, y, x), y -= x * (a / b);
-}
-
 long long inv(long long x) {
-    long long res, temp;
-    exgcd(x, MOD, res, temp);
-    return (res % MOD + MOD) % MOD;
+    return qpow(x, MOD - 2);
 }
 
 namespace NTT {
@@ -452,7 +445,7 @@ namespace NTT {
     long long omega[N], omegaInv[N];
 
     void init() {
-        long long g = pow(G, (MOD - 1) / N), ig = inv(g);
+        long long g = qpow(G, (MOD - 1) / N), ig = inv(g);
         omega[0] = omegaInv[0] = 1;
         for (int i = 1; i < N; i++) {
             omega[i] = omega[i - 1] * g % MOD;
@@ -496,7 +489,7 @@ namespace NTT {
     void idft(long long *a, int n) {
         transform(a, n, omegaInv);
         long long t = inv(n);
-        for (int i = 0; i < n; i++) (a[i] *= t) %= MOD;
+        for (int i = 0; i < n; i++) a[i] = a[i] * t % MOD;
     }
 }
 
@@ -513,7 +506,7 @@ int main() {
 
     NTT::dft(a, N);
     NTT::dft(b, N);
-    for (int i = 0; i < N; i++) (a[i] *= b[i]) %= MOD;
+    for (int i = 0; i < N; i++) a[i] = a[i] * b[i] % MOD;
     NTT::idft(a, N);
 
     for (int i = 0; i < n + m + 1; i++)  printf("%lld%c", a[i], " \n"[i == n + m]);

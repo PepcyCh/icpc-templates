@@ -1444,21 +1444,14 @@ int main() {
 <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD = <span class="hljs-number">998244353</span>;
 <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> G = <span class="hljs-number">3</span>;
 
-<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">pow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n)</span> </span>{
+<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">qpow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n)</span> </span>{
     <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>;
     <span class="hljs-keyword">for</span> (; n; n &gt;&gt;= <span class="hljs-number">1</span>, a = a * a % MOD) <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>) res = res * a % MOD;
     <span class="hljs-keyword">return</span> res;
 }
 
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> b, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> &amp;x, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> &amp;y)</span> </span>{
-    <span class="hljs-keyword">if</span> (!b) x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">else</span> exgcd(b, a % b, y, x), y -= x * (a / b);
-}
-
 <span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">inv</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> x)</span> </span>{
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res, temp;
-    exgcd(x, MOD, res, temp);
-    <span class="hljs-keyword">return</span> (res % MOD + MOD) % MOD;
+    <span class="hljs-keyword">return</span> qpow(x, MOD - <span class="hljs-number">2</span>);
 }
 
 <span class="hljs-keyword">namespace</span> NTT {
@@ -1467,7 +1460,7 @@ int main() {
     <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> omega[N], omegaInv[N];
 
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> g = <span class="hljs-built_in">pow</span>(G, (MOD - <span class="hljs-number">1</span>) / N), ig = inv(g);
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> g = qpow(G, (MOD - <span class="hljs-number">1</span>) / N), ig = inv(g);
         omega[<span class="hljs-number">0</span>] = omegaInv[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++) {
             omega[i] = omega[i - <span class="hljs-number">1</span>] * g % MOD;
@@ -1511,7 +1504,7 @@ int main() {
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">idft</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
         transform(a, n, omegaInv);
         <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t = inv(n);
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) (a[i] *= t) %= MOD;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) a[i] = a[i] * t % MOD;
     }
 }
 
@@ -1528,7 +1521,7 @@ int main() {
 
     NTT::dft(a, N);
     NTT::dft(b, N);
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) (a[i] *= b[i]) %= MOD;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) a[i] = a[i] * b[i] % MOD;
     NTT::idft(a, N);
 
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n + m + <span class="hljs-number">1</span>; i++)  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld%c&quot;</span>, a[i], <span class="hljs-string">&quot; \n&quot;</span>[i == n + m]);
@@ -1878,7 +1871,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"快速傅立叶变换","level":"1.6.11","depth":2,"next":{"title":"原根","level":"1.6.12","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"Pollard's Rho","level":"1.6.10","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/fft.md","mtime":"2018-12-24T03:28:13.384Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-24T03:29:18.160Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"快速傅立叶变换","level":"1.6.11","depth":2,"next":{"title":"原根","level":"1.6.12","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"Pollard's Rho","level":"1.6.10","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/fft.md","mtime":"2018-12-31T12:54:09.862Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-31T12:54:31.656Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
