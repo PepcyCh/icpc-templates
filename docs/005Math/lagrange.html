@@ -1,24 +1,20 @@
 
 <!DOCTYPE HTML>
-<html lang="zh-hans" >
+<html lang="" >
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>拉格朗日插值 · Pepcy's Templates for OI and ACM-ICPC</title>
+        <title>拉格朗日插值 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        <meta name="author" content="Pepcy CHEN (CHEN Yuwen)">
+        
         
         
     
     <link rel="stylesheet" href="../gitbook/style.css">
 
     
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
-                
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
@@ -75,7 +71,7 @@
         
             
 <div id="book-search-input" role="search">
-    <input type="text" placeholder="输入并搜索" />
+    <input type="text" placeholder="Type to search" />
 </div>
 
             
@@ -891,6 +887,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.7.8" data-path="../006Geometry/simpson.html">
+            
+                <a href="../006Geometry/simpson.html">
+            
+                    
+                    自适应辛普森积分
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -987,7 +996,7 @@
 
     <li>
         <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            本书使用 GitBook 发布
+            Published with GitBook
         </a>
     </li>
 </ul>
@@ -1026,7 +1035,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x62C9;&#x683C;&#x6717;&#x65E5;&#x63D2;&#x503C;&#xFF08;lagrange-interpolation-polynomial&#xFF09;">&#x62C9;&#x683C;&#x6717;&#x65E5;&#x63D2;&#x503C;&#xFF08;Lagrange Interpolation Polynomial&#xFF09;</h1>
-<p>&#x8F93;&#x5165;&#x4E3A; <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.43056em;"></span><span class="strut bottom" style="height:0.43056em;vertical-align:0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">n</span></span></span></span> &#x6B21;&#x591A;&#x9879;&#x5F0F;&#x5728; <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">x = 0, 1,..., n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height:0.64444em;"></span><span class="strut bottom" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="base textstyle uncramped"><span class="mord mathit">x</span><span class="mrel">=</span><span class="mord mathrm">0</span><span class="mpunct">,</span><span class="mord mathrm">1</span><span class="mpunct">,</span><span class="mord mathrm">.</span><span class="mord mathrm">.</span><span class="mord mathrm">.</span><span class="mpunct">,</span><span class="mord mathit">n</span></span></span></span> &#x7684;&#x503C;&#x3002;</p>
+<p>&#x8F93;&#x5165;&#x4E3A; n &#x6B21;&#x591A;&#x9879;&#x5F0F;&#x5728; x = 0, 1,..., n &#x7684;&#x503C;&#x3002;</p>
 <pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
 
 <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1000005</span>;
@@ -1125,7 +1134,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"拉格朗日插值","level":"1.6.14","depth":2,"next":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},{"title":"动态半凸壳","level":"1.7.7","depth":2,"path":"006Geometry/dhch.md","ref":"./006Geometry/dhch.md","articles":[]}]},"previous":{"title":"常系数线性齐次递推","level":"1.6.13","depth":2,"path":"005Math/lr.md","ref":"./005Math/lr.md","articles":[]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"005Math/lagrange.md","mtime":"2018-11-14T08:49:37.826Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-31T12:54:31.656Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"拉格朗日插值","level":"1.6.14","depth":2,"next":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},{"title":"动态半凸壳","level":"1.7.7","depth":2,"path":"006Geometry/dhch.md","ref":"./006Geometry/dhch.md","articles":[]},{"title":"自适应辛普森积分","level":"1.7.8","depth":2,"path":"006Geometry/simpson.md","ref":"./006Geometry/simpson.md","articles":[]}]},"previous":{"title":"常系数线性齐次递推","level":"1.6.13","depth":2,"path":"005Math/lr.md","ref":"./005Math/lr.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"005Math/lagrange.md","mtime":"2019-01-19T13:28:21.033Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T13:39:37.621Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

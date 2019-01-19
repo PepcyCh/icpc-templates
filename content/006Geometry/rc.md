@@ -98,19 +98,22 @@ Rectangle ans;
 double ansArea = DBL_MAX;
 void rotatingCalipers(int n) {
     for (int curr = 0, right = 1, up = 1, left = 1; curr < n; curr++) {
-        while (dot(ch[curr + 1] - ch[curr], ch[right + 1] - ch[right]) >= 0) right = (right + 1) % n;
+        while (dot(ch[curr + 1] - ch[curr], ch[right + 1] - ch[right]) >= 0)
+            right = (right + 1) % n;
         
         curr ? 0 : up = right;
-        while (cross(ch[curr + 1] - ch[curr], ch[up + 1] - ch[up]) >= 0) up = (up + 1) % n;
+        while (cross(ch[curr + 1] - ch[curr], ch[up + 1] - ch[up]) >= 0)
+            up = (up + 1) % n;
         
         curr ? 0 : left = up;
-        while (dot(ch[curr + 1] - ch[curr], ch[left + 1] - ch[left]) <= 0) left = (left + 1) % n;
+        while (dot(ch[curr + 1] - ch[curr], ch[left + 1] - ch[left]) <= 0)
+            left = (left + 1) % n;
         
         Point currV = ch[curr + 1] - ch[curr];
         double currLen = dist(ch[curr], ch[curr + 1]);
-        double height = fabs(cross(currV, ch[up] - ch[curr]) / currLen);
-        double bottom = fabs(dot(currV, ch[left] - ch[curr]) / currLen)
-                      + fabs(dot(currV, ch[right] - ch[curr]) / currLen);
+        double height = std::abs(cross(currV, ch[up] - ch[curr]) / currLen);
+        double bottom = std::abs(dot(currV, ch[left] - ch[curr]) / currLen)
+                      + std::abs(dot(currV, ch[right] - ch[curr]) / currLen);
                       
         double currArea = bottom * height;
         Point currPerpendicular = currV.getPerpendicular();

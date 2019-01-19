@@ -1,24 +1,20 @@
 
 <!DOCTYPE HTML>
-<html lang="zh-hans" >
+<html lang="" >
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>旋转卡壳 · Pepcy's Templates for OI and ACM-ICPC</title>
+        <title>旋转卡壳 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        <meta name="author" content="Pepcy CHEN (CHEN Yuwen)">
+        
         
         
     
     <link rel="stylesheet" href="../gitbook/style.css">
 
     
-            
-                
-                <link rel="stylesheet" href="../gitbook/gitbook-plugin-katex/katex.min.css">
-                
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
@@ -75,7 +71,7 @@
         
             
 <div id="book-search-input" role="search">
-    <input type="text" placeholder="输入并搜索" />
+    <input type="text" placeholder="Type to search" />
 </div>
 
             
@@ -891,6 +887,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.7.8" data-path="simpson.html">
+            
+                <a href="simpson.html">
+            
+                    
+                    自适应辛普森积分
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -987,7 +996,7 @@
 
     <li>
         <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
-            本书使用 GitBook 发布
+            Published with GitBook
         </a>
     </li>
 </ul>
@@ -1123,19 +1132,22 @@ Rectangle ans;
 double ansArea = DBL_MAX;
 void rotatingCalipers(int n) {
     for (int curr = 0, right = 1, up = 1, left = 1; curr &lt; n; curr++) {
-        while (dot(ch[curr + 1] - ch[curr], ch[right + 1] - ch[right]) &gt;= 0) right = (right + 1) % n;
+        while (dot(ch[curr + 1] - ch[curr], ch[right + 1] - ch[right]) &gt;= 0)
+            right = (right + 1) % n;
 
         curr ? 0 : up = right;
-        while (cross(ch[curr + 1] - ch[curr], ch[up + 1] - ch[up]) &gt;= 0) up = (up + 1) % n;
+        while (cross(ch[curr + 1] - ch[curr], ch[up + 1] - ch[up]) &gt;= 0)
+            up = (up + 1) % n;
 
         curr ? 0 : left = up;
-        while (dot(ch[curr + 1] - ch[curr], ch[left + 1] - ch[left]) &lt;= 0) left = (left + 1) % n;
+        while (dot(ch[curr + 1] - ch[curr], ch[left + 1] - ch[left]) &lt;= 0)
+            left = (left + 1) % n;
 
         Point currV = ch[curr + 1] - ch[curr];
         double currLen = dist(ch[curr], ch[curr + 1]);
-        double height = fabs(cross(currV, ch[up] - ch[curr]) / currLen);
-        double bottom = fabs(dot(currV, ch[left] - ch[curr]) / currLen)
-                      + fabs(dot(currV, ch[right] - ch[curr]) / currLen);
+        double height = std::abs(cross(currV, ch[up] - ch[curr]) / currLen);
+        double bottom = std::abs(dot(currV, ch[left] - ch[curr]) / currLen)
+                      + std::abs(dot(currV, ch[right] - ch[curr]) / currLen);
 
         double currArea = bottom * height;
         Point currPerpendicular = currV.getPerpendicular();
@@ -1208,7 +1220,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"旋转卡壳","level":"1.7.1","depth":2,"next":{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},"previous":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},{"title":"动态半凸壳","level":"1.7.7","depth":2,"path":"006Geometry/dhch.md","ref":"./006Geometry/dhch.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["katex"],"root":"./content","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"katex":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Pepcy CHEN (CHEN Yuwen)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Pepcy's Templates for OI and ACM-ICPC","language":"zh-hans","gitbook":"*"},"file":{"path":"006Geometry/rc.md","mtime":"2018-12-22T07:13:27.897Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-12-31T12:54:31.656Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"旋转卡壳","level":"1.7.1","depth":2,"next":{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},"previous":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"旋转卡壳","level":"1.7.1","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.2","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"点相关","level":"1.7.4","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.6","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},{"title":"动态半凸壳","level":"1.7.7","depth":2,"path":"006Geometry/dhch.md","ref":"./006Geometry/dhch.md","articles":[]},{"title":"自适应辛普森积分","level":"1.7.8","depth":2,"path":"006Geometry/simpson.md","ref":"./006Geometry/simpson.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"006Geometry/rc.md","mtime":"2019-01-19T13:37:30.539Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-19T13:39:37.621Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

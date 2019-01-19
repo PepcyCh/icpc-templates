@@ -1,4 +1,4 @@
-# $$k$$ 次圆覆盖
+# k 次圆覆盖
 
 ```c++
 #include <cstdio>

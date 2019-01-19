@@ -9,7 +9,7 @@ const int MAXN = 100005;
 const double EPS = 1e-9;
 
 int dcmp(double a, double b = 0) {
-    double d = std::fabs(a - b);
+    double d = std::abs(a - b);
     return d <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
@@ -51,7 +51,8 @@ struct Point {
     }
 
     Point rotate(double rad) {
-        return Point(x * std::cos(rad) - y * std::sin(rad), x * std::sin(rad) + y * std::cos(rad));
+        return Point(x * std::cos(rad) - y * std::sin(rad),
+                     x * std::sin(rad) + y * std::cos(rad));
     }
 
     double length() const {
@@ -82,13 +83,13 @@ Point getLineProj(const Point &p, const Point &s, const Point &t) {
 }
 
 double getDistToLine(const Point &p, const Point &s, const Point &t) {
-    return std::fabs(cross(t - s, p - s)) / (t - s).length();
+    return std::abs(cross(t - s, p - s)) / (t - s).length();
 }
 
 double getDistToSeg(const Point &p, const Point &s, const Point &t) {
     if (dcmp(dot(t - s, p - s)) < 0) return (p - s).length();
     else if (dcmp(dot(t - s, p - t)) > 0) return (p - t).length();
-    else return std::fabs(cross(t - s, p - s)) / (t - s).length();
+    else return std::abs(cross(t - s, p - s)) / (t - s).length();
 }
 
 bool doesPointOnSeg(const Point &p, const Point &s, const Point &t) {
