@@ -30,6 +30,7 @@
     * [费用流](./003Graph/costnet.md)
     * [上下界网络流](./003Graph/lunet.md)
     * [Tarjan](./003Graph/tarjan.md)
+    * [最大团/最大独立集](./003Graph/maxc.md)
     * [虚树](./003Graph/vtree.md)
 
 * [字符串](./004String/README.md)
