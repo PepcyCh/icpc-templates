@@ -1056,8 +1056,8 @@ const int MAXN = 100005;
 const double EPS = 1e-9;
 
 int dcmp(double a, double b = 0) {
-    double d = std::abs(a - b);
-    return d &lt;= EPS ? 0 : (d &gt; 0 ? 1 : -1);
+    double d = a - b;
+    return std::abs(d) &lt;= EPS ? 0 : (d &gt; 0 ? 1 : -1);
 }
 
 struct Point {
@@ -1069,20 +1069,20 @@ struct Point {
         return x == rhs.x ? y &lt; rhs.y : x &lt; rhs.x;
     }
 
-    friend Point operator+(const Point &amp;a, const Point &amp;b) {
-        return Point(a.x + b.x, a.y + b.y);
+    Point operator+(const Point &amp;rhs) const {
+        return Point(x + rhs.x, y + rhs.y);
     }
 
-    friend Point operator-(const Point &amp;a, const Point &amp;b) {
-        return Point(a.x - b.x, a.y - b.y);
+    Point operator-(const Point &amp;rhs) const {
+        return Point(x - rhs.x, y - rhs.y);
     }
 
-    friend Point operator*(const Point &amp;p, const double a) {
-        return Point(p.x * a, p.y * a);
+    Point operator*(const double a) const {
+        return Point(x * a, y * a);
     }
 
-    friend Point operator/(const Point &amp;p, const double a) {
-        return Point(p.x / a, p.y / a);
+    Point operator/(const double a) const {
+        return Point(x / a, y / a);
     }
 
     friend double dot(const Point &amp;a, const Point &amp;b) {
@@ -1222,7 +1222,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"点相关","level":"1.7.4","depth":2,"next":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"previous":{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"006Geometry/point.md","mtime":"2019-01-19T13:39:31.230Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-21T00:25:52.472Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"点相关","level":"1.7.4","depth":2,"next":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"previous":{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"006Geometry/point.md","mtime":"2019-01-30T14:39:57.554Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-01-30T14:40:12.470Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

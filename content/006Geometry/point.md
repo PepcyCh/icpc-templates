@@ -9,8 +9,8 @@ const int MAXN = 100005;
 const double EPS = 1e-9;
 
 int dcmp(double a, double b = 0) {
-    double d = std::abs(a - b);
-    return d <= EPS ? 0 : (d > 0 ? 1 : -1);
+    double d = a - b;
+    return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
 struct Point {
@@ -22,20 +22,20 @@ struct Point {
         return x == rhs.x ? y < rhs.y : x < rhs.x;
     }
 
-    friend Point operator+(const Point &a, const Point &b) {
-        return Point(a.x + b.x, a.y + b.y);
+    Point operator+(const Point &rhs) const {
+        return Point(x + rhs.x, y + rhs.y);
     }
 
-    friend Point operator-(const Point &a, const Point &b) {
-        return Point(a.x - b.x, a.y - b.y);
+    Point operator-(const Point &rhs) const {
+        return Point(x - rhs.x, y - rhs.y);
     }
 
-    friend Point operator*(const Point &p, const double a) {
-        return Point(p.x * a, p.y * a);
+    Point operator*(const double a) const {
+        return Point(x * a, y * a);
     }
 
-    friend Point operator/(const Point &p, const double a) {
-        return Point(p.x / a, p.y / a);
+    Point operator/(const double a) const {
+        return Point(x / a, y / a);
     }
 
     friend double dot(const Point &a, const Point &b) {
