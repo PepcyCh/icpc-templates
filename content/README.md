@@ -1,3 +1,3 @@
-# Pepcy's Templates for OI and ACM-ICPC
+# Pepcy's Templates for OI and ICPC
 
 自己的板子合集。
