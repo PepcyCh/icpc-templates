@@ -9,7 +9,7 @@ const int MAXN = 100005;
 
 template <typename T, size_t SIZE>
 struct MemoryPool {
-    char mem[sizeof (T) * SIZE], *memTop, *del[SIZE], **delTop;
+    char mem[SIZE * sizeof (T)], *memTop, *del[SIZE], **delTop;
 
     MemoryPool() : memTop(mem), delTop(del) {}
 
@@ -20,9 +20,7 @@ struct MemoryPool {
         return (void *) res;
     }
 
-    void free(void *p) {
-        *delTop++ = (char *) p;
-    }
+    void free(void *p) { *delTop++ = (char *) p; }
 };
 
 struct Splay {
@@ -39,28 +37,19 @@ struct Splay {
             if (c[1]) delete c[1];
         }
 
-        void *operator new(size_t) {
-            return pool.alloc();
-        }
-
-        void operator delete(void *p) {
-            pool.free(p);
-        }
+        void *operator new(size_t) { return pool.alloc(); }
+        void operator delete(void *p) { pool.free(p); }
 
         void maintain() {
             size = (c[0] ? c[0]->size : 0) + cnt + (c[1] ? c[1]->size : 0);
         }
 
-        int relation() {
-            return fa->c[1] == this;
-        }
+        int relation() { return fa->c[1] == this; }
     } *root;
 
     Splay() : root(NULL) {}
 
-    static int size(const Node *u) {
-        return u ? u->size : 0;
-    }
+    static int size(const Node *u) { return u ? u->size : 0; }
 
     void init() {
         root = new Node(NULL, INT_MIN);

@@ -466,7 +466,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.12" data-path="../003Graph/vtree.html">
+        <li class="chapter " data-level="1.4.12" data-path="../003Graph/cl.html">
+            
+                <a href="../003Graph/cl.html">
+            
+                    
+                    最小树形图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../003Graph/vtree.html">
             
                 <a href="../003Graph/vtree.html">
             
@@ -1048,146 +1061,135 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x4F38;&#x5C55;&#x6811;&#xFF08;splay&#xFF09;">&#x4F38;&#x5C55;&#x6811;&#xFF08;Splay&#xFF09;</h1>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<pre><code class="lang-c++">#include &lt;cstdio&gt;
+#include &lt;climits&gt;
+#include &lt;algorithm&gt;
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+const int MAXN = 100005;
 
-<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
-<span class="hljs-keyword">struct</span> MemoryPool {
-    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *memTop, *del[SIZE], **delTop;
+template &lt;typename T, size_t SIZE&gt;
+struct MemoryPool {
+    char mem[SIZE * sizeof (T)], *memTop, *del[SIZE], **delTop;
 
     MemoryPool() : memTop(mem), delTop(del) {}
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">alloc</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">if</span> (delTop != del) <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) *--delTop;
-        <span class="hljs-keyword">char</span> *res = memTop;
-        memTop += <span class="hljs-keyword">sizeof</span> (T);
-        <span class="hljs-keyword">return</span> (<span class="hljs-keyword">void</span> *) res;
+    void *alloc() {
+        if (delTop != del) return (void *) *--delTop;
+        char *res = memTop;
+        memTop += sizeof (T);
+        return (void *) res;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span> </span>{
-        *delTop++ = (<span class="hljs-keyword">char</span> *) p;
-    }
+    void free(void *p) { *delTop++ = (char *) p; }
 };
 
-<span class="hljs-keyword">struct</span> Splay {
-    <span class="hljs-keyword">struct</span> Node {
-        Node *c[<span class="hljs-number">2</span>], *fa, *pred, *succ;
-        <span class="hljs-keyword">int</span> val, cnt, size;
-        <span class="hljs-keyword">static</span> MemoryPool&lt;Node, MAXN&gt; pool;
+struct Splay {
+    struct Node {
+        Node *c[2], *fa, *pred, *succ;
+        int val, cnt, size;
+        static MemoryPool&lt;Node, MAXN&gt; pool;
 
         Node() {}
-        Node(Node *fa, <span class="hljs-keyword">int</span> val) : val(val), size(<span class="hljs-number">1</span>), cnt(<span class="hljs-number">1</span>), c(), fa(fa), pred(<span class="hljs-literal">NULL</span>), succ(<span class="hljs-literal">NULL</span>) {}
+        Node(Node *fa, int val) : val(val), size(1), cnt(1), c(), fa(fa), pred(NULL), succ(NULL) {}
 
         ~Node() {
-            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">0</span>]) <span class="hljs-keyword">delete</span> c[<span class="hljs-number">0</span>];
-            <span class="hljs-keyword">if</span> (c[<span class="hljs-number">1</span>]) <span class="hljs-keyword">delete</span> c[<span class="hljs-number">1</span>];
+            if (c[0]) delete c[0];
+            if (c[1]) delete c[1];
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(size_t)</span> </span>{
-            <span class="hljs-keyword">return</span> pool.alloc();
+        void *operator new(size_t) { return pool.alloc(); }
+        void operator delete(void *p) { pool.free(p); }
+
+        void maintain() {
+            size = (c[0] ? c[0]-&gt;size : 0) + cnt + (c[1] ? c[1]-&gt;size : 0);
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-keyword">operator</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span> </span>{
-            pool.<span class="hljs-built_in">free</span>(p);
-        }
-
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">maintain</span><span class="hljs-params">()</span> </span>{
-            size = (c[<span class="hljs-number">0</span>] ? c[<span class="hljs-number">0</span>]-&gt;size : <span class="hljs-number">0</span>) + cnt + (c[<span class="hljs-number">1</span>] ? c[<span class="hljs-number">1</span>]-&gt;size : <span class="hljs-number">0</span>);
-        }
-
-        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">relation</span><span class="hljs-params">()</span> </span>{
-            <span class="hljs-keyword">return</span> fa-&gt;c[<span class="hljs-number">1</span>] == <span class="hljs-keyword">this</span>;
-        }
+        int relation() { return fa-&gt;c[1] == this; }
     } *root;
 
-    Splay() : root(<span class="hljs-literal">NULL</span>) {}
+    Splay() : root(NULL) {}
 
-    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Node *u)</span> </span>{
-        <span class="hljs-keyword">return</span> u ? u-&gt;size : <span class="hljs-number">0</span>;
-    }
+    static int size(const Node *u) { return u ? u-&gt;size : 0; }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
-        root = <span class="hljs-keyword">new</span> Node(<span class="hljs-literal">NULL</span>, INT_MIN);
-        root-&gt;c[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> Node(root, INT_MAX);
-        root-&gt;c[<span class="hljs-number">1</span>]-&gt;pred = root;
-        root-&gt;succ = root-&gt;c[<span class="hljs-number">1</span>];
+    void init() {
+        root = new Node(NULL, INT_MIN);
+        root-&gt;c[1] = new Node(root, INT_MAX);
+        root-&gt;c[1]-&gt;pred = root;
+        root-&gt;succ = root-&gt;c[1];
         root-&gt;maintain();
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rotate</span><span class="hljs-params">(Node *u)</span> </span>{
+    void rotate(Node *u) {
         Node *o = u-&gt;fa;
-        <span class="hljs-keyword">int</span> x = u-&gt;relation();
+        int x = u-&gt;relation();
 
         u-&gt;fa = o-&gt;fa;
-        <span class="hljs-keyword">if</span> (u-&gt;fa) u-&gt;fa-&gt;c[o-&gt;relation()] = u;
+        if (u-&gt;fa) u-&gt;fa-&gt;c[o-&gt;relation()] = u;
 
-        o-&gt;c[x] = u-&gt;c[x ^ <span class="hljs-number">1</span>];
-        <span class="hljs-keyword">if</span> (u-&gt;c[x ^ <span class="hljs-number">1</span>]) u-&gt;c[x ^ <span class="hljs-number">1</span>]-&gt;fa = o;
+        o-&gt;c[x] = u-&gt;c[x ^ 1];
+        if (u-&gt;c[x ^ 1]) u-&gt;c[x ^ 1]-&gt;fa = o;
 
-        u-&gt;c[x ^ <span class="hljs-number">1</span>] = o;
+        u-&gt;c[x ^ 1] = o;
         o-&gt;fa = u;
 
         o-&gt;maintain();
         u-&gt;maintain();
 
-        <span class="hljs-keyword">if</span> (!u-&gt;fa) root = u;
+        if (!u-&gt;fa) root = u;
     }
 
-    <span class="hljs-function">Node *<span class="hljs-title">splay</span><span class="hljs-params">(Node *u, Node *targetFa = <span class="hljs-literal">NULL</span>)</span> </span>{
-        <span class="hljs-keyword">while</span> (u-&gt;fa != targetFa) {
-            <span class="hljs-keyword">if</span> (u-&gt;fa-&gt;fa == targetFa) rotate(u);
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (u-&gt;relation() == u-&gt;fa-&gt;relation()) rotate(u-&gt;fa), rotate(u);
-            <span class="hljs-keyword">else</span> rotate(u), rotate(u);
+    Node *splay(Node *u, Node *targetFa = NULL) {
+        while (u-&gt;fa != targetFa) {
+            if (u-&gt;fa-&gt;fa == targetFa) rotate(u);
+            else if (u-&gt;relation() == u-&gt;fa-&gt;relation()) rotate(u-&gt;fa), rotate(u);
+            else rotate(u), rotate(u);
         }
-        <span class="hljs-keyword">return</span> u;
+        return u;
     }
 
-    <span class="hljs-function">Node *<span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
-        Node **u = &amp;root, *fa = <span class="hljs-literal">NULL</span>;
+    Node *insert(int val) {
+        Node **u = &amp;root, *fa = NULL;
 
-        <span class="hljs-keyword">while</span> (*u &amp;&amp; (*u)-&gt;val != val) {
+        while (*u &amp;&amp; (*u)-&gt;val != val) {
             fa = *u;
             fa-&gt;size++;
             u = &amp;(*u)-&gt;c[val &gt; (*u)-&gt;val];
         }
 
-        <span class="hljs-keyword">if</span> (*u) {
+        if (*u) {
             ++(*u)-&gt;cnt;
             ++(*u)-&gt;size;
-        } <span class="hljs-keyword">else</span> {
-            (*u) = <span class="hljs-keyword">new</span> Node(fa, val);
+        } else {
+            (*u) = new Node(fa, val);
 
-            <span class="hljs-keyword">if</span> (fa) {
-                <span class="hljs-keyword">if</span> ((*u)-&gt;relation()) {
+            if (fa) {
+                if ((*u)-&gt;relation()) {
                     (*u)-&gt;succ = fa-&gt;succ;
                     (*u)-&gt;pred = fa;
-                    <span class="hljs-keyword">if</span> (fa-&gt;succ) fa-&gt;succ-&gt;pred = *u;
+                    if (fa-&gt;succ) fa-&gt;succ-&gt;pred = *u;
                     fa-&gt;succ = *u;
-                } <span class="hljs-keyword">else</span> {
+                } else {
                     (*u)-&gt;pred = fa-&gt;pred;
                     (*u)-&gt;succ = fa;
-                    <span class="hljs-keyword">if</span> (fa-&gt;pred) fa-&gt;pred-&gt;succ = *u;
+                    if (fa-&gt;pred) fa-&gt;pred-&gt;succ = *u;
                     fa-&gt;pred = *u;
                 }
             }
         }
 
-        <span class="hljs-keyword">return</span> splay(*u);
+        return splay(*u);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">erase</span><span class="hljs-params">(Node *u)</span> </span>{
+    void erase(Node *u) {
         splay(u-&gt;pred);
         splay(u-&gt;succ, u-&gt;pred);
 
-        <span class="hljs-keyword">if</span> (u-&gt;cnt &gt; <span class="hljs-number">1</span>) {
+        if (u-&gt;cnt &gt; 1) {
             --u-&gt;cnt;
             --u-&gt;size;
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-keyword">delete</span> u-&gt;succ-&gt;c[<span class="hljs-number">0</span>];
-            u-&gt;succ-&gt;c[<span class="hljs-number">0</span>] = <span class="hljs-literal">NULL</span>;
+        } else {
+            delete u-&gt;succ-&gt;c[0];
+            u-&gt;succ-&gt;c[0] = NULL;
             u-&gt;pred-&gt;succ = u-&gt;succ;
             u-&gt;succ-&gt;pred = u-&gt;pred;
         }
@@ -1195,85 +1197,85 @@
         --u-&gt;pred-&gt;size;
         --u-&gt;succ-&gt;size;
     }
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">erase</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    void erase(int val) {
         Node *u = find(val);
-        <span class="hljs-keyword">if</span> (u) erase(u);
+        if (u) erase(u);
     }
 
-    <span class="hljs-function">Node *<span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    Node *find(int val) {
         Node *u = root;
-        <span class="hljs-keyword">while</span> (u &amp;&amp; u-&gt;val != val) u = u-&gt;c[val &gt; u-&gt;val];
-        <span class="hljs-keyword">if</span> (u) <span class="hljs-keyword">return</span> splay(u);
-        <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+        while (u &amp;&amp; u-&gt;val != val) u = u-&gt;c[val &gt; u-&gt;val];
+        if (u) return splay(u);
+        else return NULL;
     }
 
-    <span class="hljs-function">Node *<span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">int</span> k)</span> </span>{
+    Node *select(int k) {
         Node *u = root;
-        <span class="hljs-keyword">while</span> (k &lt; size(u-&gt;c[<span class="hljs-number">0</span>]) || k &gt;= size(u-&gt;c[<span class="hljs-number">0</span>]) + u-&gt;cnt) {
-            <span class="hljs-keyword">if</span> (k &lt; size(u-&gt;c[<span class="hljs-number">0</span>])) u = u-&gt;c[<span class="hljs-number">0</span>];
-            <span class="hljs-keyword">else</span> {
-                k -= size(u-&gt;c[<span class="hljs-number">0</span>]) + u-&gt;cnt;
-                u = u-&gt;c[<span class="hljs-number">1</span>];
+        while (k &lt; size(u-&gt;c[0]) || k &gt;= size(u-&gt;c[0]) + u-&gt;cnt) {
+            if (k &lt; size(u-&gt;c[0])) u = u-&gt;c[0];
+            else {
+                k -= size(u-&gt;c[0]) + u-&gt;cnt;
+                u = u-&gt;c[1];
             }
         }
-        <span class="hljs-keyword">return</span> splay(u);
+        return splay(u);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    int rank(int val) {
         Node *u = find(val);
-        <span class="hljs-keyword">if</span> (!u) {
+        if (!u) {
             u = insert(val);
-            <span class="hljs-keyword">int</span> res = size(u-&gt;c[<span class="hljs-number">0</span>]);
+            int res = size(u-&gt;c[0]);
             erase(u);
-            <span class="hljs-keyword">return</span> res;
+            return res;
         }
-        <span class="hljs-keyword">return</span> size(u-&gt;c[<span class="hljs-number">0</span>]);
+        return size(u-&gt;c[0]);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pred</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    int pred(int val) {
         Node *u = find(val);
-        <span class="hljs-keyword">if</span> (!u) {
+        if (!u) {
             u = insert(val);
-            <span class="hljs-keyword">int</span> res = u-&gt;pred-&gt;val;
+            int res = u-&gt;pred-&gt;val;
             erase(u);
-            <span class="hljs-keyword">return</span> res;
+            return res;
         }
-        <span class="hljs-keyword">return</span> u-&gt;pred-&gt;val;
+        return u-&gt;pred-&gt;val;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">succ</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span> </span>{
+    int succ(int val) {
         Node *u = find(val);
-        <span class="hljs-keyword">if</span> (!u) {
+        if (!u) {
             u = insert(val);
-            <span class="hljs-keyword">int</span> res = u-&gt;succ-&gt;val;
+            int res = u-&gt;succ-&gt;val;
             erase(u);
-            <span class="hljs-keyword">return</span> res;
+            return res;
         }
-        <span class="hljs-keyword">return</span> u-&gt;succ-&gt;val;
+        return u-&gt;succ-&gt;val;
     }
 } splay;
 
 MemoryPool&lt;Splay::Node, MAXN&gt; Splay::Node::pool;
 
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+int main() {
     splay.init();
 
-    <span class="hljs-keyword">int</span> n;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
+    int n;
+    scanf(&quot;%d&quot;, &amp;n);
 
-    <span class="hljs-keyword">while</span> (n--) {
-        <span class="hljs-keyword">int</span> op, x;
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;op, &amp;x);
+    while (n--) {
+        int op, x;
+        scanf(&quot;%d %d&quot;, &amp;op, &amp;x);
 
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) splay.insert(x);
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>) splay.erase(x);
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">3</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.rank(x));
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">4</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.select(x)-&gt;val);
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">5</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.pred(x));
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">6</span>) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, splay.succ(x));
+        if (op == 1) splay.insert(x);
+        if (op == 2) splay.erase(x);
+        if (op == 3) printf(&quot;%d\n&quot;, splay.rank(x));
+        if (op == 4) printf(&quot;%d\n&quot;, splay.select(x)-&gt;val);
+        if (op == 5) printf(&quot;%d\n&quot;, splay.pred(x));
+        if (op == 6) printf(&quot;%d\n&quot;, splay.succ(x));
     }
 
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    return 0;
 }
 </code></pre>
 
@@ -1319,7 +1321,7 @@ MemoryPool&lt;Splay::Node, MAXN&gt; Splay::Node::pool;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Splay","level":"1.3.3","depth":2,"next":{"title":"Treap(Split & Merge)","level":"1.3.4","depth":2,"path":"002DataStructure/treap.md","ref":"./002DataStructure/treap.md","articles":[]},"previous":{"title":"线段树","level":"1.3.2","depth":2,"path":"002DataStructure/segt.md","ref":"./002DataStructure/segt.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/splay.md","mtime":"2018-12-22T08:09:23.638Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-13T11:49:36.205Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Splay","level":"1.3.3","depth":2,"next":{"title":"Treap(Split & Merge)","level":"1.3.4","depth":2,"path":"002DataStructure/treap.md","ref":"./002DataStructure/treap.md","articles":[]},"previous":{"title":"线段树","level":"1.3.2","depth":2,"path":"002DataStructure/segt.md","ref":"./002DataStructure/segt.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/splay.md","mtime":"2019-02-25T00:22:18.226Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-25T00:51:13.633Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

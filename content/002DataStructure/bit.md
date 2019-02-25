@@ -10,9 +10,7 @@ struct BIT {
     int n;
     long long a[MAXN];
 
-    static int lowbit(int x) {
-        return x & -x;
-    }
+    static constexpr int lowbit(int x) { return x & -x; }
 
     void init(int n) {
         this->n = n;
@@ -28,9 +26,7 @@ struct BIT {
         for (int i = pos; i; i -= lowbit(i)) res += a[i];
         return res;
     }
-    long long query(int l, int r) {
-        return query(r) - query(l - 1);
-    }
+    long long query(int l, int r) { return query(r) - query(l - 1); }
 } bit;
 
 int main() {

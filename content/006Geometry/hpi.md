@@ -19,18 +19,10 @@ struct Point {
     
     Point(double x = 0, double y = 0) : x(x), y(y) {}
     
-    friend Point operator+(const Point &a, const Point &b) {
-        return Point(a.x + b.x, a.y + b.y);
-    }
-    friend Point operator-(const Point &a, const Point &b) {
-        return Point(a.x - b.x, a.y - b.y);
-    }
-    friend Point operator*(const Point &p, const double a) {
-        return Point(p.x * a, p.y * a);
-    }
-    friend double cross(const Point &a, const Point &b) {
-        return a.x * b.y - a.y * b.x;
-    }
+    Point operator+(const Point &rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    Point operator*(double rhs) const { return Point(x * rhs, y * rhs); }
+    friend double cross(const Point &a, const Point &b) { return a.x * b.y - a.y * b.x; }
 } P[MAXN], hpi[MAXN];
 
 struct Line {
@@ -42,9 +34,7 @@ struct Line {
         slop = std::atan2(v.y, v.x);
     }
     
-    Point getVal(double t) const {
-        return p + v * t;
-    }
+    Point getVal(double t) const { return p + v * t; }
     
     bool operator<(const Line &another) const {
         return slop < another.slop || (slop == another.slop && v.x
@@ -58,7 +48,6 @@ struct Line {
 } L[MAXN];
 
 int n;
-
 int halfplaneIntersection() {
     int cnt = 0;
     L[cnt++] = L[0];

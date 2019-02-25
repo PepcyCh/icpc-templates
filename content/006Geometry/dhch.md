@@ -22,9 +22,7 @@ struct Splay {
         Node() {}
         Node(Node *fa, double x, double y) : x(x), y(y), c(), fa(fa), pred(NULL), succ(NULL) {}
 
-        int relation() {
-            return fa->c[1] == this;
-        }
+        int relation() { return fa->c[1] == this; }
     } *root, _pool[MAXN], *_curr;
 
     Splay() : root(NULL), _curr(_pool) {}

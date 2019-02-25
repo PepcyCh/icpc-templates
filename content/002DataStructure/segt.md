@@ -62,9 +62,7 @@ struct SegT {
         int mid = l + ((r - l) >> 1);
         return new (_curr++) Node(_build(l, mid, a), _build(mid + 1, r, a));
     }
-    void build(int l, int r, int *a) {
-        root = _build(l, r, a);
-    }
+    void build(int l, int r, int *a) { root = _build(l, r, a); }
 
     void update(int l, int r, int d) {
         root->update(l, r, d);

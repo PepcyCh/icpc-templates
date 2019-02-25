@@ -103,9 +103,7 @@ void build(bool flag, int n, int &tot) {
     for (int i = 0; i < top - 1; i++) addEdge(stack[i], stack[i + 1]);
 }
 
-bool cmp(int i, int j) {
-    return N[i].dfn < N[j].dfn;
-}
+bool cmp(int i, int j) { return N[i].dfn < N[j].dfn; }
 
 void clear(int n) {
     _currV = _poolV;
@@ -132,7 +130,6 @@ void solve() {
 int main() {
     int n;
     scanf("%d", &n);
-
     for (int i = 1, u, v; i < n; i++) {
         scanf("%d %d", &u, &v);
         addEdge(u, v);

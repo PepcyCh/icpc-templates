@@ -16,9 +16,7 @@ int dcmp(double a, double b = 0) {
     return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
-double sqr(double x) {
-    return x * x;
-}
+double sqr(double x) { return x * x; }
 
 struct Point {
     double x, y;
@@ -30,19 +28,10 @@ struct Point {
         return dcmp(x, rhs.x) == 0 ? y < rhs.y : x < rhs.x;
     }
 
-    Point operator+(const Point &rhs) const {
-        return Point(x + rhs.x, y + rhs.y);
-    }
-    Point operator-(const Point &rhs) const {
-        return Point(x - rhs.x, y - rhs.y);
-    }
-
-    friend double dot(const Point &a, const Point &b) {
-        return a.x * b.x + a.y * b.y;
-    }
-    friend double cross(const Point &a, const Point &b) {
-        return a.x * b.y - a.y * b.x;
-    }
+    Point operator+(const Point &rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    friend double dot(const Point &a, const Point &b) { return a.x * b.x + a.y * b.y; }
+    friend double cross(const Point &a, const Point &b) { return a.x * b.y - a.y * b.x; }
 
     friend double dist(const Point &a, const Point &b) {
         return std::sqrt(sqr(a.x - b.x) + sqr(a.y - b.y));
@@ -231,25 +220,14 @@ void split(int n, Point *P, std::vector<std::pair<int, int> > &ret) {
 
 namespace Kruskal {
 
-struct UFS {
+struct DJS {
     int f[MAXN];
 
-    void init(int n) {
-        for (int i = 1; i <= n; i++) f[i] = i;
-    }
-
-    int find(int x) {
-        return x == f[x] ? x : f[x] = find(f[x]);
-    }
-
-    void merge(int x, int y) {
-        f[find(y)] = find(x);
-    }
-
-    bool test(int x, int y) {
-        return find(x) == find(y);
-    }
-} ufs;
+    void init(int n) { for (int i = 1; i <= n; i++) f[i] = i; }
+    int find(int x) { return x == f[x] ? x : f[x] = find(f[x]); }
+    void merge(int x, int y) { f[find(y)] = find(x); }
+    bool test(int x, int y) { return find(x) == find(y); }
+} djs;
 
 struct Edge {
     int u, v;
@@ -260,13 +238,15 @@ struct Edge {
 std::vector<Edge> edges;
 
 double solve(int n) {
-    std::sort(edges.begin(), edges.end(), [](const Edge &a, const Edge &b){return a.w < b.w;});
-    ufs.init(n);
+    std::sort(edges.begin(), edges.end(), [](const Edge &a, const Edge &b){
+            return a.w < b.w;
+        });
+    djs.init(n);
 
     double ans = 0;
     int added = 0;
-    for (auto e : edges) if (!ufs.test(e.u, e.v)) {
-        ufs.merge(e.u, e.v);
+    for (auto e : edges) if (!djs.test(e.u, e.v)) {
+        djs.merge(e.u, e.v);
         ans += e.w;
         if (++added == n - 1) break;
     }

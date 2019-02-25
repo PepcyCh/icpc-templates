@@ -15,9 +15,7 @@ struct LinkCutTree {
         Node() {}
         Node(int val) : val(val), max(val), rev(false), fa(NULL), pathFa(NULL), c() {}
 
-        int relation() {
-            return fa->c[1] == this;
-        }
+        int relation() { return fa->c[1] == this; }
 
         void maintain() {
             max = val;

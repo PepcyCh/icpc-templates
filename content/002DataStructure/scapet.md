@@ -11,9 +11,7 @@ template <typename T, size_t SIZE>
 struct MemoryPool {
     char mem[sizeof (T) * SIZE], *top, *del[SIZE], **delTop;
 
-    MemoryPool() {
-        init();
-    }
+    MemoryPool() { init(); }
 
     void init() {
         top = mem;
@@ -27,9 +25,7 @@ struct MemoryPool {
         return (void *) res;
     }
 
-    void free(void *p) {
-        *(delTop++) = (char *) p;
-    }
+    void free(void *p) { *(delTop++) = (char *) p; }
 };
 
 struct ScapegoatTree {
@@ -47,12 +43,8 @@ struct ScapegoatTree {
             c[0] = c[1] = NULL;
         }
 
-        void *operator new(size_t) {
-            return pool.alloc();
-        }
-        void operator delete(void *p) {
-            pool.free(p);
-        }
+        void *operator new(size_t) { return pool.alloc(); }
+        void operator delete(void *p) { pool.free(p); }
 
         bool bad() {
             return (c[0] ? c[0]->size : 0) > ALPHA * size

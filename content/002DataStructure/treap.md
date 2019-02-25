@@ -47,9 +47,7 @@ struct Treap {
 
     Treap() : root(NULL), _curr(_pool) {}
 
-    static int size(const Node *u) {
-        return u ? u->size : 0;
-    }
+    static int size(const Node *u) { return u ? u->size : 0; }
 
     Node *_build(int l, int r) {
         if (l > r) return NULL;

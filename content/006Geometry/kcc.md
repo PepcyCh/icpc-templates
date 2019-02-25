@@ -14,32 +14,18 @@ int dcmp(double a, double b = 0.0) {
     return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
-inline double sqr(double x) {
-    return x * x;
-}
-inline double safeSqrt(double x) {
-    return !dcmp(x) ? 0 : std::sqrt(x);
-}
+inline double sqr(double x) { return x * x; }
+inline double safeSqrt(double x) { return !dcmp(x) ? 0 : std::sqrt(x); }
 
 struct Point {
     double x, y;
 
     Point(double x = 0, double y = 0) : x(x), y(y) {}
 
-    friend Point operator+(const Point &a, const Point &b) {
-        return Point(a.x + b.x, a.y + b.y);
-    }
-    friend Point operator-(const Point &a, const Point &b) {
-        return Point(a.x - b.x, a.y - b.y);
-    }
-
-    friend double cross(const Point &a, const Point &b) {
-        return a.x * b.y - a.y * b.x;
-    }
-
-    double length() const {
-        return std::sqrt(x * x + y * y);
-    }
+    Point operator+(const Point &rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    friend double cross(const Point &a, const Point &b) { return a.x * b.y - a.y * b.x; }
+    double length() const { return std::sqrt(x * x + y * y); }
 };
 
 double dist(const Point &a, const Point &b) {
@@ -139,7 +125,7 @@ int main() {
     }
 
     CircleUnion::solve(C, n);
-
+    
     return 0;
 }
 ```

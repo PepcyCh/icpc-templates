@@ -18,33 +18,14 @@ struct Point {
     
     Point(double x = 0, double y = 0) : x(x), y(y) {}
     
-    bool operator<(const Point &rhs) const {
-        return x == rhs.x ? y < rhs.y : x < rhs.x;
-    }
+    bool operator<(const Point &rhs) const { return x == rhs.x ? y < rhs.y : x < rhs.x; }
 
-    Point operator+(const Point &rhs) const {
-        return Point(x + rhs.x, y + rhs.y);
-    }
-
-    Point operator-(const Point &rhs) const {
-        return Point(x - rhs.x, y - rhs.y);
-    }
-
-    Point operator*(const double a) const {
-        return Point(x * a, y * a);
-    }
-
-    Point operator/(const double a) const {
-        return Point(x / a, y / a);
-    }
-
-    friend double dot(const Point &a, const Point &b) {
-        return a.x * b.x + a.y * b.y;
-    }
-
-    friend double cross(const Point &a, const Point &b) {
-        return a.x * b.y - a.y * b.x;
-    }
+    Point operator+(const Point &rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    Point operator*(const double a) const { return Point(x * a, y * a); }
+    Point operator/(const double a) const { return Point(x / a, y / a); }
+    friend double dot(const Point &a, const Point &b) { return a.x * b.x + a.y * b.y; }
+    friend double cross(const Point &a, const Point &b) { return a.x * b.y - a.y * b.x; }
 
     friend double angle(const Point &a, const Point &b) {
         return std::acos(dot(a, b) / a.length() / b.length());
@@ -55,9 +36,7 @@ struct Point {
                      x * std::sin(rad) + y * std::cos(rad));
     }
 
-    double length() const {
-        return std::sqrt(dot(*this, *this));
-    }
+    double length() const { return std::sqrt(dot(*this, *this)); }
 
     Point getPerpendicular() {
         double X = sqrt(1 / (1 + (x / y) * (x / y)));
@@ -72,9 +51,22 @@ struct Point {
     }
 } P[MAXN], ch[MAXN];
 
-Point getLineIntersect(const Point &sa, const Point &ta, const Point &sb, const Point &tb) {
-    double t = cross(tb - sb, sa - sb) / cross(ta - sa, tb - sb);
-    return sa + (sb - sa) * t;
+bool lineIntersect(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &p) {
+    double c1;
+    if (!dcmp(c1 = cross(at - as, bt - bs))) return false;
+    double t = cross(bt - bs, as - bs) / c1;
+    p = as + (bs - as) * t;
+    return true;
+}
+
+bool segIntersect(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &p) {
+	if (!dcmp(cross(at - as, bt - bs))) return false;
+	double c1 = cross(bs - as, at - as), c2 = cross(bt - as, at - as);
+	double c3 = cross(as - bs, bt - bs), c4 = cross(at - bs, bt - bs);
+	if (dcmp(c1) * dcmp(c2) <= 0 && dcmp(c3) * dcmp(c4) <= 0) {
+		p = (at * c3 - as * c4) / (c3 - c4);
+		return true;
+	} else return false;
 }
 
 Point getLineProj(const Point &p, const Point &s, const Point &t) {
@@ -125,6 +117,34 @@ int getv(const Point &p){
 bool cmpByAngle(const Point &a, const Point &b) {
     if (getv(a) == getv(b)) return cross(a, b) > 0;
     else return getv(a) < getv(b);
+}
+
+// *r == *l should be satisfied for the following 3 functions
+double polyArea(Point *l, Point *r) {
+	double sum = 0;
+	for (Point *p = l; p < r; p++)
+        sum += cross(*(p + 1), *p);
+	return std::abs(sum / 2.0);
+}
+
+bool insidePoly(Point *l, Point *r, const Point &p) {
+	int num = 0;
+	for (Point *q = l; q < r; q++) {
+		if (doesPointOnSeg(p, *q, *(q + 1))) return true;
+		int k = dcmp(cross(*(q + 1) - *q, p - *q));
+		int d1 = dcmp(q->y - p.y);
+		int d2 = dcmp((q + 1)->y - p.y);
+		if (k > 0 && d1 <= 0 && d2 > 0) ++num;
+		if (k < 0 && d2 <= 0 && d1 > 0) --num;
+	}
+	return num;
+}
+
+Point polyWeight(Point *l, Point *r, double area) {
+	Point res(0, 0);
+	for (Point *p = l; p < r; p++)
+		res = res + (*p + *(p + 1)) * cross(*(p + 1), *p);
+	return res / area / 6.0;
 }
 
 int main() {

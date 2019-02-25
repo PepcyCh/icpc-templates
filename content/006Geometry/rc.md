@@ -14,6 +14,19 @@ struct Point {
     
     Point(double x = 0, double y = 0) : x(x), y(y) {}
     
+    bool operator<(const Point &rhs) const { return x == rhs.x ? y < rhs.y : x < rhs.x; }
+
+    Point operator+(const Point &rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    Point operator*(const double a) const { return Point(x * a, y * a); }
+    Point operator/(const double a) const { return Point(x / a, y / a); }
+    friend double dot(const Point &a, const Point &b) { return a.x * b.x + a.y * b.y; }
+    friend double cross(const Point &a, const Point &b) { return a.x * b.y - a.y * b.x; }
+
+    friend double dist(const Point &a, const Point &b) {
+        return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+    }
+
     void print() {
         if (std::abs(x) <= EPS) x = 0;
         if (std::abs(y) <= EPS) y = 0;
@@ -29,35 +42,8 @@ struct Point {
         else if (x <= 0 && y > 0) sx = -1, sy = -1;
         else sx = 1, sy = -1;
         
-        return Point(X * sx, std::sqrt(1 - X * X) * sy);
-    }
-    
-    bool operator<(const Point &another) const {
-        return x < another.x || (x == another.x && y < another.y);
-    }
-    
-    friend Point operator+(const Point &a, const Point &b) {
-        return Point(a.x + b.x, a.y + b.y);
-    }
-    friend Point operator-(const Point &a, const Point &b) {
-        return Point(a.x - b.x, a.y - b.y);
-    }
-    friend Point operator*(const Point &p, const double a) {
-        return Point(p.x * a, p.y * a);
-    }
-    friend Point operator/(const Point &p, const double a) {
-        return Point(p.x / a, p.y / a);
-    }
-    friend double dot(const Point &a, const Point &b) {
-        return a.x * b.x + a.y * b.y;
-    }
-    friend double cross(const Point &a, const Point &b) {
-        return a.x * b.y - a.y * b.x;
-    }
-    
-    friend double dist(const Point &a, const Point &b) {
-        return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
-    }
+        return Point(sx * X, sy * std::sqrt(1 - X * X));
+    }    
 } P[MAXN], ch[MAXN];
 
 struct Rectangle {
@@ -70,9 +56,7 @@ struct Rectangle {
         for (int i = 0; i < 4; i++) p[(i + temp) % 4].print();
     }
     
-    Point &operator[](int i) {
-        return p[i];
-    }
+    Point &operator[](int i) { return p[i]; }
 };
 
 int getConvexHull(int n) {

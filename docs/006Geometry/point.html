@@ -466,7 +466,20 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.12" data-path="../003Graph/vtree.html">
+        <li class="chapter " data-level="1.4.12" data-path="../003Graph/cl.html">
+            
+                <a href="../003Graph/cl.html">
+            
+                    
+                    最小树形图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.13" data-path="../003Graph/vtree.html">
             
                 <a href="../003Graph/vtree.html">
             
@@ -1065,33 +1078,14 @@ struct Point {
 
     Point(double x = 0, double y = 0) : x(x), y(y) {}
 
-    bool operator&lt;(const Point &amp;rhs) const {
-        return x == rhs.x ? y &lt; rhs.y : x &lt; rhs.x;
-    }
+    bool operator&lt;(const Point &amp;rhs) const { return x == rhs.x ? y &lt; rhs.y : x &lt; rhs.x; }
 
-    Point operator+(const Point &amp;rhs) const {
-        return Point(x + rhs.x, y + rhs.y);
-    }
-
-    Point operator-(const Point &amp;rhs) const {
-        return Point(x - rhs.x, y - rhs.y);
-    }
-
-    Point operator*(const double a) const {
-        return Point(x * a, y * a);
-    }
-
-    Point operator/(const double a) const {
-        return Point(x / a, y / a);
-    }
-
-    friend double dot(const Point &amp;a, const Point &amp;b) {
-        return a.x * b.x + a.y * b.y;
-    }
-
-    friend double cross(const Point &amp;a, const Point &amp;b) {
-        return a.x * b.y - a.y * b.x;
-    }
+    Point operator+(const Point &amp;rhs) const { return Point(x + rhs.x, y + rhs.y); }
+    Point operator-(const Point &amp;rhs) const { return Point(x - rhs.x, y - rhs.y); }
+    Point operator*(const double a) const { return Point(x * a, y * a); }
+    Point operator/(const double a) const { return Point(x / a, y / a); }
+    friend double dot(const Point &amp;a, const Point &amp;b) { return a.x * b.x + a.y * b.y; }
+    friend double cross(const Point &amp;a, const Point &amp;b) { return a.x * b.y - a.y * b.x; }
 
     friend double angle(const Point &amp;a, const Point &amp;b) {
         return std::acos(dot(a, b) / a.length() / b.length());
@@ -1102,9 +1096,7 @@ struct Point {
                      x * std::sin(rad) + y * std::cos(rad));
     }
 
-    double length() const {
-        return std::sqrt(dot(*this, *this));
-    }
+    double length() const { return std::sqrt(dot(*this, *this)); }
 
     Point getPerpendicular() {
         double X = sqrt(1 / (1 + (x / y) * (x / y)));
@@ -1119,9 +1111,22 @@ struct Point {
     }
 } P[MAXN], ch[MAXN];
 
-Point getLineIntersect(const Point &amp;sa, const Point &amp;ta, const Point &amp;sb, const Point &amp;tb) {
-    double t = cross(tb - sb, sa - sb) / cross(ta - sa, tb - sb);
-    return sa + (sb - sa) * t;
+bool lineIntersect(const Point &amp;as, const Point &amp;at, const Point &amp;bs, const Point &amp;bt, Point &amp;p) {
+    double c1;
+    if (!dcmp(c1 = cross(at - as, bt - bs))) return false;
+    double t = cross(bt - bs, as - bs) / c1;
+    p = as + (bs - as) * t;
+    return true;
+}
+
+bool segIntersect(const Point &amp;as, const Point &amp;at, const Point &amp;bs, const Point &amp;bt, Point &amp;p) {
+    if (!dcmp(cross(at - as, bt - bs))) return false;
+    double c1 = cross(bs - as, at - as), c2 = cross(bt - as, at - as);
+    double c3 = cross(as - bs, bt - bs), c4 = cross(at - bs, bt - bs);
+    if (dcmp(c1) * dcmp(c2) &lt;= 0 &amp;&amp; dcmp(c3) * dcmp(c4) &lt;= 0) {
+        p = (at * c3 - as * c4) / (c3 - c4);
+        return true;
+    } else return false;
 }
 
 Point getLineProj(const Point &amp;p, const Point &amp;s, const Point &amp;t) {
@@ -1174,6 +1179,34 @@ bool cmpByAngle(const Point &amp;a, const Point &amp;b) {
     else return getv(a) &lt; getv(b);
 }
 
+// *r == *l should be satisfied for the following 3 functions
+double polyArea(Point *l, Point *r) {
+    double sum = 0;
+    for (Point *p = l; p &lt; r; p++)
+        sum += cross(*(p + 1), *p);
+    return std::abs(sum / 2.0);
+}
+
+bool insidePoly(Point *l, Point *r, const Point &amp;p) {
+    int num = 0;
+    for (Point *q = l; q &lt; r; q++) {
+        if (doesPointOnSeg(p, *q, *(q + 1))) return true;
+        int k = dcmp(cross(*(q + 1) - *q, p - *q));
+        int d1 = dcmp(q-&gt;y - p.y);
+        int d2 = dcmp((q + 1)-&gt;y - p.y);
+        if (k &gt; 0 &amp;&amp; d1 &lt;= 0 &amp;&amp; d2 &gt; 0) ++num;
+        if (k &lt; 0 &amp;&amp; d2 &lt;= 0 &amp;&amp; d1 &gt; 0) --num;
+    }
+    return num;
+}
+
+Point polyWeight(Point *l, Point *r, double area) {
+    Point res(0, 0);
+    for (Point *p = l; p &lt; r; p++)
+        res = res + (*p + *(p + 1)) * cross(*(p + 1), *p);
+    return res / area / 6.0;
+}
+
 int main() {
 
     return 0;
@@ -1222,7 +1255,7 @@ int main() {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"点相关","level":"1.7.4","depth":2,"next":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"previous":{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"006Geometry/point.md","mtime":"2019-01-30T14:39:57.554Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-13T11:49:36.205Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"点相关","level":"1.7.4","depth":2,"next":{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.5","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},"previous":{"title":"k 次圆覆盖","level":"1.7.3","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"006Geometry/point.md","mtime":"2019-02-25T00:15:24.241Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-02-25T00:51:13.633Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

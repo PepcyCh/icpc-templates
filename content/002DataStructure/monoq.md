@@ -21,13 +21,9 @@ struct MonoQueue {
         if (x == m.front()) m.pop_front();
     }
 
-    size_t size() {
-        return q.size();
-    }
+    size_t size() { return q.size(); }
 
-    int top() {
-        return m.front();
-    }
+    int top() { return m.front(); }
 };
 
 int main() {

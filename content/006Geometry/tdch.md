@@ -15,12 +15,8 @@ int dcmp(double a, double b = 0) {
     return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
-double asqrt(double x) {
-    return x <= EPS ? 0 : std::sqrt(x);
-}
-double sqr(double x) {
-    return x * x;
-}
+double asqrt(double x) { return x <= EPS ? 0 : std::sqrt(x); }
+double sqr(double x) { return x * x; }
 
 struct Point {
     double x, y, z;
