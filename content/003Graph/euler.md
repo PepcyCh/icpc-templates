@@ -39,19 +39,19 @@ namespace Hierholzer {
     std::vector<Node *> euler;
 
     void hierholzer(int s) {
-        currPath.push(&N[s]);
+        currPath.push(&N[s]); // delete this line if a Eulerian Path is required
         Node *u = &N[s];
         do {
             if (u->odeg == 0) {
-                euler.push_back(u);
-                u = currPath.top();
+                euler.push_back(currPath.top());
                 currPath.pop();
+                if (!currPath.empty()) u = currPath.top();
             } else {
-                currPath.push(u);
                 Node *v = u->curr->v;
                 u->curr = u->curr->next;
                 --u->odeg;
                 u = v;
+                currPath.push(u);
             }
         } while (!currPath.empty());
     }
@@ -92,7 +92,7 @@ int main() {
     } else {
         puts("-1");
     }
-
+    
     return 0;
 }
 ```
@@ -137,21 +137,21 @@ namespace Hierholzer {
     std::vector<Node *> euler;
 
     void hierholzer(int s) {
-        currPath.push(&N[s]);
+        currPath.push(&N[s]); // delete this line if a Eulerian Path is required
         Node *u = &N[s];
         do {
             if (u->deg == 0) {
-                euler.push_back(u);
-                u = currPath.top();
+                euler.push_back(currPath.top());
                 currPath.pop();
+                if (!currPath.empty()) u = currPath.top();
             } else {
-                currPath.push(u);
                 Node *v = u->e.front().v;
                 v->e.erase(u->e.front().rev);
                 u->e.erase(u->e.begin());
                 --u->deg;
                 --v->deg;
                 u = v;
+                currPath.push(u);
             }
         } while (!currPath.empty());
     }
@@ -188,7 +188,7 @@ int main() {
     } else {
         puts("-1");
     }
-
+    
     return 0;
 }
 ```
