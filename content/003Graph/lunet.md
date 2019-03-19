@@ -55,53 +55,47 @@ Pair addEdge(int u, int v, int lower, int upper) {
 namespace Dinic {
     bool level(Node *s, Node *t, int n) {
         for (int i = 0; i < n; i++) N[i].level = 0;
-
-        std::queue<Node *> q;
+        static std::queue<Node *> q;
         q.push(s);
         s->level = 1;
-
         while (!q.empty()) {
             Node *u = q.front();
             q.pop();
-
             for (Edge *e = &u->e.front(); e <= &u->e.back(); e++) {
                 if (e->cap > e->flow && e->v->level == 0) {
                     e->v->level = u->level + 1;
-                    if (e->v == t) return true;
                     q.push(e->v);
                 }
             }
         }
-
-        return false;
+        return t->level;
     }
 
     int findPath(Node *u, Node *t, int limit = INT_MAX) {
         if (u == t) return limit;
-
+        int res = 0;
         for (Edge *&e = u->curr; e <= &u->e.back(); e++) {
             if (e->cap > e->flow && e->v->level == u->level + 1) {
                 int flow = findPath(e->v, t, std::min(limit, e->cap - e->flow));
                 if (flow > 0) {
                     e->flow += flow;
                     e->v->e[e->rev].flow -= flow;
-                    return flow;
-                }
+                    limit -= flow;
+                    res += flow;
+                    if (limit <= 0) return res;
+                } else e->v->level = -1;
             }
         }
-
-        return 0;
+        return res;
     }
 
     int solve(int s, int t, int n) {
         int res = 0;
-
         while (level(&N[s], &N[t], n)) {
             for (int i = 0; i < n; i++) N[i].curr = &N[i].e.front();
             int flow;
             while ((flow = findPath(&N[s], &N[t])) > 0) res += flow;
         }
-
         return res;
     }
 }
@@ -180,53 +174,47 @@ void addEdge(int u, int v, int lower, int upper) {
 namespace Dinic {
     bool level(Node *s, Node *t, int n) {
         for (int i = 0; i < n; i++) N[i].level = 0;
-
-        std::queue<Node *> q;
+        static std::queue<Node *> q;
         q.push(s);
         s->level = 1;
-
         while (!q.empty()) {
             Node *u = q.front();
             q.pop();
-
             for (Edge *e = &u->e.front(); e <= &u->e.back(); e++) {
                 if (e->cap > e->flow && e->v->level == 0) {
                     e->v->level = u->level + 1;
-                    if (e->v == t) return true;
                     q.push(e->v);
                 }
             }
         }
-
-        return false;
+        return t->level;
     }
 
     int findPath(Node *u, Node *t, int limit = INT_MAX) {
         if (u == t) return limit;
-
+        int res = 0;
         for (Edge *&e = u->curr; e <= &u->e.back(); e++) {
             if (e->cap > e->flow && e->v->level == u->level + 1) {
                 int flow = findPath(e->v, t, std::min(limit, e->cap - e->flow));
                 if (flow > 0) {
                     e->flow += flow;
                     e->v->e[e->rev].flow -= flow;
-                    return flow;
-                }
+                    limit -= flow;
+                    res += flow;
+                    if (limit <= 0) return res;
+                } else e->v->level = -1;
             }
         }
-
-        return 0;
+        return res;
     }
 
     int solve(int s, int t, int n) {
         int res = 0;
-
         while (level(&N[s], &N[t], n)) {
             for (int i = 0; i < n; i++) N[i].curr = &N[i].e.front();
             int flow;
             while ((flow = findPath(&N[s], &N[t])) > 0) res += flow;
         }
-
         return res;
     }
 }
@@ -307,53 +295,47 @@ Edge *addEdge(int u, int v, int lower, int upper) {
 namespace Dinic {
     bool level(Node *s, Node *t, int n) {
         for (int i = 0; i < n; i++) N[i].level = 0;
-
-        std::queue<Node *> q;
+        static std::queue<Node *> q;
         q.push(s);
         s->level = 1;
-
         while (!q.empty()) {
             Node *u = q.front();
             q.pop();
-
             for (Edge *e = u->e; e; e = e->next) {
                 if (e->cap > e->flow && e->v->level == 0) {
                     e->v->level = u->level + 1;
-                    if (e->v == t) return true;
                     q.push(e->v);
                 }
             }
         }
-
-        return false;
+        return t->level;
     }
 
     int findPath(Node *u, Node *t, int limit = INT_MAX) {
         if (u == t) return limit;
-
+        int res = 0;
         for (Edge *&e = u->curr; e; e = e->next) {
             if (e->cap > e->flow && e->v->level == u->level + 1) {
                 int flow = findPath(e->v, t, std::min(limit, e->cap - e->flow));
                 if (flow > 0) {
                     e->flow += flow;
                     e->rev->flow -= flow;
-                    return flow;
-                }
+                    limit -= flow;
+                    res += flow;
+                    if (limit <= 0) return res;
+                } else e->v->level = -1;
             }
         }
-
-        return 0;
+        return res;
     }
 
     int solve(int s, int t, int n) {
         int res = 0;
-
         while (level(&N[s], &N[t], n)) {
             for (int i = 0; i < n; i++) N[i].curr = N[i].e;
             int flow;
             while ((flow = findPath(&N[s], &N[t])) > 0) res += flow;
         }
-
         return res;
     }
 }

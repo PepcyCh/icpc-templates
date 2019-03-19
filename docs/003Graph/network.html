@@ -505,6 +505,32 @@
             
         </li>
     
+        <li class="chapter " data-level="1.4.15" data-path="hk.html">
+            
+                <a href="hk.html">
+            
+                    
+                    二分图最大匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.16" data-path="km.html">
+            
+                <a href="km.html">
+            
+                    
+                    二分图最大权完备匹配
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -1082,8 +1108,8 @@
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1000005</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">4000005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">105</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">5005</span>;
 
 <span class="hljs-keyword">struct</span> Edge;
 <span class="hljs-keyword">struct</span> Node;
@@ -1109,54 +1135,47 @@
 <span class="hljs-keyword">namespace</span> Dinic {
     <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">level</span><span class="hljs-params">(Node *s, Node *t, <span class="hljs-keyword">int</span> n)</span> </span>{
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].level = <span class="hljs-number">0</span>;
-
         <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
-        <span class="hljs-keyword">while</span> (!q.empty()) q.pop();
         q.push(s);
         s-&gt;level = <span class="hljs-number">1</span>;
-
         <span class="hljs-keyword">while</span> (!q.empty()) {
             Node *u = q.front();
             q.pop();
-
             <span class="hljs-keyword">for</span> (Edge *e = &amp;u-&gt;e.front(); e &lt;= &amp;u-&gt;e.back(); e++) {
                 <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == <span class="hljs-number">0</span>) {
                     e-&gt;v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
-                    <span class="hljs-keyword">if</span> (e-&gt;v == t) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
                     q.push(e-&gt;v);
                 }
             }
         }
-
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">return</span> t-&gt;level;
     }
 
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findPath</span><span class="hljs-params">(Node *u, Node *t, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
         <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
-
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e &lt;= &amp;u-&gt;e.back(); e++) {
             <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == u-&gt;level + <span class="hljs-number">1</span>) {
                 <span class="hljs-keyword">int</span> flow = findPath(e-&gt;v, t, <span class="hljs-built_in">std</span>::min(limit, e-&gt;cap - e-&gt;flow));
                 <span class="hljs-keyword">if</span> (flow &gt; <span class="hljs-number">0</span>) {
                     e-&gt;flow += flow;
                     e-&gt;v-&gt;e[e-&gt;rev].flow -= flow;
-                    <span class="hljs-keyword">return</span> flow;
-                }
+                    limit -= flow;
+                    res += flow;
+                    <span class="hljs-keyword">if</span> (limit &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
+                } <span class="hljs-keyword">else</span> e-&gt;v-&gt;level = <span class="hljs-number">-1</span>;
             }
         }
-
-        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> res;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-
+    <span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">while</span> (level(&amp;N[s], &amp;N[t], n)) {
             <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].curr = &amp;N[i].e.front();
             <span class="hljs-keyword">int</span> flow;
             <span class="hljs-keyword">while</span> ((flow = findPath(&amp;N[s], &amp;N[t])) &gt; <span class="hljs-number">0</span>) res += flow;
         }
-
         <span class="hljs-keyword">return</span> res;
     }
 }
@@ -1170,7 +1189,7 @@
         addEdge(u, v, w);
     }
 
-    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, Dinic::solve(s, t, n));
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, Dinic::solve(s, t, n));
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
@@ -1328,7 +1347,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"网络流","level":"1.4.7","depth":2,"next":{"title":"费用流","level":"1.4.8","depth":2,"path":"003Graph/costnet.md","ref":"./003Graph/costnet.md","articles":[]},"previous":{"title":"树链剖分","level":"1.4.6","depth":2,"path":"003Graph/tsplit.md","ref":"./003Graph/tsplit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/network.md","mtime":"2018-11-09T10:41:21.603Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-04T08:06:21.949Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"网络流","level":"1.4.7","depth":2,"next":{"title":"费用流","level":"1.4.8","depth":2,"path":"003Graph/costnet.md","ref":"./003Graph/costnet.md","articles":[]},"previous":{"title":"树链剖分","level":"1.4.6","depth":2,"path":"003Graph/tsplit.md","ref":"./003Graph/tsplit.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/network.md","mtime":"2019-03-19T09:18:16.523Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-03-19T10:10:46.687Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
