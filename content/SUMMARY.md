@@ -36,6 +36,7 @@
     * [虚树](./003Graph/vtree.md)
     * [二分图最大匹配](./003Graph/hk.md)
     * [二分图最大权完备匹配](003Graph/km.md)
+    * [一般图最大匹配](./003Graph/bls.md)
 
 * [字符串](./004String/README.md)
     * [Hash](./004String/hash.md)
