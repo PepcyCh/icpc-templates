@@ -19,9 +19,9 @@ struct SparseTable {
 
         for (int i = 1; i <= n; i++) st[i][0] = a[i];
 
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= log[n]; j++) {
-                if (i + (1 << j) <= n) st[i][j] = std::min(st[i][j - 1], st[i + (1 << j)][j - 1]);
+        for (int j = 1; j <= log[n]; j++) {
+            for (int i = 1; i <= n; i++) {
+                if (i + (1 << (j - 1)) <= n) st[i][j] = std::min(st[i][j - 1], st[i + (1 << (j - 1))][j - 1]);
                 else st[i][j] = st[i][j - 1];
             }
         }
