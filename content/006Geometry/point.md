@@ -51,15 +51,19 @@ struct Point {
     }
 } P[MAXN], ch[MAXN];
 
-bool lineIntersect(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &p) {
-    double c1;
-    if (!dcmp(c1 = cross(at - as, bt - bs))) return false;
-    double t = cross(bt - bs, as - bs) / c1;
-    p = as + (bs - as) * t;
+bool parallel(const Point &as, const Point &at, const Point &bs, const Point &bt) {
+    return dcmp(cross(at - as, bt - bs)) == 0;
+}
+
+bool getLineInter(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &res) {
+    if (parallel(as, at, bs, bt)) return false;
+    double c1 = cross(as - bs, bt - bs);
+    double c2 = cross(at - bs, bt - bs);
+    res = (at * c1 - as * c2) / (c1 - c2);
     return true;
 }
 
-bool segIntersect(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &p) {
+bool getSegInter(const Point &as, const Point &at, const Point &bs, const Point &bt, Point &p) {
 	if (!dcmp(cross(at - as, bt - bs))) return false;
 	double c1 = cross(bs - as, at - as), c2 = cross(bt - as, at - as);
 	double c3 = cross(as - bs, bt - bs), c4 = cross(at - bs, bt - bs);
