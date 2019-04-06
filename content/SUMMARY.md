@@ -68,6 +68,7 @@
     * [旋转卡壳](./006Geometry/rc.md)
     * [半平面交](./006Geometry/hpi.md)
     * [k 次圆覆盖](./006Geometry/kcc.md)
+    * [平面图区域（Farmland）](./006Geometry/farmland.md)
     * [Deluanay 三角剖分与平面欧几里得距离最小生成树](./006Geometry/deluanay.md)
     * [三维凸包](./006Geometry/tdch.md)
     * [动态半凸壳](./006Geometry/dhch.md)
