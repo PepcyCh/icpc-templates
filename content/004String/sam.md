@@ -68,7 +68,7 @@ struct SAM {
     void calc() {
         toposort();
 
-        for (int i = topo.size() - 2; i; i--) topo[i]->next->posCnt += topo[i]->posCnt;
+        for (int i = topo.size() - 1; i; i--) topo[i]->next->posCnt += topo[i]->posCnt;
     }
 } sam;
 

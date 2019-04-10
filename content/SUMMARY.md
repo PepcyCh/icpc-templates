@@ -41,6 +41,7 @@
 * [字符串](./004String/README.md)
     * [Hash](./004String/hash.md)
     * [KMP](./004String/kmp.md)
+    * [扩展 KMP](./004String/exkmp.md)
     * [后缀数组](./004String/sa.md)
     * [后缀自动机](./004String/sam.md)
     * [AC 自动机](./004String/acam.md)
