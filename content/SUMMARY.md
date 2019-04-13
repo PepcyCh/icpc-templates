@@ -49,6 +49,7 @@
     * [回文树](./004String/pam.md)
 
 * [数学](./005Math/README.md)
+    * [欧几里得算法](./005Math/exgcd.md)
     * [组合数与 Lucas 定理](./005Math/combi.md)
     * [线性预处理逆元](./005Math/inv.md)
     * [欧拉筛](./005Math/seive.md)

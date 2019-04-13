@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>拉格朗日插值 · GitBook</title>
+        <title>欧几里得算法 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../006Geometry/" />
+    <link rel="next" href="combi.html" />
     
     
-    <link rel="prev" href="lr.html" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -686,7 +686,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.6.1" data-path="exgcd.html">
+        <li class="chapter active" data-level="1.6.1" data-path="exgcd.html">
             
                 <a href="exgcd.html">
             
@@ -868,7 +868,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.6.15" data-path="lagrange.html">
+        <li class="chapter " data-level="1.6.15" data-path="lagrange.html">
             
                 <a href="lagrange.html">
             
@@ -1136,7 +1136,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >拉格朗日插值</a>
+        <a href=".." >欧几里得算法</a>
     </h1>
 </div>
 
@@ -1151,59 +1151,19 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x62C9;&#x683C;&#x6717;&#x65E5;&#x63D2;&#x503C;&#xFF08;lagrange-interpolation-polynomial&#xFF09;">&#x62C9;&#x683C;&#x6717;&#x65E5;&#x63D2;&#x503C;&#xFF08;Lagrange Interpolation Polynomial&#xFF09;</h1>
-<p>&#x8F93;&#x5165;&#x4E3A; n &#x6B21;&#x591A;&#x9879;&#x5F0F;&#x5728; x = 0, 1,..., n &#x7684;&#x503C;&#x3002;</p>
+                                <h1 id="&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x7B97;&#x6CD5;&#xFF08;euclidean-algorithm&#xFF09;">&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x7B97;&#x6CD5;&#xFF08;Euclidean Algorithm&#xFF09;</h1>
 <pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1000005</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD = <span class="hljs-number">1000000007</span>;
-
-<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">qpow</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> n)</span> </span>{
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span> (; n; n &gt;&gt;= <span class="hljs-number">1</span>, a = a * a % MOD) <span class="hljs-keyword">if</span> (n &amp; <span class="hljs-number">1</span>) res = res * a % MOD;
-    <span class="hljs-keyword">return</span> res;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+    <span class="hljs-keyword">return</span> b ? gcd(b, a % b) : a;
 }
 
-<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> fact[MAXN], invFact[MAXN];
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
-    fact[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; MAXN; i++) fact[i] = fact[i - <span class="hljs-number">1</span>] * i % MOD;
-    invFact[MAXN - <span class="hljs-number">1</span>] = qpow(fact[MAXN - <span class="hljs-number">1</span>], MOD - <span class="hljs-number">2</span>);
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = MAXN - <span class="hljs-number">2</span>; ~i; i--) invFact[i] = invFact[i + <span class="hljs-number">1</span>] * (i + <span class="hljs-number">1</span>) % MOD;
-}
-
-<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">Lagrange</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> x)</span> </span>{
-    <span class="hljs-keyword">if</span> (x &lt;= n) <span class="hljs-keyword">return</span> a[x];
-
-    <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> f1[MAXN], f2[MAXN];
-    f1[<span class="hljs-number">0</span>] = f2[n + <span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n + <span class="hljs-number">1</span>; i++) f1[i] = f1[i - <span class="hljs-number">1</span>] * (x - i + <span class="hljs-number">1</span>) % MOD;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n; ~i; i--) f2[i] = f2[i + <span class="hljs-number">1</span>] * (x - i) % MOD;
-
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) {
-        <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> temp = a[i] * f1[i] % MOD * f2[i + <span class="hljs-number">1</span>] % MOD * invFact[i] % MOD * invFact[n - i] % MOD;
-        (n - i) % <span class="hljs-number">2</span> ? res -= temp : res += temp;
-        res &gt;= MOD ? res -= MOD : <span class="hljs-number">0</span>;
-        res &lt; <span class="hljs-number">0</span> ? res += MOD : <span class="hljs-number">0</span>;
-    }
-
-    <span class="hljs-keyword">return</span> res;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exgcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b, <span class="hljs-keyword">int</span> &amp;g, <span class="hljs-keyword">int</span> &amp;x, <span class="hljs-keyword">int</span> &amp;y)</span> </span>{
+    <span class="hljs-keyword">if</span> (b == <span class="hljs-number">0</span>) x = <span class="hljs-number">1</span>, y = <span class="hljs-number">0</span>, g = a;
+    <span class="hljs-keyword">else</span> exgcd(b, a % b, g, y, x), y -= a / b * x;
 }
 
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    init();
-
-    <span class="hljs-keyword">int</span> n;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;n);
-
-    <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a[MAXN + <span class="hljs-number">1</span>];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;a[i]);
-
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> x;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;x);
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ans = Lagrange(a, n, x);
-    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, ans);
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
@@ -1235,12 +1195,12 @@
 
             
                 
-                <a href="lr.html" class="navigation navigation-prev " aria-label="Previous page: 常系数线性齐次递推">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 数学">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="../006Geometry/" class="navigation navigation-next " aria-label="Next page: 计算几何">
+                <a href="combi.html" class="navigation navigation-next " aria-label="Next page: 组合数与 Lucas 定理">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1251,7 +1211,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"拉格朗日插值","level":"1.6.15","depth":2,"next":{"title":"计算几何","level":"1.7","depth":1,"path":"006Geometry/README.md","ref":"./006Geometry/README.md","articles":[{"title":"点相关","level":"1.7.1","depth":2,"path":"006Geometry/point.md","ref":"./006Geometry/point.md","articles":[]},{"title":"旋转卡壳","level":"1.7.2","depth":2,"path":"006Geometry/rc.md","ref":"./006Geometry/rc.md","articles":[]},{"title":"半平面交","level":"1.7.3","depth":2,"path":"006Geometry/hpi.md","ref":"./006Geometry/hpi.md","articles":[]},{"title":"k 次圆覆盖","level":"1.7.4","depth":2,"path":"006Geometry/kcc.md","ref":"./006Geometry/kcc.md","articles":[]},{"title":"平面图区域（Farmland）","level":"1.7.5","depth":2,"path":"006Geometry/farmland.md","ref":"./006Geometry/farmland.md","articles":[]},{"title":"Deluanay 三角剖分与平面欧几里得距离最小生成树","level":"1.7.6","depth":2,"path":"006Geometry/deluanay.md","ref":"./006Geometry/deluanay.md","articles":[]},{"title":"三维凸包","level":"1.7.7","depth":2,"path":"006Geometry/tdch.md","ref":"./006Geometry/tdch.md","articles":[]},{"title":"动态半凸壳","level":"1.7.8","depth":2,"path":"006Geometry/dhch.md","ref":"./006Geometry/dhch.md","articles":[]},{"title":"自适应辛普森积分","level":"1.7.9","depth":2,"path":"006Geometry/simpson.md","ref":"./006Geometry/simpson.md","articles":[]}]},"previous":{"title":"常系数线性齐次递推","level":"1.6.14","depth":2,"path":"005Math/lr.md","ref":"./005Math/lr.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"005Math/lagrange.md","mtime":"2019-01-19T13:28:21.033Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-04-13T00:25:44.539Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"欧几里得算法","level":"1.6.1","depth":2,"next":{"title":"组合数与 Lucas 定理","level":"1.6.2","depth":2,"path":"005Math/combi.md","ref":"./005Math/combi.md","articles":[]},"previous":{"title":"数学","level":"1.6","depth":1,"path":"005Math/README.md","ref":"./005Math/README.md","articles":[{"title":"欧几里得算法","level":"1.6.1","depth":2,"path":"005Math/exgcd.md","ref":"./005Math/exgcd.md","articles":[]},{"title":"组合数与 Lucas 定理","level":"1.6.2","depth":2,"path":"005Math/combi.md","ref":"./005Math/combi.md","articles":[]},{"title":"线性预处理逆元","level":"1.6.3","depth":2,"path":"005Math/inv.md","ref":"./005Math/inv.md","articles":[]},{"title":"欧拉筛","level":"1.6.4","depth":2,"path":"005Math/seive.md","ref":"./005Math/seive.md","articles":[]},{"title":"杜教筛","level":"1.6.5","depth":2,"path":"005Math/sums.md","ref":"./005Math/sums.md","articles":[]},{"title":"中国剩余定理","level":"1.6.6","depth":2,"path":"005Math/crt.md","ref":"./005Math/crt.md","articles":[]},{"title":"BSGS","level":"1.6.7","depth":2,"path":"005Math/bsgs.md","ref":"./005Math/bsgs.md","articles":[]},{"title":"线性基","level":"1.6.8","depth":2,"path":"005Math/lb.md","ref":"./005Math/lb.md","articles":[]},{"title":"高斯消元","level":"1.6.9","depth":2,"path":"005Math/guass.md","ref":"./005Math/guass.md","articles":[]},{"title":"Miller-Rabin","level":"1.6.10","depth":2,"path":"005Math/mr.md","ref":"./005Math/mr.md","articles":[]},{"title":"Pollard's Rho","level":"1.6.11","depth":2,"path":"005Math/pr.md","ref":"./005Math/pr.md","articles":[]},{"title":"快速傅立叶变换","level":"1.6.12","depth":2,"path":"005Math/fft.md","ref":"./005Math/fft.md","articles":[]},{"title":"原根","level":"1.6.13","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},{"title":"常系数线性齐次递推","level":"1.6.14","depth":2,"path":"005Math/lr.md","ref":"./005Math/lr.md","articles":[]},{"title":"拉格朗日插值","level":"1.6.15","depth":2,"path":"005Math/lagrange.md","ref":"./005Math/lagrange.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"005Math/exgcd.md","mtime":"2019-04-13T00:24:42.916Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-04-13T00:25:44.539Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
