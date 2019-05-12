@@ -38,16 +38,9 @@ struct Point {
 
     double length() const { return std::sqrt(dot(*this, *this)); }
 
-    Point getPerpendicular() {
-        double X = sqrt(1 / (1 + (x / y) * (x / y)));
-
-        int sx, sy;
-        if (x > 0 && y > 0) sx = 1, sy = -1;
-        else if (x > 0 && y <= 0) sx = 1, sy = 1;
-        else if (x <= 0 && y > 0) sx = -1, sy = -1;
-        else sx = 1, sy = -1;
-
-        return Point(sx * X, sy * sqrt(1 - X * X));
+    Point getNormal() {
+        Point res(-y, x);
+        return res / length();
     }
 } P[MAXN], ch[MAXN];
 
