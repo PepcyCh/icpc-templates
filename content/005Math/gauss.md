@@ -13,7 +13,7 @@ int dcmp(double a, double b = 0.0) {
     return std::abs(d) <= EPS ? 0 : (d > 0 ? 1 : -1);
 }
 
-namespace GuassJordan {
+namespace GaussJordan {
     double a[MAXN][MAXN];
 
     bool solve(int n) {
@@ -37,12 +37,12 @@ int main() {
     int n;
     scanf("%d", &n);
 
-    using GuassJordan::a;
+    using GaussJordan::a;
 
     for (int i = 0; i < n; i++) for (int j = 0; j <= n; j++)
         scanf("%lf", &a[i][j]);
 
-    if (!GuassJordan::solve(n)) puts("-1");
+    if (!GaussJordan::solve(n)) puts("-1");
     else for (int i = 0; i < n; i++) printf("%.4lf\n", a[i][n] / a[i][i]);
 
     return 0;

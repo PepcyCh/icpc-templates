@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>数学 · GitBook</title>
+        <title>多项式逆元 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="exgcd.html" />
+    <link rel="next" href="root.html" />
     
     
-    <link rel="prev" href="../004String/pam.html" />
+    <link rel="prev" href="fft.html" />
     
 
     </head>
@@ -672,7 +672,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.6" data-path="./">
+        <li class="chapter " data-level="1.6" data-path="./">
             
                 <a href="./">
             
@@ -842,7 +842,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.13" data-path="polyinv.html">
+        <li class="chapter active" data-level="1.6.13" data-path="polyinv.html">
             
                 <a href="polyinv.html">
             
@@ -1149,7 +1149,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >数学</a>
+        <a href=".." >多项式逆元</a>
     </h1>
 </div>
 
@@ -1164,37 +1164,138 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x6570;&#x5B66;">&#x6570;&#x5B66;</h1>
-<ul>
-<li>&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x7B97;&#x6CD5;&#x4E0E;&#x6269;&#x5C55;&#x6B27;&#x51E0;&#x91CC;&#x5F97;&#x7B97;&#x6CD5;</li>
-<li>&#x7EC4;&#x5408;&#x6570;&#x4E0E; Lucas &#x5B9A;&#x7406;</li>
-<li>&#x7EBF;&#x6027;&#x9884;&#x5904;&#x7406;&#x9006;&#x5143;</li>
-<li>&#x6B27;&#x62C9;&#x7B5B;</li>
-<li>&#x675C;&#x6559;&#x7B5B;</li>
-<li>&#x4E2D;&#x56FD;&#x5269;&#x4F59;&#x5B9A;&#x7406;</li>
-<li>BSGS</li>
-<li>&#x7EBF;&#x6027;&#x57FA;<ul>
-<li>&#x5728;&#x7EBF;&#x7248;&#x672C;</li>
-<li>&#x79BB;&#x7EBF;&#x7248;&#x672C;</li>
-</ul>
-</li>
-<li>&#x9AD8;&#x65AF;&#x6D88;&#x5143;</li>
-<li>Miller-Rabin</li>
-<li>Pollard&apos;s Rho</li>
-<li>&#x5FEB;&#x901F;&#x5085;&#x7ACB;&#x53F6;&#x53D8;&#x6362;<ul>
-<li>FFT</li>
-<li>&#x4E24;&#x6B21; DFT &#x7684;&#x591A;&#x9879;&#x5F0F;&#x4E58;&#x6CD5;</li>
-<li>&#x4EFB;&#x610F;&#x6A21;&#x6570; FFT</li>
-<li>NTT</li>
-<li>&#x4E09;&#x6A21;&#x6570; NTT</li>
-<li>NTT &#x6A21;&#x6570;&#x53CA;&#x539F;&#x6839;&#x8868;</li>
-</ul>
-</li>
-<li>&#x591A;&#x9879;&#x5F0F;&#x9006;&#x5143;</li>
-<li>&#x539F;&#x6839;</li>
-<li>&#x5E38;&#x7CFB;&#x6570;&#x7EBF;&#x6027;&#x9F50;&#x6B21;&#x9012;&#x63A8;</li>
-<li>&#x62C9;&#x683C;&#x6717;&#x65E5;&#x63D2;&#x503C;</li>
-</ul>
+                                <h1 id="&#x591A;&#x9879;&#x5F0F;&#x9006;&#x5143;">&#x591A;&#x9879;&#x5F0F;&#x9006;&#x5143;</h1>
+<p>&#x82E5;&#x4E0D;&#x9700;&#x8981;&#x5199;&#x62C6;&#x7CFB;&#x6570; FFT&#xFF0C;&#x6216;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; NTT&#xFF0C;&#x5219;&#x4E24;&#x6B21;&#x591A;&#x9879;&#x5F0F;&#x4E58;&#x6CD5;&#x53EF;&#x7528;&#x4E00;&#x6B21;&#x4EE3;&#x66FF;&#x3002;</p>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">262144</span> + <span class="hljs-number">1</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> PI = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">acos</span>(<span class="hljs-number">-1.0</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MOD = <span class="hljs-number">1000000007</span>;
+
+<span class="hljs-keyword">struct</span> Complex {
+    <span class="hljs-keyword">double</span> r, i;
+
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : r(r), i(i) {}
+
+    <span class="hljs-function">Complex <span class="hljs-title">conj</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> Complex(r, -i); }
+
+    Complex <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> { <span class="hljs-keyword">return</span> Complex(r - rhs.r, i - rhs.i); }
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> { <span class="hljs-keyword">return</span> Complex(r + rhs.r, i + rhs.i); }
+    Complex <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Complex &amp;rhs) <span class="hljs-keyword">const</span> { <span class="hljs-keyword">return</span> Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
+    Complex <span class="hljs-keyword">operator</span>/(<span class="hljs-keyword">double</span> rhs) <span class="hljs-keyword">const</span> { <span class="hljs-keyword">return</span> Complex(r / rhs, i / rhs); }
+};
+
+<span class="hljs-keyword">namespace</span> FFT {
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> N = <span class="hljs-number">262144</span>;
+
+    Complex omega[::MAXN], omegaInv[::MAXN];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">double</span> per = <span class="hljs-number">2</span> * PI / N;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+            omega[i] = Complex(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cos</span>(i * per), <span class="hljs-built_in">std</span>::<span class="hljs-built_in">sin</span>(i * per));
+            omegaInv[i] = omega[i].conj();
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">extend</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (res &lt; n) res &lt;&lt;= <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reverse</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, j = <span class="hljs-number">0</span>; i &lt; n; i++) {
+            <span class="hljs-keyword">if</span> (i &lt; j) <span class="hljs-built_in">std</span>::swap(a[i], a[j]);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = n &gt;&gt; <span class="hljs-number">1</span>; (j ^= l) &lt; l; l &gt;&gt;= <span class="hljs-number">1</span>) {}
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transform</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n, Complex *omega)</span> </span>{
+        reverse(a, n);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> l = <span class="hljs-number">2</span>; l &lt;= n; l &lt;&lt;= <span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">int</span> hl = l &gt;&gt; <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">for</span> (Complex *x = a; x != a + n; x += l) {
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; hl; i++) {
+                    Complex t = omega[N / l * i] * x[i + hl];
+                    x[i + hl] = x[i] - t;
+                    x[i] = x[i] + t;
+                }
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dft</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omega);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">idft</span><span class="hljs-params">(Complex *a, <span class="hljs-keyword">int</span> n)</span> </span>{
+        transform(a, n, omegaInv);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) a[i] = a[i] / n;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modMul</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *b, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *res)</span> </span>{
+    <span class="hljs-keyword">static</span> Complex a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> M = (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">15</span>) - <span class="hljs-number">1</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        a0[i] = a[i] &gt;&gt; <span class="hljs-number">15</span>;
+        a1[i] = a[i] &amp; M;
+        b0[i] = b[i] &gt;&gt; <span class="hljs-number">15</span>;
+        b1[i] = b[i] &amp; M;
+    }
+    FFT::dft(a0, n), FFT::dft(a1, n);
+    FFT::dft(b0, n), FFT::dft(b1, n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        Complex _a = a0[i], _b = a1[i], _c = b0[i], _d = b1[i];
+        a0[i] = _a * _c;
+        a1[i] = _a * _d + _b * _c;
+        b0[i] = _b * _d;
+    }
+    FFT::idft(a0, n), FFT::idft(a1, n), FFT::idft(b0, n);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        res[i] = ((((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>) (a0[i].r + <span class="hljs-number">0.5</span>) % MOD) &lt;&lt; <span class="hljs-number">30</span>) % MOD
+                + (((<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>) (a1[i].r + <span class="hljs-number">0.5</span>) % MOD) &lt;&lt; <span class="hljs-number">15</span>) % MOD
+                  + (<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>) (b0[i].r + <span class="hljs-number">0.5</span>) % MOD) % MOD;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">polyInverse</span><span class="hljs-params">(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *a, <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> *res, <span class="hljs-keyword">int</span> k)</span> </span>{
+    <span class="hljs-keyword">if</span> (k == <span class="hljs-number">1</span>) {
+        res[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+    polyInverse(a, res, (k + <span class="hljs-number">1</span>) &gt;&gt; <span class="hljs-number">1</span>);
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> t1[MAXN], t2[MAXN];
+    <span class="hljs-keyword">int</span> N = FFT::extend(k &lt;&lt; <span class="hljs-number">1</span>);
+    <span class="hljs-built_in">std</span>::copy(a, a + k, t1);
+    <span class="hljs-built_in">std</span>::fill(t1 + k, t1 + N, <span class="hljs-number">0</span>);
+    modMul(res, res, N, t2);
+    modMul(t1, t2, N, t1);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; k; i++) res[i] = (<span class="hljs-number">2</span> * res[i] % MOD - t1[i] + MOD) % MOD;
+    <span class="hljs-built_in">std</span>::fill(res + k, res + N, <span class="hljs-number">0</span>);
+}
+
+<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> a[MAXN], res[MAXN];
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    FFT::init();
+
+    <span class="hljs-keyword">int</span> n, k;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;k);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>, &amp;a[i]);
+
+    polyInverse(a, res, k);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; k; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld%c&quot;</span>, res[i], <span class="hljs-string">&quot; \n&quot;</span>[i == k - <span class="hljs-number">1</span>]);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1222,12 +1323,12 @@
 
             
                 
-                <a href="../004String/pam.html" class="navigation navigation-prev " aria-label="Previous page: 回文树">
+                <a href="fft.html" class="navigation navigation-prev " aria-label="Previous page: 快速傅立叶变换">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="exgcd.html" class="navigation navigation-next " aria-label="Next page: 欧几里得算法">
+                <a href="root.html" class="navigation navigation-next " aria-label="Next page: 原根">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1238,7 +1339,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"数学","level":"1.6","depth":1,"next":{"title":"欧几里得算法","level":"1.6.1","depth":2,"path":"005Math/exgcd.md","ref":"./005Math/exgcd.md","articles":[]},"previous":{"title":"回文树","level":"1.5.8","depth":2,"path":"004String/pam.md","ref":"./004String/pam.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"005Math/README.md","mtime":"2019-05-18T04:40:36.088Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-18T04:42:21.056Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"多项式逆元","level":"1.6.13","depth":2,"next":{"title":"原根","level":"1.6.14","depth":2,"path":"005Math/root.md","ref":"./005Math/root.md","articles":[]},"previous":{"title":"快速傅立叶变换","level":"1.6.12","depth":2,"path":"005Math/fft.md","ref":"./005Math/fft.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"005Math/polyinv.md","mtime":"2019-05-18T04:41:47.296Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-05-18T04:42:21.056Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

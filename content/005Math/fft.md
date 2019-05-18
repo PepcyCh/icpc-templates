@@ -1,5 +1,12 @@
 # 快速傅立叶变换（Fast Fourier Transformation）
 
+* FFT
+* 两次 DFT 的多项式乘法
+* 拆系数 FFT
+* NTT
+* 三模数 NTT
+* NTT 模数及原根表
+
 ### FFT
 
 ```c++
@@ -7,8 +14,7 @@
 #include <cmath>
 #include <algorithm>
 
-const int MAXN = 100005;
-const int MAXN_EXTEND = 262144;
+const int MAXN = 262144 + 1;
 const double PI = std::acos(-1.0);
 
 struct Complex {
@@ -16,44 +22,22 @@ struct Complex {
 
     Complex(double r = 0, double i = 0) : r(r), i(i) {}
 
-    Complex conj() const {
-        return Complex(r, -i);
-    }
+    Complex conj() const { return Complex(r, -i); }
 
-    Complex operator+(const Complex &rhs) const {
-        return Complex(r + rhs.r, i + rhs.i);
-    }
-    Complex &operator+=(const Complex &rhs) {
-        return *this = *this + rhs;
-    }
-
-    Complex operator-(const Complex &rhs) const {
-        return Complex(r - rhs.r, i - rhs.i);
-    }
-
-    Complex operator*(const Complex &rhs) const {
-        return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
-    }
-    Complex &operator*=(const Complex &rhs) {
-        return *this = *this * rhs;
-    }
-
-    Complex operator/(const double rhs) const {
-        return Complex(r / rhs, i / rhs);
-    }
-    Complex &operator/=(const double rhs) {
-        return *this = *this / rhs;
-    }
+    Complex operator+(const Complex &rhs) const { return Complex(r + rhs.r, i + rhs.i); }
+    Complex operator-(const Complex &rhs) const { return Complex(r - rhs.r, i - rhs.i); }
+    Complex operator*(const Complex &rhs) const { return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
+    Complex operator/(const double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
 namespace FFT {
     static const int N = 262144;
 
-    Complex omega[N], omegaInv[N];
+    Complex omega[::MAXN], omegaInv[::MAXN];
 
     void init() {
         for (int i = 0; i < N; i++) {
-            omega[i] = Complex(std::cos(2 * PI * i / N), std::sin(2 * PI * i / N));
+            omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
     }
@@ -80,7 +64,7 @@ namespace FFT {
                 for (int i = 0; i < hl; i++) {
                     Complex t = omega[N / l * i] * x[i + hl];
                     x[i + hl] = x[i] - t;
-                    x[i] += t;
+                    x[i] = x[i] + t;
                 }
             }
         }
@@ -92,7 +76,7 @@ namespace FFT {
 
     void idft(Complex *a, int n) {
         transform(a, n, omegaInv);
-        for (int i = 0; i < n; i++) a[i] /= n;
+        for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
 }
 
@@ -100,7 +84,7 @@ int main() {
     int n, m;
     scanf("%d %d", &n, &m);
 
-    static Complex a[MAXN_EXTEND], b[MAXN_EXTEND];
+    static Complex a[MAXN], b[MAXN];
     for (int i = 0; i <= n; i++) scanf("%lf", &a[i].r);
     for (int i = 0; i <= m; i++) scanf("%lf", &b[i].r);
 
@@ -109,7 +93,7 @@ int main() {
 
     FFT::dft(a, N);
     FFT::dft(b, N);
-    for (int i = 0; i < N; i++) a[i] *= b[i];
+    for (int i = 0; i < N; i++) a[i] = a[i] * b[i];
     FFT::idft(a, N);
 
     for (int i = 0; i < n + m + 1; i++)
@@ -126,7 +110,7 @@ int main() {
 #include <cmath>
 #include <algorithm>
 
-const int MAXN = 262144;
+const int MAXN = 262144 + 1;
 const double PI = std::acos(-1.0);
 
 struct Complex {
@@ -134,44 +118,22 @@ struct Complex {
 
     Complex(double r = 0, double i = 0) : r(r), i(i) {}
 
-    Complex conj() const {
-        return Complex(r, -i);
-    }
+    Complex conj() const { return Complex(r, -i); }
 
-    Complex operator+(const Complex &rhs) const {
-        return Complex(r + rhs.r, i + rhs.i);
-    }
-    Complex &operator+=(const Complex &rhs) {
-        return *this = *this + rhs;
-    }
-
-    Complex operator-(const Complex &rhs) const {
-        return Complex(r - rhs.r, i - rhs.i);
-    }
-
-    Complex operator*(const Complex &rhs) const {
-        return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
-    }
-    Complex &operator*=(const Complex &rhs) {
-        return *this = *this * rhs;
-    }
-
-    Complex operator/(const double rhs) const {
-        return Complex(r / rhs, i / rhs);
-    }
-    Complex &operator/=(const double rhs) {
-        return *this = *this / rhs;
-    }
+    Complex operator+(const Complex &rhs) const { return Complex(r + rhs.r, i + rhs.i); }
+    Complex operator-(const Complex &rhs) const { return Complex(r - rhs.r, i - rhs.i); }
+    Complex operator*(const Complex &rhs) const { return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
+    Complex operator/(const double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
 namespace FFT {
     static const int N = 262144;
 
-    Complex omega[N], omegaInv[N];
+    Complex omega[::MAXN], omegaInv[::MAXN];
 
     void init() {
         for (int i = 0; i < N; i++) {
-            omega[i] = Complex(std::cos(2 * PI * i / N), std::sin(2 * PI * i / N));
+            omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
     }
@@ -198,7 +160,7 @@ namespace FFT {
                 for (int i = 0; i < hl; i++) {
                     Complex t = omega[N / l * i] * x[i + hl];
                     x[i + hl] = x[i] - t;
-                    x[i] += t;
+                    x[i] = x[i] + t;
                 }
             }
         }
@@ -210,7 +172,7 @@ namespace FFT {
 
     void idft(Complex *a, int n) {
         transform(a, n, omegaInv);
-        for (int i = 0; i < n; i++) a[i] /= n;
+        for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
 }
 
@@ -229,7 +191,7 @@ int main() {
 
     for (int i = 0, x; i <= m; i++) {
         scanf("%d", &x);
-        a[i] += Complex(0, x);
+        a[i] = a[i] + Complex(0, x);
     }
 
     int len = n + m + 1;
@@ -253,63 +215,38 @@ int main() {
 }
 ```
 
-### 任意模数 FFT
+### 拆系数 FFT
 
 ```c++
 #include <cstdio>
 #include <cmath>
 #include <algorithm>
 
-const int MAXN = 262144;
+const int MAXN = 262144 + 1;
+const double PI = std::acos(-1.0);
 const int MOD = 1000000007;
-const long double PI = std::acos(-1.0);
 
 struct Complex {
-    long double r, i;
+    double r, i;
 
-    Complex(long double r = 0, long double i = 0) : r(r), i(i) {}
+    Complex(double r = 0, double i = 0) : r(r), i(i) {}
 
-    Complex conj() const {
-        return Complex(r, -i);
-    }
+    Complex conj() const { return Complex(r, -i); }
 
-    Complex operator+(const Complex &rhs) const {
-        return Complex(r + rhs.r, i + rhs.i);
-    }
-    Complex &operator+=(const Complex &rhs) {
-        return *this = *this + rhs;
-    }
-
-    Complex operator-(const Complex &rhs) const {
-        return Complex(r - rhs.r, i - rhs.i);
-    }
-    Complex &operator-=(const Complex &rhs) {
-        return *this = *this - rhs;
-    }
-
-    Complex operator*(const Complex &rhs) const {
-        return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r);
-    }
-    Complex &operator*=(const Complex &rhs) {
-        return *this = *this * rhs;
-    }
-
-    Complex operator/(const long double rhs) const {
-        return Complex(r / rhs, i / rhs);
-    }
-    Complex &operator/=(const long double rhs) {
-        return *this = *this / rhs;
-    }
+    Complex operator-(const Complex &rhs) const { return Complex(r - rhs.r, i - rhs.i); }
+    Complex operator+(const Complex &rhs) const { return Complex(r + rhs.r, i + rhs.i); }
+    Complex operator*(const Complex &rhs) const { return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
+    Complex operator/(double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
 namespace FFT {
-    static const int N = 262144;
+    const int N = 262144;
 
-    Complex omega[N], omegaInv[N];
+    Complex omega[::MAXN], omegaInv[::MAXN];
 
     void init() {
         for (int i = 0; i < N; i++) {
-            omega[i] = Complex(std::cos(2 * PI * i / N), std::sin(2 * PI * i / N));
+            omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
     }
@@ -336,7 +273,7 @@ namespace FFT {
                 for (int i = 0; i < hl; i++) {
                     Complex t = omega[N / l * i] * x[i + hl];
                     x[i + hl] = x[i] - t;
-                    x[i] += t;
+                    x[i] = x[i] + t;
                 }
             }
         }
@@ -348,53 +285,34 @@ namespace FFT {
 
     void idft(Complex *a, int n) {
         transform(a, n, omegaInv);
-        for (int i = 0; i < n; i++) a[i] /= n;
+        for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
 }
 
-void lowAccuracyModMul(int *a, int *b, int n, int *res) {
-    static Complex A[MAXN], B[MAXN];
-    for (int i = 0; i < n; i++) A[i] = Complex(a[i], b[i]);
-    FFT::dft(A, n);
-    for (int i = 1; i < n; i++) {
-        long double x1 = A[i].r, y1 = A[i].i;
-        long double x2 = A[n - i].r, y2 = A[n - i].i;
-        Complex t1((x1 + x2) * 0.5, (y1 - y2) * 0.5);
-        Complex t2((y1 + y2) * 0.5, (x2 - x1) * 0.5);
-        B[i] = t1 * t2;
-    }
-    B[0] = A[0].r * A[0].i;
-    FFT::idft(B, n);
-    for (int i = 0; i < n; i++)
-        res[i] = ((long long) (B[i].r + 0.5)) % MOD;
-}
-
-void modMul(int *a, int *b, int n, int *res) {
-    static int a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
-    static const int M = 1000;
+void modMul(long long *a, long long *b, int n, long long *res) {
+    static Complex a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
+    static const int M = (1 << 15) - 1;
 
     for (int i = 0; i < n; i++) {
-        a0[i] = a[i] / M;
-        b0[i] = b[i] / M;
+        a0[i] = a[i] >> 15;
+        a1[i] = a[i] & M;
+        b0[i] = b[i] >> 15;
+        b1[i] = b[i] & M;
     }
-    lowAccuracyModMul(a0, b0, n, a0);
+    FFT::dft(a0, n), FFT::dft(a1, n);
+    FFT::dft(b0, n), FFT::dft(b1, n);
     for (int i = 0; i < n; i++) {
-        res[i] = 1ll * a0[i] * M * M % MOD;
-        a1[i] = a[i] % M;
-        b1[i] = b[i] % M;
+        Complex _a = a0[i], _b = a1[i], _c = b0[i], _d = b1[i];
+        a0[i] = _a * _c;
+        a1[i] = _a * _d + _b * _c;
+        b0[i] = _b * _d;
     }
-    lowAccuracyModMul(a1, b1, n, a1);
+    FFT::idft(a0, n), FFT::idft(a1, n), FFT::idft(b0, n);
     for (int i = 0; i < n; i++) {
-        res[i] += a1[i];
-        res[i] >= MOD ? res[i] -= MOD : 0;
-
-        a0[i] = (a0[i] + a1[i]) % MOD;
-        a1[i] = a[i] / M + a[i] % M;
-        b1[i] = b[i] / M + b[i] % M;
+        res[i] = ((((long long) (a0[i].r + 0.5) % MOD) << 30) % MOD
+                + (((long long) (a1[i].r + 0.5) % MOD) << 15) % MOD
+                  + (long long) (b0[i].r + 0.5) % MOD) % MOD;
     }
-    lowAccuracyModMul(a1, b1, n, a1);
-    for (int i = 0; i < n; i++)
-        res[i] = (1ll * M * (a1[i] - a0[i] + MOD) + res[i]) % MOD;
 }
 
 int main() {
@@ -403,16 +321,16 @@ int main() {
     int n, m;
     scanf("%d %d", &n, &m);
 
-    static int a[MAXN], b[MAXN], ans[MAXN];
-    for (int i = 0; i <= n; i++) scanf("%d", &a[i]);
-    for (int i = 0; i <= m; i++) scanf("%d", &b[i]);
+    static long long a[MAXN], b[MAXN], ans[MAXN];
+    for (int i = 0; i <= n; i++) scanf("%lld", &a[i]);
+    for (int i = 0; i <= m; i++) scanf("%lld", &b[i]);
     for (int i = 0; i <= n; i++) a[i] < 0 ? a[i] += MOD : 0;
     for (int i = 0; i <= m; i++) b[i] < 0 ? b[i] += MOD : 0;
 
     int len = n + m + 1;
     int p = FFT::extend(len);
     modMul(a, b, p, ans);
-    for (int i = 0; i < len; i++) printf("%d%c", ans[i], " \n"[i == len - 1]);
+    for (int i = 0; i < len; i++) printf("%lld%c", ans[i], " \n"[i == len - 1]);
 
     return 0;
 }
@@ -650,7 +568,7 @@ int main() {
 
 ### NTT 模数及原根表
 
-| r 2 ^ k + 1 | r | k | g |
+| r 2^k + 1 | r | k | g |
 |:---|:---|:---|:---|
 | 3 | 1 | 1 | 2 | 
 | 5 | 1 | 2 | 2 | 
