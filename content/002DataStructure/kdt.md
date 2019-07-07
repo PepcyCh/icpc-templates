@@ -1,6 +1,6 @@
 # K-d Tree
 
-求曼哈顿距离最近点对和欧几里得距离 $$k$$ 远点对。
+求曼哈顿距离最近点对和欧几里得距离 k 远点对。
 
 ### 曼哈顿距离最近点对
 
@@ -26,7 +26,7 @@ std::function<bool(const Point &, const Point &)> cmp[2] = {
         return a.y == b.y ? a.x < b.x : a.y < b.y;
     },
     [](const Point &a, const Point &b) {
-        return a.x == b.x ? a.y < b.y : a.x < b.y;
+        return a.x == b.x ? a.y < b.y : a.x < b.x;
     }
 };
 
@@ -133,7 +133,7 @@ int main() {
 }
 ```
 
-### 欧几里得距离 $$k$$ 远点对
+### 欧几里得距离 k 远点对
 
 ```c++
 #include <cstdio>
@@ -156,7 +156,7 @@ long long dist(const Point &a, const Point &b) {
 
 std::function<bool(const Point &, const Point &)> cmp[2] = {
     [](const Point &a, const Point &b) {
-        return a.x == b.x ? a.y < b.y : a.x < b.y;
+        return a.x == b.x ? a.y < b.y : a.x < b.x;
     },
     [](const Point &a, const Point &b) {
         return a.y == b.y ? a.x < b.x : a.y < b.y;
