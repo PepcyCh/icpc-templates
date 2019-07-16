@@ -1,4 +1,4 @@
-# Deluanay 三角剖分与平面欧几里得距离最小生成树
+# Delaunay 三角剖分与平面欧几里得距离最小生成树
 
 ```c++
 #include <cstdio>
@@ -41,7 +41,7 @@ struct Point {
     }
 } P[MAXN];
 
-namespace Deluanay {
+namespace Delaunay {
 
 struct Point3D {
     double x, y, z;
@@ -206,7 +206,7 @@ void init(int n, Point *P) {
     std::copy(P, P + n, p);
     std::sort(p, p + n);
     for (int i = 0; i < n; i++) rename[p[i].id] = i;
-    Deluanay::n = n;
+    Delaunay::n = n;
     divide(0, n - 1);
 }
 
@@ -216,7 +216,7 @@ void split(int n, Point *P, std::vector<std::pair<int, int> > &ret) {
     getEdge(ret);
 }
 
-} // namespace Deluanay
+} // namespace Delaunay
 
 namespace Kruskal {
 
@@ -262,7 +262,7 @@ int main() {
     for (int i = 0; i < n; i++) scanf("%lf %lf", &P[i].x, &P[i].y);
 
     static std::vector<std::pair<int, int> > edges;
-    Deluanay::split(n, P, edges);
+    Delaunay::split(n, P, edges);
 
     for (auto e : edges) Kruskal::edges.emplace_back(e.first + 1, e.second + 1, dist(P[e.first], P[e.second]));
     double ans = Kruskal::solve(n);
