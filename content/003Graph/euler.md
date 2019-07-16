@@ -16,7 +16,7 @@ const int MAXM = 200005;
 
 struct Edge;
 struct Node {
-    Edge *e;
+    Edge *e, *curr;
     int deg;
 } N[MAXN];
 
@@ -42,7 +42,7 @@ namespace Euler {
     std::vector<Edge *> path;
 
     void dfs(Node *u) {
-        for (Edge *e = u->e; e; e = e->next) if (!e->used) {
+        for (Edge *&e = u->curr; e; e = e->next) if (!e->used) {
             e->used = e->rev->used = true;
             dfs(e->v);
             path.push_back(e);
@@ -53,6 +53,7 @@ namespace Euler {
         int cnt = 0;
         for (int i = 1; i <= n; i++) cnt += N[i].deg % 2;
         if (cnt > 2) return false;
+        for (int i = 1; i <= n; i++) N[i].curr = N[i].e;
         int s = -1;
         if (cnt) for (int i = 1; i <= n; i++) if (N[i].deg % 2) {
             s = i;
