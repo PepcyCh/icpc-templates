@@ -46,6 +46,7 @@ namespace EdmondsKarp {
 
     void solve(int s, int t, int n, int &flow, int &cost) {
         flow = cost = 0;
+        // if there exists negative cost, run bellman-ford on h[] first
         while (true) {
             for (int i = 1; i <= n; i++) {
                 N[i].dist = INT_MAX;
@@ -78,7 +79,8 @@ namespace EdmondsKarp {
                 }
             }
 
-            if (N[t].dist == INT_MAX) break;
+            if (N[t].dist == INT_MAX) break; // minimum cost maximum flow
+            // if (N[t].dist + N[t].h > 0) break; // minimum cost available flow
 
             for (int i = 1; i <= n; i++) N[i].h = std::min(N[i].h + N[i].dist, INT_MAX >> 1);
 
