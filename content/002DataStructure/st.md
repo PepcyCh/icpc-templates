@@ -28,7 +28,7 @@ struct SparseTable {
     }
 
     int query(int l, int r) {
-        int t = log[r - l];
+        int t = log[r - l + 1];
         return std::min(st[l][t], st[r - (1 << t) + 1][t]);
     }
 } st;

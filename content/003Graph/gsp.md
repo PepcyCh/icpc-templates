@@ -31,7 +31,7 @@ int main() {
     }
 
     floyd(n);
-    // dist[i][i] is the length of minimum circle through i
+    // dist[i][i] is the length of minimum circle through i if it's a digraph
 
     return 0;
 }
