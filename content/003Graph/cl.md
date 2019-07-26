@@ -94,6 +94,12 @@ Tarjan 的优化实现，O(n^2)。
 const int MAXN = 2505;
 const int MAXM = MAXN * MAXN;
 
+/*
+ * It takes O(n^2) time on dense graph
+ * To get O(m \log n) time on sparse graph, change 'std::vector<Edge *> in' to __gnu_pbds::priority_queue<Edge *>,
+ * and change line 80-81, 122-147
+ */
+
 struct Edge;
 struct Node {
     std::vector<Edge *> e, in, cycle; // if no need to traverse, e is not needed
@@ -274,7 +280,7 @@ int main() {
 
     long long ans = OptimumBranching::solve(n, rt);
     printf("%lld\n", ans);
-
+    
     return 0;
 }
 ```
