@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>三维偏序 · GitBook</title>
+        <title>IO 优化 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="modmul.html" />
+    <link rel="next" href="bsvis.html" />
     
     
-    <link rel="prev" href="tsat.html" />
+    <link rel="prev" href="modmul.html" />
     
 
     </head>
@@ -1035,7 +1035,52 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8" data-path="./">
+        <li class="chapter " data-level="1.8" data-path="../007Games/">
+            
+                <a href="../007Games/">
+            
+                    
+                    博弈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../007Games/ksub.html">
+            
+                <a href="../007Games/ksub.html">
+            
+                    
+                    K 倍动态减法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../007Games/nim3.html">
+            
+                <a href="../007Games/nim3.html">
+            
+                    
+                    Nim-3
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="./">
             
                 <a href="./">
             
@@ -1049,7 +1094,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.8.1" data-path="javabi.html">
+        <li class="chapter " data-level="1.9.1" data-path="javabi.html">
             
                 <a href="javabi.html">
             
@@ -1062,7 +1107,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.2" data-path="tsat.html">
+        <li class="chapter " data-level="1.9.2" data-path="tsat.html">
             
                 <a href="tsat.html">
             
@@ -1075,7 +1120,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.8.3" data-path="tdpo.html">
+        <li class="chapter " data-level="1.9.3" data-path="tdpo.html">
             
                 <a href="tdpo.html">
             
@@ -1088,7 +1133,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.4" data-path="modmul.html">
+        <li class="chapter " data-level="1.9.4" data-path="modmul.html">
             
                 <a href="modmul.html">
             
@@ -1101,7 +1146,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.5" data-path="fio.html">
+        <li class="chapter active" data-level="1.9.5" data-path="fio.html">
             
                 <a href="fio.html">
             
@@ -1114,7 +1159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.6" data-path="bsvis.html">
+        <li class="chapter " data-level="1.9.6" data-path="bsvis.html">
             
                 <a href="bsvis.html">
             
@@ -1162,7 +1207,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >三维偏序</a>
+        <a href=".." >IO 优化</a>
     </h1>
 </div>
 
@@ -1177,105 +1222,71 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x4E09;&#x7EF4;&#x504F;&#x5E8F;">&#x4E09;&#x7EF4;&#x504F;&#x5E8F;</h1>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+                                <h1 id="io-&#x4F18;&#x5316;">IO &#x4F18;&#x5316;</h1>
+<pre><code class="lang-c++"><span class="hljs-keyword">struct</span> IO {
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> BUF_SIZE = <span class="hljs-number">1048576</span>;
+    <span class="hljs-keyword">char</span> ibuf[BUF_SIZE], *ip, *ie, obuf[BUF_SIZE], *op;
+    <span class="hljs-built_in">std</span>::streambuf *rfb, *ofb;
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXK = <span class="hljs-number">200005</span>;
-
-<span class="hljs-keyword">struct</span> Data {
-    <span class="hljs-keyword">int</span> a, b, c, cnt, ans;
-
-    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> Data &amp;rhs) <span class="hljs-keyword">const</span> {
-        <span class="hljs-keyword">return</span> a &lt; rhs.a || (a == rhs.a &amp;&amp; b &lt; rhs.b) || (a == rhs.a &amp;&amp; b == rhs.b &amp;&amp; c &lt; rhs.c);
+    IO() : op(obuf) {
+        ip = ie = <span class="hljs-literal">NULL</span>;
+        rfb = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cin</span>.rdbuf();
+        ofb = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>.rdbuf();
+    }
+    ~IO() {
+        ofb-&gt;sputn(obuf, op - obuf);
     }
 
-    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-keyword">const</span> Data &amp;rhs) <span class="hljs-keyword">const</span> {
-        <span class="hljs-keyword">return</span> a == rhs.a &amp;&amp; b == rhs.b &amp;&amp; c == rhs.c;
-    }
-} a[MAXN];
-
-<span class="hljs-keyword">struct</span> BIT {
-    <span class="hljs-keyword">int</span> c[MAXK], n;
-
-    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
-        <span class="hljs-keyword">return</span> x &amp; -x;
+    <span class="hljs-function"><span class="hljs-keyword">char</span> <span class="hljs-title">read</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (ip == ie) ie = (ip = ibuf) + rfb-&gt;sgetn(ibuf, BUF_SIZE);
+        <span class="hljs-keyword">return</span> ip == ie ? <span class="hljs-number">-1</span> : *ip++;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">this</span>-&gt;n = n;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;x)</span> </span>{
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span> c;
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> isneg;
+
+        <span class="hljs-keyword">for</span> (isneg = <span class="hljs-literal">false</span>; !<span class="hljs-built_in">std</span>::<span class="hljs-built_in">isdigit</span>(c) &amp;&amp; c != <span class="hljs-number">-1</span>; c = read()) isneg |= c == <span class="hljs-string">&apos;-&apos;</span>;
+        <span class="hljs-keyword">for</span> (x = <span class="hljs-number">0</span>; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">isdigit</span>(c) &amp;&amp; c != <span class="hljs-number">-1</span>; x = x * <span class="hljs-number">10</span> + (c ^ <span class="hljs-number">48</span>), c = read()) {}
+
+        x = (isneg ? -x : x);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> d)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i &lt;= n; i += lowbit(i)) c[i] += d;
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+    IO &amp;<span class="hljs-keyword">operator</span>&gt;&gt;(T &amp;x) {
+        read(x);
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i; i -= lowbit(i)) res += c[i];
-        <span class="hljs-keyword">return</span> res;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clear</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i &lt;= n; i += lowbit(i)) {
-            <span class="hljs-keyword">if</span> (c[i]) c[i] = <span class="hljs-number">0</span>;
-            <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span> </span>{
+        <span class="hljs-keyword">if</span> (op == obuf + BUF_SIZE) {
+            ofb-&gt;sputn(obuf, BUF_SIZE);
+            op = obuf;
         }
-    }
-} bit;
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">divide</span><span class="hljs-params">(Data *l, Data *r)</span> </span>{
-    <span class="hljs-keyword">if</span> (l == r) {
-        l-&gt;ans += l-&gt;cnt - <span class="hljs-number">1</span>;
-        <span class="hljs-keyword">return</span>;
+        *op++ = c;
     }
 
-    Data *mid = l + (r - l) / <span class="hljs-number">2</span>;
-    divide(l, mid), divide(mid + <span class="hljs-number">1</span>, r);
-
-    <span class="hljs-keyword">static</span> Data temp[MAXN];
-    <span class="hljs-keyword">for</span> (Data *p = temp, *pl = l, *pr = mid + <span class="hljs-number">1</span>; p &lt;= temp + (r - l); p++) {
-        <span class="hljs-keyword">if</span> (pr &gt; r || (pl &lt;= mid &amp;&amp; pl-&gt;b &lt;= pr-&gt;b)) {
-            *p = *pl++;
-            bit.update(p-&gt;c, p-&gt;cnt);
-        } <span class="hljs-keyword">else</span> {
-            *p = *pr++;
-            p-&gt;ans += bit.query(p-&gt;c);
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(T x)</span> </span>{
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span> buf[<span class="hljs-number">21</span>];
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> cnt;
+        <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>) {
+            print(<span class="hljs-string">&apos;-&apos;</span>);
+            x = -x;
         }
+        cnt = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">do</span> {
+            buf[++cnt] = x % <span class="hljs-number">10</span> | <span class="hljs-number">48</span>;
+        } <span class="hljs-keyword">while</span> (x /= <span class="hljs-number">10</span>);
+        <span class="hljs-keyword">while</span> (cnt) print((<span class="hljs-keyword">char</span>) buf[cnt--]);
     }
 
-    <span class="hljs-keyword">for</span> (Data *p = temp, *q = l; q &lt;= r; q++, p++) {
-        bit.clear(q-&gt;c);
-        *q = *p;
+    <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;
+    IO &amp;<span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-keyword">const</span> T &amp;x) {
+        print(x);
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
     }
-}
-
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">int</span> n, k;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;k);
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;a[i].a, &amp;a[i].b, &amp;a[i].c);
-        a[i].cnt = <span class="hljs-number">1</span>;
-    }
-
-    <span class="hljs-built_in">std</span>::sort(a, a + n);
-    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
-        <span class="hljs-keyword">if</span> (i &amp;&amp; a[i] == a[i - <span class="hljs-number">1</span>]) a[cnt - <span class="hljs-number">1</span>].cnt++;
-        <span class="hljs-keyword">else</span> a[cnt++] = a[i];
-    }
-
-    bit.init(k);
-    divide(a, a + cnt - <span class="hljs-number">1</span>);
-
-    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> ans[MAXN];
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; cnt; i++) ans[a[i].ans] += a[i].cnt;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, ans[i]);
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
+} in, out;
 </code></pre>
 
                                 
@@ -1304,12 +1315,12 @@
 
             
                 
-                <a href="tsat.html" class="navigation navigation-prev " aria-label="Previous page: 2-SAT">
+                <a href="modmul.html" class="navigation navigation-prev " aria-label="Previous page: O(1) 取模乘">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="modmul.html" class="navigation navigation-next " aria-label="Next page: O(1) 取模乘">
+                <a href="bsvis.html" class="navigation navigation-next " aria-label="Next page: std::bitset 遍历">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1320,7 +1331,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"三维偏序","level":"1.8.3","depth":2,"next":{"title":"O(1) 取模乘","level":"1.8.4","depth":2,"path":"007Others/modmul.md","ref":"./007Others/modmul.md","articles":[]},"previous":{"title":"2-SAT","level":"1.8.2","depth":2,"path":"007Others/tsat.md","ref":"./007Others/tsat.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"007Others/tdpo.md","mtime":"2018-11-14T08:43:31.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-31T14:37:45.514Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"IO 优化","level":"1.9.5","depth":2,"next":{"title":"std::bitset 遍历","level":"1.9.6","depth":2,"path":"008Others/bsvis.md","ref":"./008Others/bsvis.md","articles":[]},"previous":{"title":"O(1) 取模乘","level":"1.9.4","depth":2,"path":"008Others/modmul.md","ref":"./008Others/modmul.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"008Others/fio.md","mtime":"2018-11-14T08:47:03.231Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-07T11:29:45.145Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

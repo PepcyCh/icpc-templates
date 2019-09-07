@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>其他 · GitBook</title>
+        <title>Java 高精度 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="javabi.html" />
+    <link rel="next" href="tsat.html" />
     
     
-    <link rel="prev" href="../006Geometry/simpson.html" />
+    <link rel="prev" href="./" />
     
 
     </head>
@@ -1035,7 +1035,52 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.8" data-path="./">
+        <li class="chapter " data-level="1.8" data-path="../007Games/">
+            
+                <a href="../007Games/">
+            
+                    
+                    博弈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../007Games/ksub.html">
+            
+                <a href="../007Games/ksub.html">
+            
+                    
+                    K 倍动态减法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../007Games/nim3.html">
+            
+                <a href="../007Games/nim3.html">
+            
+                    
+                    Nim-3
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="./">
             
                 <a href="./">
             
@@ -1049,7 +1094,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.8.1" data-path="javabi.html">
+        <li class="chapter active" data-level="1.9.1" data-path="javabi.html">
             
                 <a href="javabi.html">
             
@@ -1062,7 +1107,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.2" data-path="tsat.html">
+        <li class="chapter " data-level="1.9.2" data-path="tsat.html">
             
                 <a href="tsat.html">
             
@@ -1075,7 +1120,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.3" data-path="tdpo.html">
+        <li class="chapter " data-level="1.9.3" data-path="tdpo.html">
             
                 <a href="tdpo.html">
             
@@ -1088,7 +1133,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.4" data-path="modmul.html">
+        <li class="chapter " data-level="1.9.4" data-path="modmul.html">
             
                 <a href="modmul.html">
             
@@ -1101,7 +1146,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.5" data-path="fio.html">
+        <li class="chapter " data-level="1.9.5" data-path="fio.html">
             
                 <a href="fio.html">
             
@@ -1114,7 +1159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.6" data-path="bsvis.html">
+        <li class="chapter " data-level="1.9.6" data-path="bsvis.html">
             
                 <a href="bsvis.html">
             
@@ -1162,7 +1207,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >其他</a>
+        <a href=".." >Java 高精度</a>
     </h1>
 </div>
 
@@ -1177,14 +1222,100 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x5176;&#x4ED6;">&#x5176;&#x4ED6;</h1>
-<ul>
-<li>Java &#x9AD8;&#x7CBE;&#x5EA6;</li>
-<li>2-SAT</li>
-<li>&#x4E09;&#x7EF4;&#x504F;&#x5E8F;</li>
-<li>O(1) &#x53D6;&#x6A21;&#x4E58;</li>
-<li>std::bitset &#x904D;&#x5386;</li>
-</ul>
+                                <h1 id="java-&#x9AD8;&#x7CBE;&#x5EA6;">Java &#x9AD8;&#x7CBE;&#x5EA6;</h1>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.math.BigInteger;
+<span class="hljs-keyword">import</span> java.util.Scanner;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> </span>{
+        <span class="hljs-comment">// read</span>
+        Scanner in = <span class="hljs-keyword">new</span> Scanner(System.in);
+        BigInteger a = in.nextBigInteger();
+
+        <span class="hljs-comment">// 3 special numbers</span>
+        a = BigInteger.ZERO;
+        a = BigInteger.ONE;
+        a = BigInteger.TEN;
+
+        <span class="hljs-comment">// convert an int to BigInteger</span>
+        BigInteger b = BigInteger.valueOf(<span class="hljs-number">2333</span>);
+        BigInteger p = BigInteger.valueOf(<span class="hljs-number">998244353</span>);
+
+        <span class="hljs-comment">// convert a BigInteger to int</span>
+        <span class="hljs-keyword">int</span> i = b.intValue();
+        <span class="hljs-comment">// convert a BigInteger to long</span>
+        <span class="hljs-keyword">long</span> l = b.longValue();
+
+        <span class="hljs-comment">// operations:</span>
+        <span class="hljs-comment">// a + b;                                BigInteger add(BigInteger b);</span>
+        a.add(b);
+        <span class="hljs-comment">// a - b;                                BigInteger subtract(BigInteger b);</span>
+        a.subtract(b);
+        <span class="hljs-comment">// a * b;                                BigInteger multiply(BigInteger b);</span>
+        a.multiply(b);
+        <span class="hljs-comment">// a / b;                                BigInteger divide(BigInteger b);</span>
+        a.divide(b);
+        <span class="hljs-comment">// a % b;                                BigInteger mod(BigInteger b);</span>
+        a.mod(b);
+        <span class="hljs-comment">// -a;                                   BigInteger negate();</span>
+        a.negate();
+        <span class="hljs-comment">// a &lt; 0 ? -1 : (a &gt; 0 ? 1 : 0);         int signum();</span>
+        a.signum();
+        <span class="hljs-comment">// signum(a - b);                        int compareTo(BigInteger b);</span>
+        a.compareTo(b);
+        <span class="hljs-comment">// a == b;                               boolean equals(BigInteger b);</span>
+        a.equals(b);
+
+        <span class="hljs-comment">// abs(a);                               BigInteger abs();</span>
+        a.abs();
+        <span class="hljs-comment">// max(a, b);                            BigInteger max(BigInteger b);</span>
+        a.max(b);
+        <span class="hljs-comment">// min(a, b);                            BigInteger min(BigInteger b);</span>
+        a.min(b);
+        <span class="hljs-comment">// gcd(a, b);                            BigInteger gcd(BigInteger b);</span>
+        a.gcd(b);
+        <span class="hljs-comment">// pow(a, i);                            BigInteger pow(int i);</span>
+        a.pow(i);
+
+        <span class="hljs-comment">// modPow(a, b, p);              BigInteger modPow(BigInteger b, BigInteger p);</span>
+        a.modPow(b, p);
+        <span class="hljs-comment">// modPow(a, p - 2, p);                  BigInteger modInverse(BigInteger p);</span>
+        a.modInverse(p);
+        <span class="hljs-comment">// isPrime(a); (probability:1 - 0.5^i)  boolean isProbablePrime(int certainty);</span>
+        a.isProbablePrime(i);
+
+        <span class="hljs-comment">// a &lt;&lt; i;                               BigInteger shiftLeft(int i);</span>
+        a.shiftLeft(i);
+        <span class="hljs-comment">// a &gt;&gt; i;                               BigInteger shiftRight(int i);</span>
+        a.shiftRight(i);
+        <span class="hljs-comment">// a ^ b;                                BigInteger xor(BigInteger b);</span>
+        a.xor(b);
+        <span class="hljs-comment">// a | b;                                BigInteger or(BigInteger b);</span>
+        a.or(b);
+        <span class="hljs-comment">// a &amp; b;                                BigInteger and(BigInteger b);</span>
+        a.and(b);
+        <span class="hljs-comment">// ~a;                                   BigInteger not();</span>
+        a.not();
+        <span class="hljs-comment">// a &amp; ~b;                               BigInteger andNot(BigInteger b);</span>
+        a.andNot(b);
+
+        <span class="hljs-comment">// ((a &gt;&gt; i) &amp; 1) == 1;                  BigInteger testBit(int i);</span>
+        a.testBit(i);
+        <span class="hljs-comment">// a | (1 &lt;&lt; i);                         BigInteger setBit(int i);</span>
+        a.setBit(i);
+        <span class="hljs-comment">// a &amp; ~(1 &lt;&lt; i);                        BigInteger clearBit(int i);</span>
+        a.clearBit(i);
+        <span class="hljs-comment">// a ^ (1 &lt;&lt; i);                         BigInteger flipBit(int i);</span>
+        a.flipBit(i);
+        <span class="hljs-comment">// a &amp; -a;                               BigInteger getLowerSetBit();</span>
+        a.getLowestSetBit();
+        <span class="hljs-comment">// __builtin_popcount(a);                int bitCount();</span>
+        a.bitCount();
+        <span class="hljs-comment">// ceil(log2(this &lt; 0 ? -this : this+1)) int bitLength();</span>
+        a.bitLength();
+    }
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1212,12 +1343,12 @@
 
             
                 
-                <a href="../006Geometry/simpson.html" class="navigation navigation-prev " aria-label="Previous page: 自适应辛普森积分">
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 其他">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="javabi.html" class="navigation navigation-next " aria-label="Next page: Java 高精度">
+                <a href="tsat.html" class="navigation navigation-next " aria-label="Next page: 2-SAT">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1228,7 +1359,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"其他","level":"1.8","depth":1,"next":{"title":"Java 高精度","level":"1.8.1","depth":2,"path":"007Others/javabi.md","ref":"./007Others/javabi.md","articles":[]},"previous":{"title":"自适应辛普森积分","level":"1.7.9","depth":2,"path":"006Geometry/simpson.md","ref":"./006Geometry/simpson.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"007Others/README.md","mtime":"2019-08-31T14:36:53.892Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-31T14:37:45.514Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Java 高精度","level":"1.9.1","depth":2,"next":{"title":"2-SAT","level":"1.9.2","depth":2,"path":"008Others/tsat.md","ref":"./008Others/tsat.md","articles":[]},"previous":{"title":"其他","level":"1.9","depth":1,"path":"008Others/README.md","ref":"./008Others/README.md","articles":[{"title":"Java 高精度","level":"1.9.1","depth":2,"path":"008Others/javabi.md","ref":"./008Others/javabi.md","articles":[]},{"title":"2-SAT","level":"1.9.2","depth":2,"path":"008Others/tsat.md","ref":"./008Others/tsat.md","articles":[]},{"title":"三维偏序","level":"1.9.3","depth":2,"path":"008Others/tdpo.md","ref":"./008Others/tdpo.md","articles":[]},{"title":"O(1) 取模乘","level":"1.9.4","depth":2,"path":"008Others/modmul.md","ref":"./008Others/modmul.md","articles":[]},{"title":"IO 优化","level":"1.9.5","depth":2,"path":"008Others/fio.md","ref":"./008Others/fio.md","articles":[]},{"title":"std::bitset 遍历","level":"1.9.6","depth":2,"path":"008Others/bsvis.md","ref":"./008Others/bsvis.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"008Others/javabi.md","mtime":"2018-11-14T08:51:21.604Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-07T11:29:45.145Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

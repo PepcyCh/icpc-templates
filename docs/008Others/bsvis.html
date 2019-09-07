@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>2-SAT · GitBook</title>
+        <title>std::bitset 遍历 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="tdpo.html" />
     
-    
-    <link rel="prev" href="javabi.html" />
+    <link rel="prev" href="fio.html" />
     
 
     </head>
@@ -1035,7 +1033,52 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8" data-path="./">
+        <li class="chapter " data-level="1.8" data-path="../007Games/">
+            
+                <a href="../007Games/">
+            
+                    
+                    博弈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../007Games/ksub.html">
+            
+                <a href="../007Games/ksub.html">
+            
+                    
+                    K 倍动态减法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../007Games/nim3.html">
+            
+                <a href="../007Games/nim3.html">
+            
+                    
+                    Nim-3
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="./">
             
                 <a href="./">
             
@@ -1049,7 +1092,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.8.1" data-path="javabi.html">
+        <li class="chapter " data-level="1.9.1" data-path="javabi.html">
             
                 <a href="javabi.html">
             
@@ -1062,7 +1105,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.8.2" data-path="tsat.html">
+        <li class="chapter " data-level="1.9.2" data-path="tsat.html">
             
                 <a href="tsat.html">
             
@@ -1075,7 +1118,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.3" data-path="tdpo.html">
+        <li class="chapter " data-level="1.9.3" data-path="tdpo.html">
             
                 <a href="tdpo.html">
             
@@ -1088,7 +1131,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.4" data-path="modmul.html">
+        <li class="chapter " data-level="1.9.4" data-path="modmul.html">
             
                 <a href="modmul.html">
             
@@ -1101,7 +1144,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.5" data-path="fio.html">
+        <li class="chapter " data-level="1.9.5" data-path="fio.html">
             
                 <a href="fio.html">
             
@@ -1114,7 +1157,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.6" data-path="bsvis.html">
+        <li class="chapter active" data-level="1.9.6" data-path="bsvis.html">
             
                 <a href="bsvis.html">
             
@@ -1162,7 +1205,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >2-SAT</a>
+        <a href=".." >std::bitset 遍历</a>
     </h1>
 </div>
 
@@ -1177,160 +1220,9 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="2-sat">2-SAT</h1>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stack&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
-
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">1005</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">2000005</span>;
-
-<span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;
-<span class="hljs-keyword">struct</span> Edge {
-    T *u, *v;
-    Edge *next;
-
-    Edge() {}
-    Edge(T *u, T *v) : u(u), v(v), next(u-&gt;e) {}
-};
-
-<span class="hljs-keyword">struct</span> Comp {
-    Edge&lt;Comp&gt; *e;
-    Comp *opp;
-    <span class="hljs-keyword">int</span> deg, mark;
-
-    Comp() : mark(<span class="hljs-number">-1</span>) {}
-} C[MAXN &lt;&lt; <span class="hljs-number">1</span>];
-Edge&lt;Comp&gt; _poolC[MAXM], *_currC = _poolC;
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(Comp *u, Comp *v)</span> </span>{
-    u-&gt;e = <span class="hljs-keyword">new</span> (_currC++) Edge&lt;Comp&gt;(u, v);
-    ++v-&gt;deg;
-}
-
-<span class="hljs-keyword">struct</span> Node {
-    Edge&lt;Node&gt; *e;
-    <span class="hljs-keyword">int</span> dfn, low;
-    Comp *belong;
-    <span class="hljs-keyword">bool</span> ins;
-} N[MAXN &lt;&lt; <span class="hljs-number">1</span>];
-Edge&lt;Node&gt; _poolN[MAXM], *_currN = _poolN;
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
-    N[u].e = <span class="hljs-keyword">new</span> (_currN++) Edge&lt;Node&gt;(&amp;N[u], &amp;N[v]);
-}
-
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rebuild</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = _poolN; e != _currN; e++) <span class="hljs-keyword">if</span> (e-&gt;u-&gt;belong != e-&gt;v-&gt;belong)
-        addEdge(e-&gt;v-&gt;belong, e-&gt;u-&gt;belong);
-}
-
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getV</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> k)</span> </span>{
-    <span class="hljs-keyword">return</span> (x &lt;&lt; <span class="hljs-number">1</span>) - k;
-}
-
-<span class="hljs-keyword">namespace</span> TwoSat {
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Node *&gt; s;
-    <span class="hljs-keyword">int</span> dfsClock, sccCnt;
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(Node *u)</span> </span>{
-        s.push(u);
-        u-&gt;dfn = u-&gt;low = ++dfsClock;
-        u-&gt;ins = <span class="hljs-literal">true</span>;
-
-        <span class="hljs-keyword">for</span> (Edge&lt;Node&gt; *e = u-&gt;e; e; e = e-&gt;next) {
-            <span class="hljs-keyword">if</span> (e-&gt;v-&gt;dfn == <span class="hljs-number">0</span>) {
-                tarjan(e-&gt;v);
-                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;low);
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e-&gt;v-&gt;ins) {
-                u-&gt;low = <span class="hljs-built_in">std</span>::min(u-&gt;low, e-&gt;v-&gt;dfn);
-            }
-        }
-
-        <span class="hljs-keyword">if</span> (u-&gt;dfn == u-&gt;low) {
-            Node *v;
-            Comp *c = &amp;C[sccCnt++];
-            <span class="hljs-keyword">do</span> {
-                v = s.top();
-                s.pop();
-                v-&gt;ins = <span class="hljs-literal">false</span>;
-                v-&gt;belong = c;
-            } <span class="hljs-keyword">while</span> (v != u);
-        }
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (N[getV(i, <span class="hljs-number">0</span>)].belong == N[getV(i, <span class="hljs-number">1</span>)].belong)
-            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-        sccCnt = dfsClock = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n &lt;&lt; <span class="hljs-number">1</span>; i++) <span class="hljs-keyword">if</span> (N[i].dfn == <span class="hljs-number">0</span>) tarjan(&amp;N[i]);
-        <span class="hljs-keyword">return</span> check(n);
-    }
-} <span class="hljs-comment">// namespace TwoSat</span>
-
-<span class="hljs-keyword">namespace</span> TopoSort {
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Comp *&gt; s;
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Comp *u)</span> </span>{
-        <span class="hljs-keyword">if</span> (u-&gt;mark != <span class="hljs-number">-1</span>) <span class="hljs-keyword">return</span>;
-
-        u-&gt;mark = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (Edge&lt;Comp&gt; *e; e; e = e-&gt;next) dfs(e-&gt;v);
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (C[i].deg == <span class="hljs-number">0</span>) s.push(&amp;C[i]);
-
-        <span class="hljs-keyword">while</span> (!s.empty()) {
-            Comp *u = s.top();
-            s.pop();
-
-            <span class="hljs-keyword">if</span> (u-&gt;mark != <span class="hljs-number">-1</span>) <span class="hljs-keyword">continue</span>;
-
-            u-&gt;mark = <span class="hljs-number">1</span>;
-            dfs(u-&gt;opp);
-
-            <span class="hljs-keyword">for</span> (Edge&lt;Comp&gt; *e = u-&gt;e; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (!(--e-&gt;v-&gt;deg))
-                s.push(e-&gt;v);
-        }
-    }
-} <span class="hljs-comment">// namespace TopoSort</span>
-
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">int</span> n, m;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, op; i &lt; m; i++) {
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;op);
-
-        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>) { <span class="hljs-comment">// u and v can&apos;t be true at the same time</span>
-            addEdge(getV(u, <span class="hljs-number">1</span>), getV(v, <span class="hljs-number">0</span>));
-            addEdge(getV(v, <span class="hljs-number">1</span>), getV(u, <span class="hljs-number">0</span>));
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>) { <span class="hljs-comment">// u and v can&apos;t be false at the same time</span>
-            addEdge(getV(u, <span class="hljs-number">0</span>), getV(v, <span class="hljs-number">1</span>));
-            addEdge(getV(v, <span class="hljs-number">0</span>), getV(u, <span class="hljs-number">1</span>));
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (op == <span class="hljs-number">3</span>) { <span class="hljs-comment">// u and v must be different</span>
-            addEdge(getV(u, <span class="hljs-number">1</span>), getV(v, <span class="hljs-number">0</span>));
-            addEdge(getV(v, <span class="hljs-number">1</span>), getV(u, <span class="hljs-number">0</span>));
-            addEdge(getV(u, <span class="hljs-number">0</span>), getV(v, <span class="hljs-number">1</span>));
-            addEdge(getV(v, <span class="hljs-number">0</span>), getV(u, <span class="hljs-number">1</span>));
-        } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// u and v must be the same</span>
-            addEdge(getV(u, <span class="hljs-number">1</span>), getV(v, <span class="hljs-number">1</span>));
-            addEdge(getV(v, <span class="hljs-number">1</span>), getV(u, <span class="hljs-number">1</span>));
-            addEdge(getV(u, <span class="hljs-number">0</span>), getV(v, <span class="hljs-number">0</span>));
-            addEdge(getV(v, <span class="hljs-number">0</span>), getV(u, <span class="hljs-number">0</span>));
-        }
-    }
-
-    TwoSat::solve(n);
-
-    rebuild();
-
-    TopoSort::solve(TwoSat::sccCnt);
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+                                <h1 id="stdbitset-&#x904D;&#x5386;">std::bitset &#x904D;&#x5386;</h1>
+<pre><code class="lang-c++"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = bs._Find_first(); i &lt; bs.size(); i = bs._Find_next(i)) {
+    <span class="hljs-comment">// TODO</span>
 }
 </code></pre>
 
@@ -1360,14 +1252,10 @@ Edge&lt;Node&gt; _poolN[MAXM], *_currN = _poolN;
 
             
                 
-                <a href="javabi.html" class="navigation navigation-prev " aria-label="Previous page: Java 高精度">
+                <a href="fio.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: IO 优化">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="tdpo.html" class="navigation navigation-next " aria-label="Next page: 三维偏序">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -1376,7 +1264,7 @@ Edge&lt;Node&gt; _poolN[MAXM], *_currN = _poolN;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2-SAT","level":"1.8.2","depth":2,"next":{"title":"三维偏序","level":"1.8.3","depth":2,"path":"007Others/tdpo.md","ref":"./007Others/tdpo.md","articles":[]},"previous":{"title":"Java 高精度","level":"1.8.1","depth":2,"path":"007Others/javabi.md","ref":"./007Others/javabi.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"007Others/tsat.md","mtime":"2018-11-14T08:41:38.573Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-31T14:37:45.514Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"std::bitset 遍历","level":"1.9.6","depth":2,"previous":{"title":"IO 优化","level":"1.9.5","depth":2,"path":"008Others/fio.md","ref":"./008Others/fio.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"008Others/bsvis.md","mtime":"2019-08-31T14:36:34.078Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-07T11:29:45.145Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

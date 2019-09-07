@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Java 高精度 · GitBook</title>
+        <title>三维偏序 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="tsat.html" />
+    <link rel="next" href="modmul.html" />
     
     
-    <link rel="prev" href="./" />
+    <link rel="prev" href="tsat.html" />
     
 
     </head>
@@ -1035,7 +1035,52 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8" data-path="./">
+        <li class="chapter " data-level="1.8" data-path="../007Games/">
+            
+                <a href="../007Games/">
+            
+                    
+                    博弈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../007Games/ksub.html">
+            
+                <a href="../007Games/ksub.html">
+            
+                    
+                    K 倍动态减法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../007Games/nim3.html">
+            
+                <a href="../007Games/nim3.html">
+            
+                    
+                    Nim-3
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="./">
             
                 <a href="./">
             
@@ -1049,7 +1094,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.8.1" data-path="javabi.html">
+        <li class="chapter " data-level="1.9.1" data-path="javabi.html">
             
                 <a href="javabi.html">
             
@@ -1062,7 +1107,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.2" data-path="tsat.html">
+        <li class="chapter " data-level="1.9.2" data-path="tsat.html">
             
                 <a href="tsat.html">
             
@@ -1075,7 +1120,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.3" data-path="tdpo.html">
+        <li class="chapter active" data-level="1.9.3" data-path="tdpo.html">
             
                 <a href="tdpo.html">
             
@@ -1088,7 +1133,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.4" data-path="modmul.html">
+        <li class="chapter " data-level="1.9.4" data-path="modmul.html">
             
                 <a href="modmul.html">
             
@@ -1101,7 +1146,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.5" data-path="fio.html">
+        <li class="chapter " data-level="1.9.5" data-path="fio.html">
             
                 <a href="fio.html">
             
@@ -1114,7 +1159,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.8.6" data-path="bsvis.html">
+        <li class="chapter " data-level="1.9.6" data-path="bsvis.html">
             
                 <a href="bsvis.html">
             
@@ -1162,7 +1207,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Java 高精度</a>
+        <a href=".." >三维偏序</a>
     </h1>
 </div>
 
@@ -1177,98 +1222,104 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="java-&#x9AD8;&#x7CBE;&#x5EA6;">Java &#x9AD8;&#x7CBE;&#x5EA6;</h1>
-<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.math.BigInteger;
-<span class="hljs-keyword">import</span> java.util.Scanner;
+                                <h1 id="&#x4E09;&#x7EF4;&#x504F;&#x5E8F;">&#x4E09;&#x7EF4;&#x504F;&#x5E8F;</h1>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span> </span>{
-        <span class="hljs-comment">// read</span>
-        Scanner in = <span class="hljs-keyword">new</span> Scanner(System.in);
-        BigInteger a = in.nextBigInteger();
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXK = <span class="hljs-number">200005</span>;
 
-        <span class="hljs-comment">// 3 special numbers</span>
-        a = BigInteger.ZERO;
-        a = BigInteger.ONE;
-        a = BigInteger.TEN;
+<span class="hljs-keyword">struct</span> Data {
+    <span class="hljs-keyword">int</span> a, b, c, cnt, ans;
 
-        <span class="hljs-comment">// convert an int to BigInteger</span>
-        BigInteger b = BigInteger.valueOf(<span class="hljs-number">2333</span>);
-        BigInteger p = BigInteger.valueOf(<span class="hljs-number">998244353</span>);
-
-        <span class="hljs-comment">// convert a BigInteger to int</span>
-        <span class="hljs-keyword">int</span> i = b.intValue();
-        <span class="hljs-comment">// convert a BigInteger to long</span>
-        <span class="hljs-keyword">long</span> l = b.longValue();
-
-        <span class="hljs-comment">// operations:</span>
-        <span class="hljs-comment">// a + b;                                BigInteger add(BigInteger b);</span>
-        a.add(b);
-        <span class="hljs-comment">// a - b;                                BigInteger subtract(BigInteger b);</span>
-        a.subtract(b);
-        <span class="hljs-comment">// a * b;                                BigInteger multiply(BigInteger b);</span>
-        a.multiply(b);
-        <span class="hljs-comment">// a / b;                                BigInteger divide(BigInteger b);</span>
-        a.divide(b);
-        <span class="hljs-comment">// a % b;                                BigInteger mod(BigInteger b);</span>
-        a.mod(b);
-        <span class="hljs-comment">// -a;                                   BigInteger negate();</span>
-        a.negate();
-        <span class="hljs-comment">// a &lt; 0 ? -1 : (a &gt; 0 ? 1 : 0);         int signum();</span>
-        a.signum();
-        <span class="hljs-comment">// signum(a - b);                        int compareTo(BigInteger b);</span>
-        a.compareTo(b);
-        <span class="hljs-comment">// a == b;                               boolean equals(BigInteger b);</span>
-        a.equals(b);
-
-        <span class="hljs-comment">// abs(a);                               BigInteger abs();</span>
-        a.abs();
-        <span class="hljs-comment">// max(a, b);                            BigInteger max(BigInteger b);</span>
-        a.max(b);
-        <span class="hljs-comment">// min(a, b);                            BigInteger min(BigInteger b);</span>
-        a.min(b);
-        <span class="hljs-comment">// gcd(a, b);                            BigInteger gcd(BigInteger b);</span>
-        a.gcd(b);
-        <span class="hljs-comment">// pow(a, i);                            BigInteger pow(int i);</span>
-        a.pow(i);
-
-        <span class="hljs-comment">// modPow(a, b, p);              BigInteger modPow(BigInteger b, BigInteger p);</span>
-        a.modPow(b, p);
-        <span class="hljs-comment">// modPow(a, p - 2, p);                  BigInteger modInverse(BigInteger p);</span>
-        a.modInverse(p);
-        <span class="hljs-comment">// isPrime(a); (probability:1 - 0.5^i)  boolean isProbablePrime(int certainty);</span>
-        a.isProbablePrime(i);
-
-        <span class="hljs-comment">// a &lt;&lt; i;                               BigInteger shiftLeft(int i);</span>
-        a.shiftLeft(i);
-        <span class="hljs-comment">// a &gt;&gt; i;                               BigInteger shiftRight(int i);</span>
-        a.shiftRight(i);
-        <span class="hljs-comment">// a ^ b;                                BigInteger xor(BigInteger b);</span>
-        a.xor(b);
-        <span class="hljs-comment">// a | b;                                BigInteger or(BigInteger b);</span>
-        a.or(b);
-        <span class="hljs-comment">// a &amp; b;                                BigInteger and(BigInteger b);</span>
-        a.and(b);
-        <span class="hljs-comment">// ~a;                                   BigInteger not();</span>
-        a.not();
-        <span class="hljs-comment">// a &amp; ~b;                               BigInteger andNot(BigInteger b);</span>
-        a.andNot(b);
-
-        <span class="hljs-comment">// ((a &gt;&gt; i) &amp; 1) == 1;                  BigInteger testBit(int i);</span>
-        a.testBit(i);
-        <span class="hljs-comment">// a | (1 &lt;&lt; i);                         BigInteger setBit(int i);</span>
-        a.setBit(i);
-        <span class="hljs-comment">// a &amp; ~(1 &lt;&lt; i);                        BigInteger clearBit(int i);</span>
-        a.clearBit(i);
-        <span class="hljs-comment">// a ^ (1 &lt;&lt; i);                         BigInteger flipBit(int i);</span>
-        a.flipBit(i);
-        <span class="hljs-comment">// a &amp; -a;                               BigInteger getLowerSetBit();</span>
-        a.getLowestSetBit();
-        <span class="hljs-comment">// __builtin_popcount(a);                int bitCount();</span>
-        a.bitCount();
-        <span class="hljs-comment">// ceil(log2(this &lt; 0 ? -this : this+1)) int bitLength();</span>
-        a.bitLength();
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> Data &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> a &lt; rhs.a || (a == rhs.a &amp;&amp; b &lt; rhs.b) || (a == rhs.a &amp;&amp; b == rhs.b &amp;&amp; c &lt; rhs.c);
     }
+
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-keyword">const</span> Data &amp;rhs) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> a == rhs.a &amp;&amp; b == rhs.b &amp;&amp; c == rhs.c;
+    }
+} a[MAXN];
+
+<span class="hljs-keyword">struct</span> BIT {
+    <span class="hljs-keyword">int</span> c[MAXK], n;
+
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        <span class="hljs-keyword">return</span> x &amp; -x;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">this</span>-&gt;n = n;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> d)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i &lt;= n; i += lowbit(i)) c[i] += d;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i; i -= lowbit(i)) res += c[i];
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clear</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pos)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = pos; i &lt;= n; i += lowbit(i)) {
+            <span class="hljs-keyword">if</span> (c[i]) c[i] = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;
+        }
+    }
+} bit;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">divide</span><span class="hljs-params">(Data *l, Data *r)</span> </span>{
+    <span class="hljs-keyword">if</span> (l == r) {
+        l-&gt;ans += l-&gt;cnt - <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">return</span>;
+    }
+
+    Data *mid = l + (r - l) / <span class="hljs-number">2</span>;
+    divide(l, mid), divide(mid + <span class="hljs-number">1</span>, r);
+
+    <span class="hljs-keyword">static</span> Data temp[MAXN];
+    <span class="hljs-keyword">for</span> (Data *p = temp, *pl = l, *pr = mid + <span class="hljs-number">1</span>; p &lt;= temp + (r - l); p++) {
+        <span class="hljs-keyword">if</span> (pr &gt; r || (pl &lt;= mid &amp;&amp; pl-&gt;b &lt;= pr-&gt;b)) {
+            *p = *pl++;
+            bit.update(p-&gt;c, p-&gt;cnt);
+        } <span class="hljs-keyword">else</span> {
+            *p = *pr++;
+            p-&gt;ans += bit.query(p-&gt;c);
+        }
+    }
+
+    <span class="hljs-keyword">for</span> (Data *p = temp, *q = l; q &lt;= r; q++, p++) {
+        bit.clear(q-&gt;c);
+        *q = *p;
+    }
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, k;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;k);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;a[i].a, &amp;a[i].b, &amp;a[i].c);
+        a[i].cnt = <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-built_in">std</span>::sort(a, a + n);
+    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) {
+        <span class="hljs-keyword">if</span> (i &amp;&amp; a[i] == a[i - <span class="hljs-number">1</span>]) a[cnt - <span class="hljs-number">1</span>].cnt++;
+        <span class="hljs-keyword">else</span> a[cnt++] = a[i];
+    }
+
+    bit.init(k);
+    divide(a, a + cnt - <span class="hljs-number">1</span>);
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> ans[MAXN];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; cnt; i++) ans[a[i].ans] += a[i].cnt;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, ans[i]);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
 
@@ -1298,12 +1349,12 @@
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: 其他">
+                <a href="tsat.html" class="navigation navigation-prev " aria-label="Previous page: 2-SAT">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="tsat.html" class="navigation navigation-next " aria-label="Next page: 2-SAT">
+                <a href="modmul.html" class="navigation navigation-next " aria-label="Next page: O(1) 取模乘">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1314,7 +1365,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Java 高精度","level":"1.8.1","depth":2,"next":{"title":"2-SAT","level":"1.8.2","depth":2,"path":"007Others/tsat.md","ref":"./007Others/tsat.md","articles":[]},"previous":{"title":"其他","level":"1.8","depth":1,"path":"007Others/README.md","ref":"./007Others/README.md","articles":[{"title":"Java 高精度","level":"1.8.1","depth":2,"path":"007Others/javabi.md","ref":"./007Others/javabi.md","articles":[]},{"title":"2-SAT","level":"1.8.2","depth":2,"path":"007Others/tsat.md","ref":"./007Others/tsat.md","articles":[]},{"title":"三维偏序","level":"1.8.3","depth":2,"path":"007Others/tdpo.md","ref":"./007Others/tdpo.md","articles":[]},{"title":"O(1) 取模乘","level":"1.8.4","depth":2,"path":"007Others/modmul.md","ref":"./007Others/modmul.md","articles":[]},{"title":"IO 优化","level":"1.8.5","depth":2,"path":"007Others/fio.md","ref":"./007Others/fio.md","articles":[]},{"title":"std::bitset 遍历","level":"1.8.6","depth":2,"path":"007Others/bsvis.md","ref":"./007Others/bsvis.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"007Others/javabi.md","mtime":"2018-11-14T08:51:21.604Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-08-31T14:37:45.514Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"三维偏序","level":"1.9.3","depth":2,"next":{"title":"O(1) 取模乘","level":"1.9.4","depth":2,"path":"008Others/modmul.md","ref":"./008Others/modmul.md","articles":[]},"previous":{"title":"2-SAT","level":"1.9.2","depth":2,"path":"008Others/tsat.md","ref":"./008Others/tsat.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"008Others/tdpo.md","mtime":"2018-11-14T08:43:31.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-07T11:29:45.145Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
