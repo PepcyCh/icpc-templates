@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>上下界网络流 · GitBook</title>
+        <title>Gomory-Hu Tree · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="tarjan.html" />
+    <link rel="next" href="costnet.html" />
     
     
-    <link rel="prev" href="costnet.html" />
+    <link rel="prev" href="network.html" />
     
 
     </head>
@@ -414,7 +414,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4.8" data-path="ght.html">
+        <li class="chapter active" data-level="1.4.8" data-path="ght.html">
             
                 <a href="ght.html">
             
@@ -440,7 +440,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.4.10" data-path="lunet.html">
+        <li class="chapter " data-level="1.4.10" data-path="lunet.html">
             
                 <a href="lunet.html">
             
@@ -1233,7 +1233,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >上下界网络流</a>
+        <a href=".." >Gomory-Hu Tree</a>
     </h1>
 </div>
 
@@ -1248,154 +1248,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x4E0A;&#x4E0B;&#x754C;&#x7F51;&#x7EDC;&#x6D41;">&#x4E0A;&#x4E0B;&#x754C;&#x7F51;&#x7EDC;&#x6D41;</h1>
-<p>&#x65E0;&#x6E90;&#x65E0;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x53EF;&#x884C;&#x6D41;&#x3001;&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x7EC6;&#x8282;&#x6700;&#x5927;&#x6D41;&#x3001;&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5C0F;&#x6D41;&#xFF1B;&#x5176;&#x4E2D;&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5927;&#x6D41;&#x53EF;&#x6539;&#x9020;&#x4E3A;&#x4E0A;&#x4E0B;&#x754C;&#x8D39;&#x7528;&#x6D41;&#x3002;</p>
-<h3 id="&#x65E0;&#x6E90;&#x65E0;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x53EF;&#x884C;&#x6D41;">&#x65E0;&#x6E90;&#x65E0;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x53EF;&#x884C;&#x6D41;</h3>
+                                <h1 id="gomory-hu-tree--&#x6700;&#x5C0F;&#x5272;&#x6811;">Gomory-Hu Tree / &#x6700;&#x5C0F;&#x5272;&#x6811;</h1>
 <pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">205</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">10205</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">3005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_LOG = <span class="hljs-number">13</span>;
 
 <span class="hljs-keyword">struct</span> Edge;
-<span class="hljs-keyword">struct</span> Node;
-
 <span class="hljs-keyword">struct</span> Node {
     <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; e;
     Edge *curr;
-    <span class="hljs-keyword">int</span> level, extra;
-} N[MAXN];
-
-<span class="hljs-keyword">struct</span> Edge {
-    Node *u, *v;
-    <span class="hljs-keyword">int</span> cap, flow, rev;
-
-    Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> cap, <span class="hljs-keyword">int</span> rev)
-        : u(u), v(v), cap(cap), flow(<span class="hljs-number">0</span>), rev(rev) {}
-};
-
-<span class="hljs-keyword">struct</span> Pair {
-    <span class="hljs-keyword">int</span> u, num, lower;
-
-    Pair() {}
-    Pair(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> num, <span class="hljs-keyword">int</span> lower) : u(u), num(num), lower(lower) {}
-
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">flow</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
-        <span class="hljs-keyword">return</span> N[u].e[num].flow + lower;
-    }
-} E[MAXM];
-
-<span class="hljs-function">Pair <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> lower, <span class="hljs-keyword">int</span> upper)</span> </span>{
-    <span class="hljs-keyword">int</span> cap = upper - lower;
-    N[u].e.push_back(Edge(&amp;N[u], &amp;N[v], cap, N[v].e.size()));
-    N[v].e.push_back(Edge(&amp;N[v], &amp;N[u], <span class="hljs-number">0</span>, N[u].e.size() - <span class="hljs-number">1</span>));
-
-    N[u].extra -= lower;
-    N[v].extra += lower;
-
-    <span class="hljs-keyword">return</span> Pair(u, N[u].e.size() - <span class="hljs-number">1</span>, lower);
-}
-
-<span class="hljs-keyword">namespace</span> Dinic {
-    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">level</span><span class="hljs-params">(Node *s, Node *t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].level = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
-        q.push(s);
-        s-&gt;level = <span class="hljs-number">1</span>;
-        <span class="hljs-keyword">while</span> (!q.empty()) {
-            Node *u = q.front();
-            q.pop();
-            <span class="hljs-keyword">for</span> (Edge *e = &amp;u-&gt;e.front(); e &lt;= &amp;u-&gt;e.back(); e++) {
-                <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == <span class="hljs-number">0</span>) {
-                    e-&gt;v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
-                    q.push(e-&gt;v);
-                }
-            }
-        }
-        <span class="hljs-keyword">return</span> t-&gt;level;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findPath</span><span class="hljs-params">(Node *u, Node *t, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
-        <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e &lt;= &amp;u-&gt;e.back(); e++) {
-            <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == u-&gt;level + <span class="hljs-number">1</span>) {
-                <span class="hljs-keyword">int</span> flow = findPath(e-&gt;v, t, <span class="hljs-built_in">std</span>::min(limit, e-&gt;cap - e-&gt;flow));
-                <span class="hljs-keyword">if</span> (flow &gt; <span class="hljs-number">0</span>) {
-                    e-&gt;flow += flow;
-                    e-&gt;v-&gt;e[e-&gt;rev].flow -= flow;
-                    limit -= flow;
-                    res += flow;
-                    <span class="hljs-keyword">if</span> (limit &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
-                } <span class="hljs-keyword">else</span> e-&gt;v-&gt;level = <span class="hljs-number">-1</span>;
-            }
-        }
-        <span class="hljs-keyword">return</span> res;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">while</span> (level(&amp;N[s], &amp;N[t], n)) {
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].curr = &amp;N[i].e.front();
-            <span class="hljs-keyword">int</span> flow;
-            <span class="hljs-keyword">while</span> ((flow = findPath(&amp;N[s], &amp;N[t])) &gt; <span class="hljs-number">0</span>) res += flow;
-        }
-        <span class="hljs-keyword">return</span> res;
-    }
-}
-
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">int</span> n, m;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> s = <span class="hljs-number">0</span>, t = n + <span class="hljs-number">1</span>;
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, lower, upper; i &lt; m; i++) {
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;u, &amp;v, &amp;lower, &amp;upper);
-        E[i] = addEdge(u, v, lower, upper);
-    }
-
-    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
-        <span class="hljs-keyword">if</span> (N[i].extra &gt; <span class="hljs-number">0</span>) {
-            sum += N[i].extra;
-            addEdge(s, i, <span class="hljs-number">0</span>, N[i].extra);
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (N[i].extra &lt; <span class="hljs-number">0</span>) {
-            addEdge(i, t, <span class="hljs-number">0</span>, -N[i].extra);
-        }
-    }
-
-    <span class="hljs-keyword">int</span> maxFlow = Dinic::solve(s, t, n + <span class="hljs-number">2</span>);
-    <span class="hljs-keyword">if</span> (maxFlow &lt; sum) {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;NO&quot;</span>);
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;YES&quot;</span>);
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, E[i].flow());
-    }
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-<h3 id="&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5927;&#x6D41;">&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5927;&#x6D41;</h3>
-<p>&#x82E5;&#x8981;&#x6C42;&#x300C;&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x8D39;&#x7528;&#x6D41;&#x300D;&#xFF0C;&#x5C06;&#x7F51;&#x7EDC;&#x6D41;&#x6539;&#x4E3A; Edmonds-Karp &#x5373;&#x53EF;&#xFF0C;&#x6700;&#x540E;&#x8D39;&#x7528;&#x662F;&#x4E24;&#x6B21;&#x7684;&#x8D39;&#x7528;&#x548C;&#x3002;</p>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
-
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">205</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">10000</span>;
-
-<span class="hljs-keyword">struct</span> Edge;
-<span class="hljs-keyword">struct</span> Node;
-
-<span class="hljs-keyword">struct</span> Node {
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; e;
-    Edge *curr;
-    <span class="hljs-keyword">int</span> level, extra;
+    <span class="hljs-keyword">int</span> level;
+    <span class="hljs-keyword">bool</span> vis;
 } N[MAXN];
 
 <span class="hljs-keyword">struct</span> Edge {
@@ -1405,28 +1273,28 @@
     Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> cap, <span class="hljs-keyword">int</span> rev) : u(u), v(v), cap(cap), flow(<span class="hljs-number">0</span>), rev(rev) {}
 };
 
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> lower, <span class="hljs-keyword">int</span> upper)</span> </span>{
-    <span class="hljs-keyword">int</span> cap = upper - lower;
-    N[u].e.push_back(Edge(&amp;N[u], &amp;N[v], cap, N[v].e.size()));
-    N[v].e.push_back(Edge(&amp;N[v], &amp;N[u], <span class="hljs-number">0</span>, N[u].e.size() - <span class="hljs-number">1</span>));
+<span class="hljs-keyword">bool</span> G[MAXN][MAXN];
 
-    N[u].extra -= lower;
-    N[v].extra += lower;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> cap)</span> </span>{
+    N[u].e.emplace_back(&amp;N[u], &amp;N[v], cap, N[v].e.size());
+    N[v].e.emplace_back(&amp;N[v], &amp;N[u], cap, N[u].e.size() - <span class="hljs-number">1</span>);
+    G[u][v] = G[v][u] = <span class="hljs-literal">true</span>;
 }
 
 <span class="hljs-keyword">namespace</span> Dinic {
     <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">level</span><span class="hljs-params">(Node *s, Node *t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].level = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) N[i].level = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
         q.push(s);
         s-&gt;level = <span class="hljs-number">1</span>;
         <span class="hljs-keyword">while</span> (!q.empty()) {
             Node *u = q.front();
             q.pop();
-            <span class="hljs-keyword">for</span> (Edge *e = &amp;u-&gt;e.front(); e &lt;= &amp;u-&gt;e.back(); e++) {
-                <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == <span class="hljs-number">0</span>) {
-                    e-&gt;v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
-                    q.push(e-&gt;v);
+
+            <span class="hljs-keyword">for</span> (Edge &amp;e : u-&gt;e) {
+                <span class="hljs-keyword">if</span> (e.cap &gt; e.flow &amp;&amp; e.v-&gt;level == <span class="hljs-number">0</span>) {
+                    e.v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
+                    q.push(e.v);
                 }
             }
         }
@@ -1436,7 +1304,7 @@
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findPath</span><span class="hljs-params">(Node *u, Node *t, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
         <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
         <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e &lt;= &amp;u-&gt;e.back(); e++) {
+        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e &amp;&amp; e &lt;= &amp;u-&gt;e.back(); e++) {
             <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == u-&gt;level + <span class="hljs-number">1</span>) {
                 <span class="hljs-keyword">int</span> flow = findPath(e-&gt;v, t, <span class="hljs-built_in">std</span>::min(limit, e-&gt;cap - e-&gt;flow));
                 <span class="hljs-keyword">if</span> (flow &gt; <span class="hljs-number">0</span>) {
@@ -1444,7 +1312,7 @@
                     e-&gt;v-&gt;e[e-&gt;rev].flow -= flow;
                     limit -= flow;
                     res += flow;
-                    <span class="hljs-keyword">if</span> (limit &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
+                    <span class="hljs-keyword">if</span> (!limit) <span class="hljs-keyword">return</span> res;
                 } <span class="hljs-keyword">else</span> e-&gt;v-&gt;level = <span class="hljs-number">-1</span>;
             }
         }
@@ -1452,162 +1320,140 @@
     }
 
     <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">for</span> (Edge &amp;e : N[i].e) e.flow = <span class="hljs-number">0</span>;
+
         <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">while</span> (level(&amp;N[s], &amp;N[t], n)) {
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].curr = &amp;N[i].e.front();
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) N[i].curr = &amp;N[i].e.front();
             <span class="hljs-keyword">int</span> flow;
             <span class="hljs-keyword">while</span> ((flow = findPath(&amp;N[s], &amp;N[t])) &gt; <span class="hljs-number">0</span>) res += flow;
         }
         <span class="hljs-keyword">return</span> res;
     }
-}
 
-<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">int</span> n, m, s, t;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;n, &amp;m, &amp;s, &amp;t);
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> S = <span class="hljs-number">0</span>, T = n + <span class="hljs-number">1</span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bfs</span><span class="hljs-params">(Node *s, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) N[i].vis = <span class="hljs-literal">false</span>;
 
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, lower, upper; i &lt; m; i++) {
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;u, &amp;v, &amp;lower, &amp;upper);
-        addEdge(u, v, lower, upper);
-    }
-    addEdge(t, s, <span class="hljs-number">0</span>, INT_MAX);
-    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
-        <span class="hljs-keyword">if</span> (N[i].extra &gt; <span class="hljs-number">0</span>) {
-            sum += N[i].extra;
-            addEdge(S, i, <span class="hljs-number">0</span>, N[i].extra);
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (N[i].extra &lt; <span class="hljs-number">0</span>) {
-            addEdge(i, T, <span class="hljs-number">0</span>, -N[i].extra);
-        }
-    }
-
-    <span class="hljs-keyword">int</span> maxFlow = Dinic::solve(S, T, n + <span class="hljs-number">2</span>);
-    <span class="hljs-keyword">if</span> (maxFlow &lt; sum) {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;No&quot;</span>);
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Yes&quot;</span>);
-        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, Dinic::solve(s, t, n + <span class="hljs-number">2</span>));
-    }
-
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-<h3 id="&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5C0F;&#x6D41;">&#x6709;&#x6E90;&#x6709;&#x6C47;&#x4E0A;&#x4E0B;&#x754C;&#x6700;&#x5C0F;&#x6D41;</h3>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
-
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">50005</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = <span class="hljs-number">125005</span>;
-
-<span class="hljs-keyword">struct</span> Edge;
-<span class="hljs-keyword">struct</span> Node;
-
-<span class="hljs-keyword">struct</span> Node {
-    Edge *e, *curr;
-    <span class="hljs-keyword">int</span> level, extra;
-} N[MAXN];
-
-<span class="hljs-keyword">struct</span> Edge {
-    Node *u, *v;
-    Edge *next, *rev;
-    <span class="hljs-keyword">int</span> cap, flow;
-
-    Edge() {}
-    Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> cap) : u(u), v(v), cap(cap), flow(<span class="hljs-number">0</span>), next(u-&gt;e) {}
-} _pool[MAXM + MAXN &lt;&lt; <span class="hljs-number">1</span>], *_curr = _pool;
-
-<span class="hljs-function">Edge *<span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> lower, <span class="hljs-keyword">int</span> upper)</span> </span>{
-    <span class="hljs-keyword">int</span> cap = upper - lower;
-    N[u].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[u], &amp;N[v], cap);
-    N[v].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[v], &amp;N[u], <span class="hljs-number">0</span>);
-    (N[u].e-&gt;rev = N[v].e)-&gt;rev = N[u].e;
-
-    N[u].extra -= lower;
-    N[v].extra += lower;
-
-    <span class="hljs-keyword">return</span> N[u].e;
-}
-
-<span class="hljs-keyword">namespace</span> Dinic {
-    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">level</span><span class="hljs-params">(Node *s, Node *t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].level = <span class="hljs-number">0</span>;
         <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
         q.push(s);
-        s-&gt;level = <span class="hljs-number">1</span>;
+        s-&gt;vis = <span class="hljs-literal">true</span>;
         <span class="hljs-keyword">while</span> (!q.empty()) {
             Node *u = q.front();
             q.pop();
-            <span class="hljs-keyword">for</span> (Edge *e = u-&gt;e; e; e = e-&gt;next) {
-                <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == <span class="hljs-number">0</span>) {
-                    e-&gt;v-&gt;level = u-&gt;level + <span class="hljs-number">1</span>;
-                    q.push(e-&gt;v);
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> Edge &amp;e : u-&gt;e) {
+                <span class="hljs-keyword">if</span> (e.cap &gt; e.flow &amp;&amp; !e.v-&gt;vis) {
+                    e.v-&gt;vis = <span class="hljs-literal">true</span>;
+                    q.push(e.v);
                 }
             }
         }
-        <span class="hljs-keyword">return</span> t-&gt;level;
+    }
+}
+
+<span class="hljs-keyword">namespace</span> GomoryHuTree {
+    <span class="hljs-keyword">struct</span> Edge;
+    <span class="hljs-keyword">struct</span> Node {
+        Edge *e;
+        Node *f[MAXN_LOG];
+        <span class="hljs-keyword">int</span> dep, min[MAXN_LOG];
+    } N[MAXN];
+
+    <span class="hljs-keyword">struct</span> Edge {
+        Node *u, *v;
+        Edge *next;
+        <span class="hljs-keyword">int</span> w;
+
+        Edge() {}
+        Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> w) : u(u), v(v), next(u-&gt;e), w(w) {}
+    } _pool[MAXN &lt;&lt; <span class="hljs-number">1</span>], *_curr;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> w)</span> </span>{
+        N[u].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[u], &amp;N[v], w);
+        N[v].e = <span class="hljs-keyword">new</span> (_curr++) Edge(&amp;N[v], &amp;N[u], w);
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findPath</span><span class="hljs-params">(Node *u, Node *t, <span class="hljs-keyword">int</span> limit = INT_MAX)</span> </span>{
-        <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> limit;
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (Edge *&amp;e = u-&gt;curr; e; e = e-&gt;next) {
-            <span class="hljs-keyword">if</span> (e-&gt;cap &gt; e-&gt;flow &amp;&amp; e-&gt;v-&gt;level == u-&gt;level + <span class="hljs-number">1</span>) {
-                <span class="hljs-keyword">int</span> flow = findPath(e-&gt;v, t, <span class="hljs-built_in">std</span>::min(limit, e-&gt;cap - e-&gt;flow));
-                <span class="hljs-keyword">if</span> (flow &gt; <span class="hljs-number">0</span>) {
-                    e-&gt;flow += flow;
-                    e-&gt;rev-&gt;flow -= flow;
-                    limit -= flow;
-                    res += flow;
-                    <span class="hljs-keyword">if</span> (limit &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> res;
-                } <span class="hljs-keyword">else</span> e-&gt;v-&gt;level = <span class="hljs-number">-1</span>;
-            }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(Node *u, Node *fa = <span class="hljs-literal">NULL</span>)</span> </span>{
+        u-&gt;f[<span class="hljs-number">0</span>] = (fa ? fa : u);
+        u-&gt;dep = (fa ? fa-&gt;dep : <span class="hljs-number">0</span>) + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; MAXN_LOG; i++) {
+            u-&gt;f[i] = u-&gt;f[i - <span class="hljs-number">1</span>]-&gt;f[i - <span class="hljs-number">1</span>];
+            u-&gt;min[i] = <span class="hljs-built_in">std</span>::min(u-&gt;min[i - <span class="hljs-number">1</span>], u-&gt;f[i - <span class="hljs-number">1</span>]-&gt;min[i - <span class="hljs-number">1</span>]);
         }
-        <span class="hljs-keyword">return</span> res;
+
+        <span class="hljs-keyword">for</span> (Edge *e = u-&gt;e; e; e = e-&gt;next) <span class="hljs-keyword">if</span> (e-&gt;v != fa) {
+            e-&gt;v-&gt;min[<span class="hljs-number">0</span>] = e-&gt;w;
+            dfs(e-&gt;v, u);
+        }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, <span class="hljs-keyword">int</span> n)</span> </span>{
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">while</span> (level(&amp;N[s], &amp;N[t], n)) {
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) N[i].curr = N[i].e;
-            <span class="hljs-keyword">int</span> flow;
-            <span class="hljs-keyword">while</span> ((flow = findPath(&amp;N[s], &amp;N[t])) &gt; <span class="hljs-number">0</span>) res += flow;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(Node *u, Node *v)</span> </span>{
+        <span class="hljs-keyword">if</span> (u-&gt;dep &lt; v-&gt;dep) <span class="hljs-built_in">std</span>::swap(u, v);
+        <span class="hljs-keyword">int</span> res = INT_MAX;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = MAXN_LOG - <span class="hljs-number">1</span>; ~i; i--) <span class="hljs-keyword">if</span> (u-&gt;f[i]-&gt;dep &gt;= v-&gt;dep) {
+            res = <span class="hljs-built_in">std</span>::min(res, u-&gt;min[i]);
+            u = u-&gt;f[i];
         }
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = MAXN_LOG - <span class="hljs-number">1</span>; ~i; i--) <span class="hljs-keyword">if</span> (u-&gt;f[i] != v-&gt;f[i]) {
+            res = <span class="hljs-built_in">std</span>::min({res, u-&gt;min[i], v-&gt;min[i]});
+            u = u-&gt;f[i];
+            v = v-&gt;f[i];
+        }
+
+        <span class="hljs-keyword">if</span> (u != v) res = <span class="hljs-built_in">std</span>::min({res, u-&gt;min[<span class="hljs-number">0</span>], v-&gt;min[<span class="hljs-number">0</span>]});
+
         <span class="hljs-keyword">return</span> res;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{ <span class="hljs-keyword">return</span> query(&amp;N[u], &amp;N[v]); }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;nodes, <span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">if</span> (nodes.size() &lt;= <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span>;
+        <span class="hljs-keyword">int</span> s = nodes[<span class="hljs-number">0</span>], t = nodes[<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">int</span> flow = Dinic::solve(s, t, n);
+        addEdge(s, t, flow);
+
+        Dinic::bfs(&amp;::N[s], n);
+
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ln, rn;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> u : nodes) {
+            <span class="hljs-keyword">if</span> (::N[u].vis) ln.push_back(u);
+            <span class="hljs-keyword">else</span> rn.push_back(u);
+        }
+
+        build(ln, n);
+        build(rn, n);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        _curr = _pool;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; vec(n);
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) vec[i - <span class="hljs-number">1</span>] = i;
+        build(vec, n);
+
+        N[<span class="hljs-number">1</span>].min[<span class="hljs-number">0</span>] = INT_MAX;
+        dfs(&amp;N[<span class="hljs-number">1</span>]);
     }
 }
 
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">int</span> n, m, s, t;
-    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;n, &amp;m, &amp;s, &amp;t);
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> S = <span class="hljs-number">0</span>, T = n + <span class="hljs-number">1</span>;
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, lower, upper; i &lt; m; i++) {
-        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;u, &amp;v, &amp;lower, &amp;upper);
-        addEdge(u, v, lower, upper);
-    }
-    Edge *e = addEdge(t, s, <span class="hljs-number">0</span>, INT_MAX);
-    <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) {
-        <span class="hljs-keyword">if</span> (N[i].extra &gt; <span class="hljs-number">0</span>) {
-            sum += N[i].extra;
-            addEdge(S, i, <span class="hljs-number">0</span>, N[i].extra);
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (N[i].extra &lt; <span class="hljs-number">0</span>) {
-            addEdge(i, T, <span class="hljs-number">0</span>, -N[i].extra);
-        }
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, w; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;w);
+        addEdge(u, v, w);
     }
 
-    <span class="hljs-keyword">int</span> maxFlow = Dinic::solve(S, T, n + <span class="hljs-number">2</span>);
-    <span class="hljs-keyword">if</span> (maxFlow &lt; sum) {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;No&quot;</span>);
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Yes&quot;</span>);
-        <span class="hljs-keyword">int</span> flow = e-&gt;flow;
-        e-&gt;cap = e-&gt;rev-&gt;cap = <span class="hljs-number">0</span>;
-        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, flow - Dinic::solve(t, s, n + <span class="hljs-number">2</span>));
+    GomoryHuTree::build(n);
+
+    <span class="hljs-keyword">int</span> q;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d&quot;</span>, &amp;q);
+    <span class="hljs-keyword">while</span> (q--) {
+        <span class="hljs-keyword">int</span> u, v;
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
+
+        <span class="hljs-keyword">int</span> ans = GomoryHuTree::query(u, v);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, ans);
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -1640,12 +1486,12 @@
 
             
                 
-                <a href="costnet.html" class="navigation navigation-prev " aria-label="Previous page: 费用流">
+                <a href="network.html" class="navigation navigation-prev " aria-label="Previous page: 网络流">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="tarjan.html" class="navigation navigation-next " aria-label="Next page: Tarjan">
+                <a href="costnet.html" class="navigation navigation-next " aria-label="Next page: 费用流">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1656,7 +1502,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"上下界网络流","level":"1.4.10","depth":2,"next":{"title":"Tarjan","level":"1.4.11","depth":2,"path":"003Graph/tarjan.md","ref":"./003Graph/tarjan.md","articles":[]},"previous":{"title":"费用流","level":"1.4.9","depth":2,"path":"003Graph/costnet.md","ref":"./003Graph/costnet.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/lunet.md","mtime":"2019-03-19T09:21:33.968Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-14T00:53:06.184Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Gomory-Hu Tree","level":"1.4.8","depth":2,"next":{"title":"费用流","level":"1.4.9","depth":2,"path":"003Graph/costnet.md","ref":"./003Graph/costnet.md","articles":[]},"previous":{"title":"网络流","level":"1.4.7","depth":2,"path":"003Graph/network.md","ref":"./003Graph/network.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/ght.md","mtime":"2019-09-14T00:51:21.768Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-14T00:53:06.184Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

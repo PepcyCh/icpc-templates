@@ -27,6 +27,7 @@
     * [点分治](./003Graph/pd.md)
     * [树链剖分](./003Graph/tsplit.md)
     * [网络流](./003Graph/network.md)
+    * [Gomory-Hu Tree](./003Graph/ght.md)
     * [费用流](./003Graph/costnet.md)
     * [上下界网络流](./003Graph/lunet.md)
     * [Tarjan](./003Graph/tarjan.md)
@@ -88,3 +89,4 @@
     * [O(1) 取模乘](./008Others/modmul.md)
     * [IO 优化](./008Others/fio.md)
     * [std::bitset 遍历](./008Others/bsvis.md)
+    * [bitset 优化最长公共子序列](./008Others/lcsbs.md)

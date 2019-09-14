@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Vim 配置 · GitBook</title>
+        <title>bitset 优化最长公共子序列 · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="../002DataStructure/" />
     
-    
-    <link rel="prev" href="./" />
+    <link rel="prev" href="bsvis.html" />
     
 
     </head>
@@ -102,9 +100,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="./">
+        <li class="chapter " data-level="1.2" data-path="../001VimConfig/">
             
-                <a href="./">
+                <a href="../001VimConfig/">
             
                     
                     Vim 配置
@@ -116,9 +114,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter active" data-level="1.2.1" data-path="vimrc.html">
+        <li class="chapter " data-level="1.2.1" data-path="../001VimConfig/vimrc.html">
             
-                <a href="vimrc.html">
+                <a href="../001VimConfig/vimrc.html">
             
                     
                     Vim 配置
@@ -1093,9 +1091,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9" data-path="../008Others/">
+        <li class="chapter " data-level="1.9" data-path="./">
             
-                <a href="../008Others/">
+                <a href="./">
             
                     
                     其他
@@ -1107,9 +1105,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.9.1" data-path="../008Others/javabi.html">
+        <li class="chapter " data-level="1.9.1" data-path="javabi.html">
             
-                <a href="../008Others/javabi.html">
+                <a href="javabi.html">
             
                     
                     Java 高精度
@@ -1120,9 +1118,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.2" data-path="../008Others/tsat.html">
+        <li class="chapter " data-level="1.9.2" data-path="tsat.html">
             
-                <a href="../008Others/tsat.html">
+                <a href="tsat.html">
             
                     
                     2-SAT
@@ -1133,9 +1131,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.3" data-path="../008Others/tdpo.html">
+        <li class="chapter " data-level="1.9.3" data-path="tdpo.html">
             
-                <a href="../008Others/tdpo.html">
+                <a href="tdpo.html">
             
                     
                     三维偏序
@@ -1146,9 +1144,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.4" data-path="../008Others/modmul.html">
+        <li class="chapter " data-level="1.9.4" data-path="modmul.html">
             
-                <a href="../008Others/modmul.html">
+                <a href="modmul.html">
             
                     
                     O(1) 取模乘
@@ -1159,9 +1157,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.5" data-path="../008Others/fio.html">
+        <li class="chapter " data-level="1.9.5" data-path="fio.html">
             
-                <a href="../008Others/fio.html">
+                <a href="fio.html">
             
                     
                     IO 优化
@@ -1172,9 +1170,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.6" data-path="../008Others/bsvis.html">
+        <li class="chapter " data-level="1.9.6" data-path="bsvis.html">
             
-                <a href="../008Others/bsvis.html">
+                <a href="bsvis.html">
             
                     
                     std::bitset 遍历
@@ -1185,9 +1183,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.9.7" data-path="../008Others/lcsbs.html">
+        <li class="chapter active" data-level="1.9.7" data-path="lcsbs.html">
             
-                <a href="../008Others/lcsbs.html">
+                <a href="lcsbs.html">
             
                     
                     bitset 优化最长公共子序列
@@ -1233,7 +1231,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Vim 配置</a>
+        <a href=".." >bitset 优化最长公共子序列</a>
     </h1>
 </div>
 
@@ -1248,47 +1246,97 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="vim-&#x914D;&#x7F6E;">Vim &#x914D;&#x7F6E;</h1>
-<pre><code class="lang-vimrc">syntax on
-set nocompatible
-set backspace=2
-set tabstop=4
-set softtabstop
-set shiftwidth=4
-set smarttab
-set autoindent
-set cindent
-set smartindent
-set number
-set ruler
-set cursorline
-set scrolloff=3
-set magic
-set showmatch
-set showcmd
-set history=1000
-set mouse=a
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
+                                <h1 id="bitset-&#x4F18;&#x5316;&#x6700;&#x957F;&#x516C;&#x5171;&#x5B50;&#x5E8F;&#x5217;">bitset &#x4F18;&#x5316;&#x6700;&#x957F;&#x516C;&#x5171;&#x5B50;&#x5E8F;&#x5217;</h1>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-set printoption=paper:A4,syntax:n,wrap:y
-set printdevice={{printer-name}}
-noremap &lt;C-p&gt; :hardcopy&lt;CR&gt;
-inoremap &lt;C-p&gt; &lt;C-o&gt;:hardcopy&lt;CR&gt;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">5005</span>, SIGMA = <span class="hljs-number">26</span>;
 
-map &lt;C-a&gt; gg0vG$
+<span class="hljs-keyword">struct</span> Bitset {
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">int</span> W = <span class="hljs-number">62</span>;
 
-noremap &lt;C-z&gt; u
-inoremap &lt;C-z&gt; &lt;C-o&gt;u
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">size_t</span> size = MAXN / W + !!(MAXN % W);
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> u[size];
 
-inoremap {&lt;CR&gt; {}&lt;LEFT&gt;&lt;CR&gt;&lt;CR&gt;&lt;UP&gt;&lt;TAB&gt;
+    Bitset &amp;<span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Bitset &amp;rhs) {
+        <span class="hljs-built_in">std</span>::copy(rhs.u, rhs.u + size, u);
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+    }
 
-map &lt;C-p&gt; i#include &lt;bits/stdc++.h&gt;&lt;CR&gt;&lt;CR&gt;int main() {&lt;CR&gt;&lt;CR&gt;return 0;&lt;UP&gt;&lt;ESC&gt;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">reset</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">std</span>::fill(u, u + size, <span class="hljs-number">0</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+        u[x / W] |= <span class="hljs-number">1u</span>ll &lt;&lt; (x % W);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> u[x / W] &amp; (<span class="hljs-number">1u</span>ll &lt;&lt; (x % W));
+    }
 
-map &lt;F5&gt; :w&lt;CR&gt;:!g++ % -o %&lt; -lm -O2 -std=c++11; echo Exit code: $?; echo &quot;===================&quot;&lt;CR&gt;
-imap &lt;F5&gt; &lt;ESC&gt;:w&lt;CR&gt;:!g++ % -o %&lt; -lm -O2 -std=c++11; echo Exit code: $?; echo &quot;===================&quot;&lt;CR&gt;
+    Bitset <span class="hljs-keyword">operator</span>|(<span class="hljs-keyword">const</span> Bitset &amp;rhs) <span class="hljs-keyword">const</span> {
+        Bitset res;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) res.u[i] = u[i] | rhs.u[i];
+        <span class="hljs-keyword">return</span> res;
+    }
+    Bitset <span class="hljs-keyword">operator</span>&amp;(<span class="hljs-keyword">const</span> Bitset &amp;rhs) <span class="hljs-keyword">const</span> {
+        Bitset res;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) res.u[i] = u[i] &amp; rhs.u[i];
+        <span class="hljs-keyword">return</span> res;
+    }
+    Bitset <span class="hljs-keyword">operator</span>^(<span class="hljs-keyword">const</span> Bitset &amp;rhs) <span class="hljs-keyword">const</span> {
+        Bitset res;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) res.u[i] = u[i] ^ rhs.u[i];
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    Bitset <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">const</span> Bitset &amp;rhs) <span class="hljs-keyword">const</span> {
+        Bitset res;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++) res.u[i] = u[i] - rhs.u[i];
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++ i) <span class="hljs-keyword">if</span> (res.u[i] &lt; <span class="hljs-number">0</span>) {
+            res.u[i] += <span class="hljs-number">1l</span>l &lt;&lt; W;
+            --res.u[i + <span class="hljs-number">1</span>];
+        }
+        res.u[size] = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> res;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">shlOr1</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> c = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++ i) {
+            u[i] &lt;&lt;= <span class="hljs-number">1</span>; u[i] |= c;
+            c = u[i] &gt;&gt; W &amp; <span class="hljs-number">1</span>;
+            u[i] ^= c &lt;&lt; W;
+        }
+    }
+
+    <span class="hljs-keyword">size_t</span> count() <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">size_t</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; ++ i) res += __builtin_popcountll(u[i]);
+        <span class="hljs-keyword">return</span> res;
+    }
+};
+Bitset row, as[SIGMA], x;
+
+<span class="hljs-keyword">char</span> s[MAXN], t[MAXN];
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%s %s&quot;</span>, s, t);
+    <span class="hljs-keyword">int</span> n = <span class="hljs-built_in">strlen</span>(s), m = <span class="hljs-built_in">strlen</span>(t);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; SIGMA; i++) as[i].reset();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) as[s[i] - <span class="hljs-string">&apos;a&apos;</span>].<span class="hljs-built_in">set</span>(i);
+
+    row.reset();
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) {
+        x = row | as[t[i] - <span class="hljs-string">&apos;a&apos;</span>];
+        row.shlOr1();
+        row = x - row;
+        row = (row ^ x) &amp; x;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, row.count());
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
 </code></pre>
 
                                 
@@ -1317,14 +1365,10 @@ imap &lt;F5&gt; &lt;ESC&gt;:w&lt;CR&gt;:!g++ % -o %&lt; -lm -O2 -std=c++11; echo
 
             
                 
-                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Vim 配置">
+                <a href="bsvis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: std::bitset 遍历">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="../002DataStructure/" class="navigation navigation-next " aria-label="Next page: 数据结构">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -1333,7 +1377,7 @@ imap &lt;F5&gt; &lt;ESC&gt;:w&lt;CR&gt;:!g++ % -o %&lt; -lm -O2 -std=c++11; echo
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Vim 配置","level":"1.2.1","depth":2,"next":{"title":"数据结构","level":"1.3","depth":1,"path":"002DataStructure/README.md","ref":"./002DataStructure/README.md","articles":[{"title":"树状数组","level":"1.3.1","depth":2,"path":"002DataStructure/bit.md","ref":"./002DataStructure/bit.md","articles":[]},{"title":"线段树","level":"1.3.2","depth":2,"path":"002DataStructure/segt.md","ref":"./002DataStructure/segt.md","articles":[]},{"title":"Splay","level":"1.3.3","depth":2,"path":"002DataStructure/splay.md","ref":"./002DataStructure/splay.md","articles":[]},{"title":"Treap(Split & Merge)","level":"1.3.4","depth":2,"path":"002DataStructure/treap.md","ref":"./002DataStructure/treap.md","articles":[]},{"title":"替罪羊树","level":"1.3.5","depth":2,"path":"002DataStructure/scapet.md","ref":"./002DataStructure/scapet.md","articles":[]},{"title":"Link-Cut Tree","level":"1.3.6","depth":2,"path":"002DataStructure/lct.md","ref":"./002DataStructure/lct.md","articles":[]},{"title":"主席树","level":"1.3.7","depth":2,"path":"002DataStructure/psegt.md","ref":"./002DataStructure/psegt.md","articles":[]},{"title":"可持久化 Treap","level":"1.3.8","depth":2,"path":"002DataStructure/ptreap.md","ref":"./002DataStructure/ptreap.md","articles":[]},{"title":"并查集","level":"1.3.9","depth":2,"path":"002DataStructure/djs.md","ref":"./002DataStructure/djs.md","articles":[]},{"title":"Sparse Table","level":"1.3.10","depth":2,"path":"002DataStructure/st.md","ref":"./002DataStructure/st.md","articles":[]},{"title":"K-d Tree","level":"1.3.11","depth":2,"path":"002DataStructure/kdt.md","ref":"./002DataStructure/kdt.md","articles":[]},{"title":"单调队列","level":"1.3.12","depth":2,"path":"002DataStructure/monoq.md","ref":"./002DataStructure/monoq.md","articles":[]}]},"previous":{"title":"Vim 配置","level":"1.2","depth":1,"path":"001VimConfig/README.md","ref":"./001VimConfig/README.md","articles":[{"title":"Vim 配置","level":"1.2.1","depth":2,"path":"001VimConfig/vimrc.md","ref":"./001VimConfig/vimrc.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"001VimConfig/vimrc.md","mtime":"2018-11-08T10:27:55.262Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-14T00:53:06.184Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"bitset 优化最长公共子序列","level":"1.9.7","depth":2,"previous":{"title":"std::bitset 遍历","level":"1.9.6","depth":2,"path":"008Others/bsvis.md","ref":"./008Others/bsvis.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"008Others/lcsbs.md","mtime":"2019-09-14T00:52:38.603Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-09-14T00:53:06.184Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
