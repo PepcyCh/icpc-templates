@@ -18,6 +18,7 @@
     * [Sparse Table](./002DataStructure/st.md)
     * [K-d Tree](./002DataStructure/kdt.md)
     * [单调队列](./002DataStructure/monoq.md)
+    * [Sqrt Tree](./002DataStructure/sqrtt.md)
 
 * [树与图](./003Graph/README.md)
     * [单源最短路](./003Graph/sssp.md)

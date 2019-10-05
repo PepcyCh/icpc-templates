@@ -14,3 +14,4 @@
 * Sparse Table
 * K-d Tree
 * 单调队列
+* Sqrt Tree
