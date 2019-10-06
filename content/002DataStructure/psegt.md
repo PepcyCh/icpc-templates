@@ -1,18 +1,19 @@
 # 主席树/可持久化线段树（Persistent Segment Tree）
 
-主席树求区间 $$k$$ 小值和树上两点间 $$k$$ 小值。
+主席树求区间 k 小值和树上两点间 k 小值。
 
-### 区间 $$k$$ 小值
+### 区间 k 小值
 
 ```c++
 #include <cstdio>
 #include <algorithm>
 
-const int MAXN = 100005;
+const int MAXN = 200005;
+const int MAXN_LOG = 20;
 
 template <typename T, size_t SIZE>
 struct MemoryPool {
-    char mem[sizeof (T) * SIZE], *top;
+    char mem[sizeof(T) * SIZE], *top;
 
     MemoryPool() : top(mem) {}
 
@@ -23,44 +24,39 @@ struct MemoryPool {
     }
 };
 
-struct PSegT {
+class PSegT {
+  private:
     struct Node {
         Node *lc, *rc;
         int cnt;
-        static MemoryPool<Node, MAXN * 20> pool;
+        static MemoryPool<Node, MAXN * MAXN_LOG> pool;
+        static Node *nil;
 
-        Node(int cnt) : cnt(cnt), lc(NULL), rc(NULL) {}
-        Node(Node *lc = NULL, Node *rc = NULL) : lc(lc), rc(rc), cnt((lc ? lc->cnt : 0) + (rc ? rc->cnt : 0)) {}
+        Node(int cnt) : lc(nil), rc(nil), cnt(cnt) {
+            static bool init = true;
+            if (init) { lc = rc = this; init = false; }
+        }
+        Node(Node *lc = nil, Node *rc = nil) : lc(lc), rc(rc), cnt(lc->cnt + rc->cnt) {}
 
         void *operator new(size_t) {
             return pool.alloc();
         }
 
-        void pushDown() {
-            if (lc && rc) return;
-            if (!lc) lc = new Node;
-            if (!rc) rc = new Node;
-        }
-
         Node *insert(int l, int r, int val) {
             if (val == l && val == r) return new Node(cnt + 1);
-            pushDown();
             int mid = l + ((r - l) >> 1);
             if (val <= mid) return new Node(lc->insert(l, mid, val), rc);
             else return new Node(lc, rc->insert(mid + 1, r, val));
         }
 
-        int rank() const {
-            return lc ? lc->cnt : 0;
-        }
+        int rank() const { return lc->cnt; }
     } *root[MAXN];
     int n;
 
-    PSegT() : root() {}
-
+  public:
     void build(int *a, int n) {
         this->n = n;
-        root[0] = new Node;
+        root[0] = new Node();
         for (int i = 1; i <= n; i++) root[i] = root[i - 1]->insert(1, n, a[i]);
     }
 
@@ -68,15 +64,15 @@ struct PSegT {
         Node *L = root[l - 1], *R = root[r];
         int min = 1, max = n;
         while (min < max) {
-            L->pushDown(), R->pushDown();
-            int mid = min + (max - min) / 2, temp = R->rank() - L->rank();
+            int mid = min + ((max - min) >> 1), temp = R->rank() - L->rank();
             if (k <= temp) L = L->lc, R = R->lc, max = mid;
             else L = L->rc, R = R->rc, k -= temp, min = mid + 1;
         }
         return min;
     }
 } pSegT;
-MemoryPool<PSegT::Node, MAXN * 20> PSegT::Node::pool;
+MemoryPool<PSegT::Node, MAXN * MAXN_LOG> PSegT::Node::pool;
+PSegT::Node *PSegT::Node::nil = new PSegT::Node(0);
 
 int map[MAXN];
 void discrete(int *a, int n) {
@@ -100,14 +96,14 @@ int main() {
     while (q--) {
         int l, r, k;
         scanf("%d %d %d", &l, &r, &k);
-        printf("%d\n", map[pSegT.query(l, r, k)]);
+        printf("%d\n", map[pSegT.query(l, r, k) - 1]);
     }
 
     return 0;
 }
 ```
 
-### 树上两点间 $$k$$ 小值
+### 树上两点间 k 小值
 
 ```c++
 #include <cstdio>
@@ -119,7 +115,7 @@ const int MAXN_LOG = 18;
 
 template <typename T, size_t SIZE>
 struct MemoryPool {
-    char mem[sizeof (T) * SIZE], *top;
+    char mem[sizeof(T) * SIZE], *top;
 
     MemoryPool() : top(mem) {}
 

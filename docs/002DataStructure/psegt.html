@@ -1262,16 +1262,17 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="&#x4E3B;&#x5E2D;&#x6811;&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;persistent-segment-tree&#xFF09;">&#x4E3B;&#x5E2D;&#x6811;/&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7EBF;&#x6BB5;&#x6811;&#xFF08;Persistent Segment Tree&#xFF09;</h1>
-<p>&#x4E3B;&#x5E2D;&#x6811;&#x6C42;&#x533A;&#x95F4; $$k$$ &#x5C0F;&#x503C;&#x548C;&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4; $$k$$ &#x5C0F;&#x503C;&#x3002;</p>
-<h3 id="&#x533A;&#x95F4;-k-&#x5C0F;&#x503C;">&#x533A;&#x95F4; $$k$$ &#x5C0F;&#x503C;</h3>
+<p>&#x4E3B;&#x5E2D;&#x6811;&#x6C42;&#x533A;&#x95F4; k &#x5C0F;&#x503C;&#x548C;&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4; k &#x5C0F;&#x503C;&#x3002;</p>
+<h3 id="&#x533A;&#x95F4;-k-&#x5C0F;&#x503C;">&#x533A;&#x95F4; k &#x5C0F;&#x503C;</h3>
 <pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">100005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">200005</span>;
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN_LOG = <span class="hljs-number">20</span>;
 
 <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
 <span class="hljs-keyword">struct</span> MemoryPool {
-    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *top;
+    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span>(T) * SIZE], *top;
 
     MemoryPool() : top(mem) {}
 
@@ -1282,44 +1283,39 @@
     }
 };
 
-<span class="hljs-keyword">struct</span> PSegT {
+<span class="hljs-keyword">class</span> PSegT {
+  <span class="hljs-keyword">private</span>:
     <span class="hljs-keyword">struct</span> Node {
         Node *lc, *rc;
         <span class="hljs-keyword">int</span> cnt;
-        <span class="hljs-keyword">static</span> MemoryPool&lt;Node, MAXN * <span class="hljs-number">20</span>&gt; pool;
+        <span class="hljs-keyword">static</span> MemoryPool&lt;Node, MAXN * MAXN_LOG&gt; pool;
+        <span class="hljs-keyword">static</span> Node *nil;
 
-        Node(<span class="hljs-keyword">int</span> cnt) : cnt(cnt), lc(<span class="hljs-literal">NULL</span>), rc(<span class="hljs-literal">NULL</span>) {}
-        Node(Node *lc = <span class="hljs-literal">NULL</span>, Node *rc = <span class="hljs-literal">NULL</span>) : lc(lc), rc(rc), cnt((lc ? lc-&gt;cnt : <span class="hljs-number">0</span>) + (rc ? rc-&gt;cnt : <span class="hljs-number">0</span>)) {}
+        Node(<span class="hljs-keyword">int</span> cnt) : lc(nil), rc(nil), cnt(cnt) {
+            <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> init = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">if</span> (init) { lc = rc = <span class="hljs-keyword">this</span>; init = <span class="hljs-literal">false</span>; }
+        }
+        Node(Node *lc = nil, Node *rc = nil) : lc(lc), rc(rc), cnt(lc-&gt;cnt + rc-&gt;cnt) {}
 
         <span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-keyword">operator</span> <span class="hljs-title">new</span><span class="hljs-params">(size_t)</span> </span>{
             <span class="hljs-keyword">return</span> pool.alloc();
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pushDown</span><span class="hljs-params">()</span> </span>{
-            <span class="hljs-keyword">if</span> (lc &amp;&amp; rc) <span class="hljs-keyword">return</span>;
-            <span class="hljs-keyword">if</span> (!lc) lc = <span class="hljs-keyword">new</span> Node;
-            <span class="hljs-keyword">if</span> (!rc) rc = <span class="hljs-keyword">new</span> Node;
-        }
-
         <span class="hljs-function">Node *<span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> val)</span> </span>{
             <span class="hljs-keyword">if</span> (val == l &amp;&amp; val == r) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(cnt + <span class="hljs-number">1</span>);
-            pushDown();
             <span class="hljs-keyword">int</span> mid = l + ((r - l) &gt;&gt; <span class="hljs-number">1</span>);
             <span class="hljs-keyword">if</span> (val &lt;= mid) <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(lc-&gt;insert(l, mid, val), rc);
             <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(lc, rc-&gt;insert(mid + <span class="hljs-number">1</span>, r, val));
         }
 
-        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
-            <span class="hljs-keyword">return</span> lc ? lc-&gt;cnt : <span class="hljs-number">0</span>;
-        }
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rank</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> lc-&gt;cnt; }
     } *root[MAXN];
     <span class="hljs-keyword">int</span> n;
 
-    PSegT() : root() {}
-
+  <span class="hljs-keyword">public</span>:
     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
         <span class="hljs-keyword">this</span>-&gt;n = n;
-        root[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Node;
+        root[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Node();
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) root[i] = root[i - <span class="hljs-number">1</span>]-&gt;insert(<span class="hljs-number">1</span>, n, a[i]);
     }
 
@@ -1327,15 +1323,15 @@
         Node *L = root[l - <span class="hljs-number">1</span>], *R = root[r];
         <span class="hljs-keyword">int</span> min = <span class="hljs-number">1</span>, max = n;
         <span class="hljs-keyword">while</span> (min &lt; max) {
-            L-&gt;pushDown(), R-&gt;pushDown();
-            <span class="hljs-keyword">int</span> mid = min + (max - min) / <span class="hljs-number">2</span>, temp = R-&gt;rank() - L-&gt;rank();
+            <span class="hljs-keyword">int</span> mid = min + ((max - min) &gt;&gt; <span class="hljs-number">1</span>), temp = R-&gt;rank() - L-&gt;rank();
             <span class="hljs-keyword">if</span> (k &lt;= temp) L = L-&gt;lc, R = R-&gt;lc, max = mid;
             <span class="hljs-keyword">else</span> L = L-&gt;rc, R = R-&gt;rc, k -= temp, min = mid + <span class="hljs-number">1</span>;
         }
         <span class="hljs-keyword">return</span> min;
     }
 } pSegT;
-MemoryPool&lt;PSegT::Node, MAXN * <span class="hljs-number">20</span>&gt; PSegT::Node::pool;
+MemoryPool&lt;PSegT::Node, MAXN * MAXN_LOG&gt; PSegT::Node::pool;
+PSegT::Node *PSegT::Node::nil = <span class="hljs-keyword">new</span> PSegT::Node(<span class="hljs-number">0</span>);
 
 <span class="hljs-keyword">int</span> <span class="hljs-built_in">map</span>[MAXN];
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">discrete</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *a, <span class="hljs-keyword">int</span> n)</span> </span>{
@@ -1359,13 +1355,13 @@ MemoryPool&lt;PSegT::Node, MAXN * <span class="hljs-number">20</span>&gt; PSegT:
     <span class="hljs-keyword">while</span> (q--) {
         <span class="hljs-keyword">int</span> l, r, k;
         <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;l, &amp;r, &amp;k);
-        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">map</span>[pSegT.query(l, r, k)]);
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, <span class="hljs-built_in">map</span>[pSegT.query(l, r, k) - <span class="hljs-number">1</span>]);
     }
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
-<h3 id="&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4;-k-&#x5C0F;&#x503C;">&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4; $$k$$ &#x5C0F;&#x503C;</h3>
+<h3 id="&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4;-k-&#x5C0F;&#x503C;">&#x6811;&#x4E0A;&#x4E24;&#x70B9;&#x95F4; k &#x5C0F;&#x503C;</h3>
 <pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
@@ -1375,7 +1371,7 @@ MemoryPool&lt;PSegT::Node, MAXN * <span class="hljs-number">20</span>&gt; PSegT:
 
 <span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T, <span class="hljs-keyword">size_t</span> SIZE&gt;
 <span class="hljs-keyword">struct</span> MemoryPool {
-    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span> (T) * SIZE], *top;
+    <span class="hljs-keyword">char</span> mem[<span class="hljs-keyword">sizeof</span>(T) * SIZE], *top;
 
     MemoryPool() : top(mem) {}
 
@@ -1569,7 +1565,7 @@ MemoryPool&lt;PSegT, MAXN * <span class="hljs-number">40</span>&gt; PSegT::pool;
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"主席树","level":"1.3.7","depth":2,"next":{"title":"可持久化 Treap","level":"1.3.8","depth":2,"path":"002DataStructure/ptreap.md","ref":"./002DataStructure/ptreap.md","articles":[]},"previous":{"title":"Link-Cut Tree","level":"1.3.6","depth":2,"path":"002DataStructure/lct.md","ref":"./002DataStructure/lct.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/psegt.md","mtime":"2018-11-13T04:56:11.697Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-05T14:19:11.160Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"主席树","level":"1.3.7","depth":2,"next":{"title":"可持久化 Treap","level":"1.3.8","depth":2,"path":"002DataStructure/ptreap.md","ref":"./002DataStructure/ptreap.md","articles":[]},"previous":{"title":"Link-Cut Tree","level":"1.3.6","depth":2,"path":"002DataStructure/lct.md","ref":"./002DataStructure/lct.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"002DataStructure/psegt.md","mtime":"2019-10-06T14:41:52.363Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-06T14:42:23.041Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

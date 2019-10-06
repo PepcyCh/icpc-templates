@@ -1263,108 +1263,124 @@
                                 
                                 <h1 id="&#x4E00;&#x822C;&#x56FE;&#x6700;&#x5927;&#x5339;&#x914D;">&#x4E00;&#x822C;&#x56FE;&#x6700;&#x5927;&#x5339;&#x914D;</h1>
 <p>&#x5E26;&#x82B1;&#x6811;&#xFF08;Blossom Algorithm&#xFF09;&#x3002;</p>
-<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span>
 
 <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">505</span>;
 
-<span class="hljs-keyword">namespace</span> Blossom {
-    <span class="hljs-keyword">struct</span> DJS{
+<span class="hljs-keyword">struct</span> Graph {
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; G[MAXN];
+    <span class="hljs-keyword">int</span> n, mate[MAXN];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+} G;
+
+<span class="hljs-keyword">class</span> Blossom {
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(Graph &amp;G)</span> </span>{
+        <span class="hljs-keyword">this</span>-&gt;G = &amp;G;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= G.n; i++) G.mate[i] = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= G.n; i++) <span class="hljs-keyword">if</span> (G.mate[i] == <span class="hljs-number">-1</span>) aug(i);
+
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= G.n; i++) res += (G.mate[i] &gt; i);
+        <span class="hljs-keyword">return</span> res;
+    }
+
+  <span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">struct</span> DJS {
         <span class="hljs-keyword">int</span> f[MAXN];
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{ <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) f[i] = i; }
+
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) f[i] = i;
+        }
+
         <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-keyword">return</span> x == f[x] ? x : f[x] = find(f[x]); }
         <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{ <span class="hljs-keyword">return</span> find(x) == find(y); }
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{ f[find(x)] = find(y); }
     } djs;
 
-    <span class="hljs-keyword">int</span> n, match[MAXN], id[MAXN], fa[MAXN], vis[MAXN], tim;
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; G[MAXN];
+    <span class="hljs-keyword">int</span> next[MAXN], dsu[MAXN], mark[MAXN], vis[MAXN];
+    Graph *G;
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> t = <span class="hljs-number">0</span>;
+        ++t;
+        <span class="hljs-keyword">for</span> (; ; <span class="hljs-built_in">std</span>::swap(x, y)) <span class="hljs-keyword">if</span> (x != <span class="hljs-number">-1</span>) {
+            <span class="hljs-keyword">if</span> (vis[x = djs.find(x)] == t) <span class="hljs-keyword">return</span> x;
+            vis[x] = t;
+            x = (G-&gt;mate[x] != <span class="hljs-number">-1</span>) ? next[G-&gt;mate[x]] : <span class="hljs-number">-1</span>;
+        }
+    }
+
     <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
-
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lca</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v)</span> </span>{
-        ++tim;
-        <span class="hljs-keyword">while</span> (vis[u] != tim) {
-            <span class="hljs-keyword">if</span> (u) {
-                u = djs.find(u);
-                <span class="hljs-keyword">if</span> (vis[u] == tim) <span class="hljs-keyword">return</span> u;
-                vis[u] = tim;
-                <span class="hljs-keyword">if</span> (match[u]) u = djs.find(fa[match[u]]);
-                <span class="hljs-keyword">else</span> u = <span class="hljs-number">0</span>;
-            }
-            <span class="hljs-built_in">std</span>::swap(u, v);
-        }
-        <span class="hljs-keyword">return</span> u;
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v , <span class="hljs-keyword">int</span> p)</span> </span>{
-        <span class="hljs-keyword">while</span> (djs.find(u) != p) {
-            fa[u] = v;
-            <span class="hljs-keyword">int</span> t = match[u];
-            <span class="hljs-keyword">if</span> (id[t] == <span class="hljs-number">1</span>) id[t] = <span class="hljs-number">0</span>, q.push(t);
-            <span class="hljs-keyword">if</span> (djs.find(t) == t) djs.f[t] = p;
-            <span class="hljs-keyword">if</span> (djs.find(u) == u) djs.f[u] = p;
-            v = t;
-            u = fa[v];
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">group</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> p)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> b, c; a != p; djs.merge(a, b), djs.merge(b, c), a = c) {
+            b = G-&gt;mate[a], c = next[b];
+            <span class="hljs-keyword">if</span> (djs.find(c) != p) next[c] = b;
+            <span class="hljs-keyword">if</span> (mark[b] == <span class="hljs-number">2</span>) mark[b] = <span class="hljs-number">1</span>, q.push(b);
+            <span class="hljs-keyword">if</span> (mark[c] == <span class="hljs-number">2</span>) mark[c] = <span class="hljs-number">1</span>, q.push(c);
         }
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">bfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) id[i] = <span class="hljs-number">-1</span>;
-        djs.init(n);
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">aug</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= G-&gt;n; i++) {
+            next[i] = vis[i] = <span class="hljs-number">-1</span>;
+            mark[i] = <span class="hljs-number">0</span>;
+        }
+        djs.init(G-&gt;n);
         <span class="hljs-keyword">while</span> (!q.empty()) q.pop();
 
         q.push(s);
-        id[s] = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">while</span> (!q.empty()) {
-            <span class="hljs-keyword">int</span> u = q.front();
+        mark[s] = <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">while</span> (G-&gt;mate[s] == <span class="hljs-number">-1</span> &amp;&amp; !q.empty()) {
+            <span class="hljs-keyword">int</span> x = q.front();
             q.pop();
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : G[u]) {
-                <span class="hljs-keyword">if</span> (id[v] == <span class="hljs-number">-1</span>) {
-                    fa[v] = u;
-                    id[v] = <span class="hljs-number">1</span>;
-                    <span class="hljs-keyword">if</span> (!match[v]) {
-                        <span class="hljs-keyword">int</span> curr = v;
-                        <span class="hljs-keyword">while</span> (curr) {
-                            <span class="hljs-keyword">int</span> temp = fa[curr], last = match[temp];
-                            match[temp] = curr;
-                            match[curr] = temp;
-                            curr = last;
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> y : G-&gt;G[x]) {
+                <span class="hljs-keyword">if</span> (y != G-&gt;mate[x] &amp;&amp; !djs.test(x, y) &amp;&amp; mark[y] != <span class="hljs-number">2</span>) {
+                    <span class="hljs-keyword">if</span> (mark[y] == <span class="hljs-number">1</span>) {
+                        <span class="hljs-keyword">int</span> p = lca(x, y);
+                        <span class="hljs-keyword">if</span> (djs.find(x) != p) next[x] = y;
+                        <span class="hljs-keyword">if</span> (djs.find(y) != p) next[y] = x;
+                        group(x, p);
+                        group(y, p);
+                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (G-&gt;mate[y] == <span class="hljs-number">-1</span>) {
+                        next[y] = x;
+                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = y, k, l; j != <span class="hljs-number">-1</span>; j = l) {
+                            k = next[j];
+                            l = G-&gt;mate[k];
+                            G-&gt;mate[j] = k;
+                            G-&gt;mate[k] = j;
                         }
-                        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+                        <span class="hljs-keyword">break</span>;
+                    } <span class="hljs-keyword">else</span> {
+                        next[y] = x;
+                        q.push(G-&gt;mate[y]);
+                        mark[G-&gt;mate[y]] = <span class="hljs-number">1</span>;
+                        mark[y] = <span class="hljs-number">2</span>;
                     }
-                    id[match[v]] = <span class="hljs-number">0</span>;
-                    q.push(match[v]);
-                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (id[v] == <span class="hljs-number">0</span> &amp;&amp; !djs.test(u, v)) {
-                    <span class="hljs-keyword">int</span> p = lca(u, v);
-                    update(u, v, p);
-                    update(v, u, p);
                 }
             }
         }
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     }
-
-    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-        Blossom::n = n;
-        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (!match[i] &amp;&amp; bfs(i)) ++res;
-        <span class="hljs-keyword">return</span> res;
-    }
-} <span class="hljs-comment">// namespace Blossom</span>
+} blossom;
 
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">int</span> n, m;
     <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    G.n = n;
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v; i &lt; m; i++) {
         <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;u, &amp;v);
-        Blossom::G[u].push_back(v);
-        Blossom::G[v].push_back(u);
+        G.addEdge(u, v);
     }
 
-    <span class="hljs-keyword">int</span> ans = Blossom::solve(n);
-    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, ans);
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d%c&quot;</span>, Blossom::match[i], <span class="hljs-string">&quot; \n&quot;</span>[i == n]);
+    blossom.solve(G);
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d%c&quot;</span>, G.mate[i], <span class="hljs-string">&quot; \n&quot;</span>[i == n]);
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
@@ -1412,7 +1428,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"一般图最大匹配","level":"1.4.18","depth":2,"next":{"title":"字符串","level":"1.5","depth":1,"path":"004String/README.md","ref":"./004String/README.md","articles":[{"title":"Hash","level":"1.5.1","depth":2,"path":"004String/hash.md","ref":"./004String/hash.md","articles":[]},{"title":"KMP","level":"1.5.2","depth":2,"path":"004String/kmp.md","ref":"./004String/kmp.md","articles":[]},{"title":"扩展 KMP","level":"1.5.3","depth":2,"path":"004String/exkmp.md","ref":"./004String/exkmp.md","articles":[]},{"title":"后缀数组","level":"1.5.4","depth":2,"path":"004String/sa.md","ref":"./004String/sa.md","articles":[]},{"title":"后缀自动机","level":"1.5.5","depth":2,"path":"004String/sam.md","ref":"./004String/sam.md","articles":[]},{"title":"AC 自动机","level":"1.5.6","depth":2,"path":"004String/acam.md","ref":"./004String/acam.md","articles":[]},{"title":"Manacher","level":"1.5.7","depth":2,"path":"004String/manacher.md","ref":"./004String/manacher.md","articles":[]},{"title":"回文树","level":"1.5.8","depth":2,"path":"004String/pam.md","ref":"./004String/pam.md","articles":[]}]},"previous":{"title":"二分图最大权完备匹配","level":"1.4.17","depth":2,"path":"003Graph/km.md","ref":"003Graph/km.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/bls.md","mtime":"2019-03-25T04:40:46.580Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-05T14:19:11.160Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"一般图最大匹配","level":"1.4.18","depth":2,"next":{"title":"字符串","level":"1.5","depth":1,"path":"004String/README.md","ref":"./004String/README.md","articles":[{"title":"Hash","level":"1.5.1","depth":2,"path":"004String/hash.md","ref":"./004String/hash.md","articles":[]},{"title":"KMP","level":"1.5.2","depth":2,"path":"004String/kmp.md","ref":"./004String/kmp.md","articles":[]},{"title":"扩展 KMP","level":"1.5.3","depth":2,"path":"004String/exkmp.md","ref":"./004String/exkmp.md","articles":[]},{"title":"后缀数组","level":"1.5.4","depth":2,"path":"004String/sa.md","ref":"./004String/sa.md","articles":[]},{"title":"后缀自动机","level":"1.5.5","depth":2,"path":"004String/sam.md","ref":"./004String/sam.md","articles":[]},{"title":"AC 自动机","level":"1.5.6","depth":2,"path":"004String/acam.md","ref":"./004String/acam.md","articles":[]},{"title":"Manacher","level":"1.5.7","depth":2,"path":"004String/manacher.md","ref":"./004String/manacher.md","articles":[]},{"title":"回文树","level":"1.5.8","depth":2,"path":"004String/pam.md","ref":"./004String/pam.md","articles":[]}]},"previous":{"title":"二分图最大权完备匹配","level":"1.4.17","depth":2,"path":"003Graph/km.md","ref":"003Graph/km.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/bls.md","mtime":"2019-10-06T14:42:12.815Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-06T14:42:23.041Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

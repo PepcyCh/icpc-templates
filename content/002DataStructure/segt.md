@@ -6,15 +6,16 @@
 
 const int MAXN = 100005;
 
-struct SegT {
+class SegT {
+  private:
     struct Node {
         Node *lc, *rc;
         int l, r;
         long long sum, tag;
 
         Node() {}
-        Node(int pos, int val) : l(pos), r(pos), sum(val), tag(0), lc(NULL), rc(NULL) {}
-        Node(Node *lc, Node *rc) : l(lc->l), r(rc->r), lc(lc), rc(rc), tag(0) {
+        Node(int pos, int val) : lc(NULL), rc(NULL), l(pos), r(pos), sum(val), tag(0) {}
+        Node(Node *lc, Node *rc) : lc(lc), rc(rc), l(lc->l), r(rc->r), tag(0) {
             maintain();
         }
 
@@ -46,6 +47,16 @@ struct SegT {
             rc->update(l, r, d);
             maintain();
         }
+        void update(int pos, int d) {
+            if (l == r) {
+                add(d);
+                return;
+            }
+            pushDown();
+            int mid = l + ((r - l) >> 1);
+            (pos <= mid ? lc : rc)->update(pos, d);
+            maintain();
+        }
 
         long long query(int l, int r) {
             if (r < this->l || this->r < l) return 0;
@@ -53,24 +64,29 @@ struct SegT {
             pushDown();
             return lc->query(l, r) + rc->query(l, r);
         }
+        long long query(int pos) {
+            if (l == r) return sum;
+            pushDown();
+            int mid = l + ((r - l) >> 1);
+            return (pos <= mid ? lc : rc)->query(pos);
+        }
     } *root, _pool[MAXN << 1], *_curr;
 
-    SegT() : root(NULL), _curr(_pool) {}
-
-    Node *_build(int l, int r, int *a) {
+  public:
+    Node *build(int l, int r, int *a) {
         if (l == r) return new (_curr++) Node(l, a[l]);
         int mid = l + ((r - l) >> 1);
-        return new (_curr++) Node(_build(l, mid, a), _build(mid + 1, r, a));
+        return new (_curr++) Node(build(l, mid, a), build(mid + 1, r, a));
     }
-    void build(int l, int r, int *a) { root = _build(l, r, a); }
+    void build(int n, int *a) {
+        _curr = _pool;
+        root = build(1, n, a);
+    }
 
-    void update(int l, int r, int d) {
-        root->update(l, r, d);
-    }
-
-    long long query(int l, int r) {
-        return root->query(l, r);
-    }
+    void update(int l, int r, int d) { root->update(l, r, d); }
+    void update(int pos, int d) { root->update(pos, d); }
+    long long query(int l, int r) { return root->query(l, r); }
+    long long query(int pos) { return root->query(pos); }
 } segT;
 
 int main() {
@@ -96,7 +112,7 @@ int main() {
             printf("%lld\n", segT.query(l, r));
         }
     }
-
+    
     return 0;
 }
 ```
