@@ -111,3 +111,121 @@ int main() {
     return 0;
 }
 ```
+
+ZKW 费用流
+
+```c++
+#include <cstdio>
+#include <climits>
+#include <queue>
+#include <algorithm>
+
+const int MAXN = 405;
+
+struct Graph {
+    struct Edge {
+        int v, cap, flow, cost, rev;
+
+        Edge(int v, int cap, int cost, int rev) : v(v), cap(cap), flow(0), cost(cost), rev(rev) {}
+    };
+
+    void addEdge(int u, int v, int cap, int cost) {
+        G[u].emplace_back(v, cap, cost, G[v].size());
+        G[v].emplace_back(u, 0, -cost, G[u].size() - 1);
+    }
+
+    std::vector<Edge> G[MAXN];
+    int n;
+} G;
+
+class MCMF {
+public:
+    std::pair<int, int> solve(int s, int t, Graph &G) {
+        this->s = s;
+        this->t = t;
+        this->G = &G;
+
+        int flow = 0, cost = 0;
+        int rem = INT_MAX;
+        while (argument()) {
+            std::fill_n(ptr + 1, G.n, 0);
+            int d = dfs(s, rem - flow);
+            flow += d;
+            cost += d * dist[t];
+        }
+
+        return std::make_pair(flow, cost);
+    }
+
+private:
+    int s, t;
+    Graph *G;
+    int dist[MAXN], ptr[MAXN];
+    bool vis[MAXN];
+
+    bool argument() {
+        std::fill_n(dist + 1, G->n, INT_MAX);
+        std::fill_n(vis + 1, G->n, false);
+        dist[s] = 0;
+
+        std::queue<int> q;
+        q.push(s);
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+
+            vis[u] = false;
+            for (auto &e : G->G[u]) {
+                if (e.cap > e.flow && dist[e.v] > dist[u] + e.cost) {
+                    dist[e.v] = dist[u] + e.cost;
+                    if (!vis[e.v]) {
+                        vis[e.v] = true;
+                        q.push(e.v);
+                    }
+                }
+            }
+        }
+
+        return dist[t] != INT_MAX;
+    }
+
+    int dfs(int u, int r) {
+        if (u == t) return r;
+
+        vis[u] = true;
+        int res = 0;
+
+        for (int &i = ptr[u]; i < G->G[u].size(); i++) {
+            auto &e = G->G[u][i];
+            if (e.cap > e.flow && dist[e.v] == dist[u] + e.cost && !vis[e.v]) {
+                int d = dfs(e.v, std::min(r - res, e.cap - e.flow));
+                res += d;
+                e.flow += d;
+                G->G[e.v][e.rev].flow -= d;
+                if (res == r) {
+                    vis[u] = false;
+                    break;
+                }
+            }
+        }
+
+        return res;
+    }
+} mcmf;
+
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+
+    G.n = n;
+    for (int i = 0, u, v, c, w; i < m; i++) {
+        scanf("%d %d %d %d", &u, &v, &c, &w);
+        G.addEdge(u, v, c, w);
+    }
+
+    auto [flow, cost] = mcmf.solve(1, n, G);
+    printf("%d %d\n", flow, cost);
+
+    return 0;
+}
+```

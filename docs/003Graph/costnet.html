@@ -1371,6 +1371,121 @@
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
 }
 </code></pre>
+<p>ZKW &#x8D39;&#x7528;&#x6D41;</p>
+<pre><code class="lang-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdio&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">405</span>;
+
+<span class="hljs-keyword">struct</span> Graph {
+    <span class="hljs-keyword">struct</span> Edge {
+        <span class="hljs-keyword">int</span> v, cap, flow, cost, rev;
+
+        Edge(<span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> cap, <span class="hljs-keyword">int</span> cost, <span class="hljs-keyword">int</span> rev) : v(v), cap(cap), flow(<span class="hljs-number">0</span>), cost(cost), rev(rev) {}
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> cap, <span class="hljs-keyword">int</span> cost)</span> </span>{
+        G[u].emplace_back(v, cap, cost, G[v].size());
+        G[v].emplace_back(u, <span class="hljs-number">0</span>, -cost, G[u].size() - <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; G[MAXN];
+    <span class="hljs-keyword">int</span> n;
+} G;
+
+<span class="hljs-keyword">class</span> MCMF {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">std</span>::pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; solve(<span class="hljs-keyword">int</span> s, <span class="hljs-keyword">int</span> t, Graph &amp;G) {
+        <span class="hljs-keyword">this</span>-&gt;s = s;
+        <span class="hljs-keyword">this</span>-&gt;t = t;
+        <span class="hljs-keyword">this</span>-&gt;G = &amp;G;
+
+        <span class="hljs-keyword">int</span> flow = <span class="hljs-number">0</span>, cost = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> rem = INT_MAX;
+        <span class="hljs-keyword">while</span> (argument()) {
+            <span class="hljs-built_in">std</span>::fill_n(ptr + <span class="hljs-number">1</span>, G.n, <span class="hljs-number">0</span>);
+            <span class="hljs-keyword">int</span> d = dfs(s, rem - flow);
+            flow += d;
+            cost += d * dist[t];
+        }
+
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::make_pair(flow, cost);
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> s, t;
+    Graph *G;
+    <span class="hljs-keyword">int</span> dist[MAXN], ptr[MAXN];
+    <span class="hljs-keyword">bool</span> vis[MAXN];
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">argument</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">std</span>::fill_n(dist + <span class="hljs-number">1</span>, G-&gt;n, INT_MAX);
+        <span class="hljs-built_in">std</span>::fill_n(vis + <span class="hljs-number">1</span>, G-&gt;n, <span class="hljs-literal">false</span>);
+        dist[s] = <span class="hljs-number">0</span>;
+
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+        q.push(s);
+        <span class="hljs-keyword">while</span> (!q.empty()) {
+            <span class="hljs-keyword">int</span> u = q.front();
+            q.pop();
+
+            vis[u] = <span class="hljs-literal">false</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> &amp;e : G-&gt;G[u]) {
+                <span class="hljs-keyword">if</span> (e.cap &gt; e.flow &amp;&amp; dist[e.v] &gt; dist[u] + e.cost) {
+                    dist[e.v] = dist[u] + e.cost;
+                    <span class="hljs-keyword">if</span> (!vis[e.v]) {
+                        vis[e.v] = <span class="hljs-literal">true</span>;
+                        q.push(e.v);
+                    }
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> dist[t] != INT_MAX;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> r)</span> </span>{
+        <span class="hljs-keyword">if</span> (u == t) <span class="hljs-keyword">return</span> r;
+
+        vis[u] = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> &amp;i = ptr[u]; i &lt; G-&gt;G[u].size(); i++) {
+            <span class="hljs-keyword">auto</span> &amp;e = G-&gt;G[u][i];
+            <span class="hljs-keyword">if</span> (e.cap &gt; e.flow &amp;&amp; dist[e.v] == dist[u] + e.cost &amp;&amp; !vis[e.v]) {
+                <span class="hljs-keyword">int</span> d = dfs(e.v, <span class="hljs-built_in">std</span>::min(r - res, e.cap - e.flow));
+                res += d;
+                e.flow += d;
+                G-&gt;G[e.v][e.rev].flow -= d;
+                <span class="hljs-keyword">if</span> (res == r) {
+                    vis[u] = <span class="hljs-literal">false</span>;
+                    <span class="hljs-keyword">break</span>;
+                }
+            }
+        }
+
+        <span class="hljs-keyword">return</span> res;
+    }
+} mcmf;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> n, m;
+    <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);
+
+    G.n = n;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, c, w; i &lt; m; i++) {
+        <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d %d&quot;</span>, &amp;u, &amp;v, &amp;c, &amp;w);
+        G.addEdge(u, v, c, w);
+    }
+
+    <span class="hljs-keyword">auto</span> [flow, cost] = mcmf.solve(<span class="hljs-number">1</span>, n, G);
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d %d\n&quot;</span>, flow, cost);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
 
                                 
                                 </section>
@@ -1414,7 +1529,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"费用流","level":"1.4.9","depth":2,"next":{"title":"上下界网络流","level":"1.4.10","depth":2,"path":"003Graph/lunet.md","ref":"./003Graph/lunet.md","articles":[]},"previous":{"title":"Gomory-Hu Tree","level":"1.4.8","depth":2,"path":"003Graph/ght.md","ref":"./003Graph/ght.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/costnet.md","mtime":"2019-07-16T09:28:56.786Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-06T14:42:23.041Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"费用流","level":"1.4.9","depth":2,"next":{"title":"上下界网络流","level":"1.4.10","depth":2,"path":"003Graph/lunet.md","ref":"./003Graph/lunet.md","articles":[]},"previous":{"title":"Gomory-Hu Tree","level":"1.4.8","depth":2,"path":"003Graph/ght.md","ref":"./003Graph/ght.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/costnet.md","mtime":"2019-10-14T00:39:27.807Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-14T00:39:59.880Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
