@@ -91,130 +91,121 @@ Tarjan 的优化实现，O(n^2)。
 #include <queue>
 #include <algorithm>
 
-const int MAXN = 2505;
-const int MAXM = MAXN * MAXN;
-
 /*
  * It takes O(n^2) time on dense graph
  * To get O(m \log n) time on sparse graph, change 'std::vector<Edge *> in' to __gnu_pbds::priority_queue<Edge *>,
- * and change line 80-81, 122-147
+ * and change line 71-72, 113-138
  */
 
-struct Edge;
-struct Node {
-    std::vector<Edge *> e, in, cycle; // if no need to traverse, e is not needed
-    Edge *lambda, *enter;
-    int change;
-    bool vis;
-} N[MAXN];
+const int MAXN = 2505;
 
-struct Edge {
-    Node *u, *v;
-    std::vector<Edge *> ch;
-    Edge *pa;
-    int w, ow;
-    bool removed;
+struct Graph {
+    struct Edge {
+        int u, v, w, ow;
+        bool removed;
+        std::vector<Edge *> ch;
+        Edge *pa;
 
-    Edge() {}
-    Edge(Node *u, Node *v, int w) : u(u), v(v), w(w), ow(w), pa(NULL), removed(false) {}
-} E[MAXM];
-int _curr;
+        Edge() {}
+        Edge(int u, int v, int w) : u(u), v(v), w(w), ow(w), pa(NULL), removed(false) {}
+    };
+    std::vector<Edge> E;
 
-void addEdge(int u, int v, int w) {
-    if (u == v) return;
-    E[_curr] = Edge(&N[u], &N[v], w);
-    N[v].in.push_back(&E[_curr]);
-    N[u].e.push_back(&E[_curr]);
-    _curr++;
-}
-
-namespace OptimumBranching {
-    struct DJS {
-        int f[MAXN];
-
-        void init(int n) {
-            for (int i = 0; i <= n; i++) f[i] = i;
-        }
-        int find(int x) { return x == f[x] ? x : f[x] = find(f[x]); }
-        bool test(int a, int b) { return find(a) == find(b); }
-        void merge(int a, int b) { f[find(b)] = find(a); }
-    } S, W;
-
-    void remove(Edge *e, std::stack<Edge *> &roots) {
-        for (; e; e = e->pa) {
-            e->removed = true;
-            for (Edge *c : e->ch) {
-                roots.push(c);
-                c->pa = NULL;
-            }
-            e->ch.clear();
-        }
+    void addEdge(int u, int v, int w) {
+        if (u == v) return;
+        E[eid] = Edge(u, v, w);
+        G[u].push_back(&E[eid]);
+        in[v].push_back(&E[eid]);
+        ++eid;
     }
 
-    long long solve(int n, int rt) {
-        for (int i = 1; i <= n; i++) N[i].change = 0;
-        S.init(n), W.init(n);
+    std::vector<Edge *> G[MAXN], in[MAXN];
+    int n, eid;
 
-        static std::stack<Node *> roots;
-        static std::vector<Edge *> F;
+    void init(int n, int m) {
+        this->n = n;
+        E.resize(m);
+        this->eid = 0;
+    }
+} G;
 
-        for (int i = 1; i <= n; i++) if (i != rt) roots.push(&N[i]);
+struct DJS {
+    int f[MAXN];
 
+    void init(int n) {
+        for (int i = 0; i <= n; i++) f[i] = i;
+    }
+    int find(int x) { return x == f[x] ? x : f[x] = find(f[x]); }
+    bool test(int x, int y) { return find(x) == find(y); }
+    void merge(int x, int y) { f[find(y)] = find(x); }
+};
+
+class OptimumBranching {
+public:
+    long long solve(Graph &G, int rt) {
+        std::fill_n(change + 1, G.n, 0);
+        S.init(G.n);
+        W.init(G.n);
+
+        std::stack<int> roots;
+        std::vector<Edge *> F;
+
+        for (int i = 1; i <= G.n; i++) if (i != rt) roots.push(i);
         while (!roots.empty()) {
-            Node *u = roots.top();
+            int u = roots.top();
             roots.pop();
 
             Edge *min = NULL;
-            for (Edge *e : u->in) if (min == NULL || e->w < min->w) min = e;
+            for (Edge *e : G.in[u]) if (!min || e->w < min->w) min = e;
 
             F.push_back(min);
-            for (Edge *e : u->cycle) {
+            for (Edge *e : cycle[u]) {
                 e->pa = min;
                 min->ch.push_back(e);
             }
 
-            if (u->cycle.empty()) u->lambda = min;
+            if (cycle[u].empty()) lambda[u] = min;
 
-            if (!W.test(min->u - N, min->v - N)) {
-                u->enter = min;
-                W.merge(min->u - N, min->v - N);
+            if (!W.test(min->u, min->v)) {
+                enter[u] = min;
+                W.merge(min->u, min->v);
             } else {
-                static std::vector<Edge *> cycle;
-                static std::vector<Node *> cycleRepr;
-                cycle.clear(), cycleRepr.clear();
-                Edge *max = min;
-                u->enter = NULL;
+                std::vector<Edge *> cycleEdge;
+                std::vector<int> cycleRepr;
 
-                cycle.push_back(min);
-                cycleRepr.push_back(&N[S.find(min->v - N)]);
-                for (Node *v = &N[S.find(min->u - N)]; v->enter; v = &N[S.find(v->enter->u - N)]) {
-                    cycle.push_back(v->enter);
+                Edge *max = min;
+                enter[u] = NULL;
+
+                cycleEdge.push_back(min);
+                cycleRepr.push_back(S.find(min->v));
+                for (int v = S.find(min->u); enter[v]; v = S.find(enter[v]->u)) {
+                    cycleEdge.push_back(enter[v]);
                     cycleRepr.push_back(v);
-                    if (max->w < v->enter->w) max = v->enter;
+                    if (max->w < enter[v]->w) max = enter[v];
                 }
 
-                for (Edge *e : cycle) N[S.find(e->v - N)].change = max->w - e->w;
+                for (Edge *e : cycleEdge) change[S.find(e->v)] = max->w - e->w;
 
-                Node *nr = cycleRepr.front();
-                for (Node *v : cycleRepr) {
-                    S.merge(v - N, nr - N);
-                    nr = &N[S.find(nr - N)];
+                int nr = cycleRepr.front();
+                for (int v : cycleRepr) {
+                    S.merge(v, nr);
+                    nr = S.find(nr);
                 }
                 roots.push(nr);
-                nr->cycle.swap(cycle);
+                cycle[nr].swap(cycleEdge);
 
-                for (Node *v : cycleRepr) for (Edge *e : v->in) e->w += v->change;
+                for (int v : cycleRepr) for (Edge *e : G.in[v]) e->w += change[v];
 
-                static std::vector<Edge *> nin;
+                std::vector<Edge *> nin;
                 for (int i = 1; i < cycleRepr.size(); i++) {
-                    auto i1 = cycleRepr[i]->in.begin();
-                    auto e1 = cycleRepr[i]->in.end();
-                    auto i2 = cycleRepr[i - 1]->in.begin();
-                    auto e2 = cycleRepr[i - 1]->in.end();
+                    auto i1 = G.in[cycleRepr[i]].begin();
+                    auto e1 = G.in[cycleRepr[i]].end();
+                    auto i2 = G.in[cycleRepr[i - 1]].begin();
+                    auto e2 = G.in[cycleRepr[i - 1]].end();
 
                     while (i1 != e1 || i2 != e2) {
-                        while (i1 != e1 && S.test((*i1)->u - N, nr - N)) ++i1;
-                        while (i2 != e2 && S.test((*i2)->u - N, nr - N)) ++i2;
+                        while (i1 != e1 && S.test((*i1)->u, nr)) ++i1;
+                        while (i2 != e2 && S.test((*i2)->u, nr)) ++i2;
 
                         if (i1 == e1 && i2 == e2) break;
                         else if (i1 == e1) nin.push_back(*i2++);
@@ -229,58 +220,80 @@ namespace OptimumBranching {
                         }
                     }
 
-                    cycleRepr[i]->in.swap(nin);
+                    G.in[cycleRepr[i]].swap(nin);
                     nin.clear();
                 }
-                nr->in.swap(cycleRepr.back()->in);
-                nr->change = 0;
+                G.in[nr].swap(G.in[cycleRepr.back()]);
+                change[nr] = 0;
             }
         }
 
         long long res = 0;
-        static std::stack<Edge *> froots;
+        std::stack<Edge *> froots;
         for (Edge *e : F) if (e->pa == NULL) froots.push(e);
         while (!froots.empty()) {
             Edge *e = froots.top();
             froots.pop();
             if (e->removed) continue;
             res += e->ow;
-            remove(e->v->lambda, froots);
+            remove(lambda[e->v], froots);
         }
 
         return res;
     }
-}
+
+private:
+    using Edge = Graph::Edge;
+    DJS S, W;
+    std::vector<Edge *> cycle[MAXN];
+    Edge *lambda[MAXN], *enter[MAXN];
+    int change[MAXN];
+
+    void remove(Edge *e, std::stack<Edge *> &roots) {
+        for (; e; e = e->pa) {
+            e->removed = true;
+            for (Edge *c : e->ch) {
+                roots.push(c);
+                c->pa = NULL;
+            }
+            e->ch.clear();
+        }
+    }
+} ob;
 
 bool check(int rt, int n) {
-    static std::queue<Node *> q;
-    q.push(&N[rt]);
-    N[rt].vis = true;
+    static int vis[MAXN];
+
+    std::queue<int> q;
+    q.push(rt);
+    vis[rt] = true;
     while (!q.empty()) {
-        Node *u = q.front();
+        int u = q.front();
         q.pop();
-        for (Edge *e : u->e) if (!e->v->vis) {
-            e->v->vis = true;
+        for (Graph::Edge *e : G.G[u]) if (!vis[e->v]) {
+            vis[e->v] = true;
             q.push(e->v);
         }
     }
-    for (int i = 1; i <= n; i++) if (!N[i].vis) return false;
+    for (int i = 1; i <= n; i++) if (!vis[i]) return false;
     return true;
 }
 
 int main() {
     int n, m, rt;
     scanf("%d %d %d", &n, &m, &rt);
+
+    G.init(n, m);
     for (int i = 0, u, v, w; i < m; i++) {
         scanf("%d %d %d", &u, &v, &w);
-        addEdge(u, v, w);
+        G.addEdge(u, v, w);
     }
 
     if (!check(rt, n)) return puts("-1"), 0;
 
-    long long ans = OptimumBranching::solve(n, rt);
+    long long ans = ob.solve(G, rt);
     printf("%lld\n", ans);
-    
+
     return 0;
 }
 ```

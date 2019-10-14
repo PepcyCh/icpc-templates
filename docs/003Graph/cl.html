@@ -1348,130 +1348,121 @@
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;queue&gt;</span></span>
 <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span></span>
 
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">2505</span>;
-<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXM = MAXN * MAXN;
-
 <span class="hljs-comment">/*
  * It takes O(n^2) time on dense graph
  * To get O(m \log n) time on sparse graph, change &apos;std::vector&lt;Edge *&gt; in&apos; to __gnu_pbds::priority_queue&lt;Edge *&gt;,
- * and change line 80-81, 122-147
+ * and change line 71-72, 113-138
  */</span>
 
-<span class="hljs-keyword">struct</span> Edge;
-<span class="hljs-keyword">struct</span> Node {
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; e, in, cycle; <span class="hljs-comment">// if no need to traverse, e is not needed</span>
-    Edge *lambda, *enter;
-    <span class="hljs-keyword">int</span> change;
-    <span class="hljs-keyword">bool</span> vis;
-} N[MAXN];
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MAXN = <span class="hljs-number">2505</span>;
 
-<span class="hljs-keyword">struct</span> Edge {
-    Node *u, *v;
-    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; ch;
-    Edge *pa;
-    <span class="hljs-keyword">int</span> w, ow;
-    <span class="hljs-keyword">bool</span> removed;
+<span class="hljs-keyword">struct</span> Graph {
+    <span class="hljs-keyword">struct</span> Edge {
+        <span class="hljs-keyword">int</span> u, v, w, ow;
+        <span class="hljs-keyword">bool</span> removed;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; ch;
+        Edge *pa;
 
-    Edge() {}
-    Edge(Node *u, Node *v, <span class="hljs-keyword">int</span> w) : u(u), v(v), w(w), ow(w), pa(<span class="hljs-literal">NULL</span>), removed(<span class="hljs-literal">false</span>) {}
-} E[MAXM];
-<span class="hljs-keyword">int</span> _curr;
+        Edge() {}
+        Edge(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> w) : u(u), v(v), w(w), ow(w), pa(<span class="hljs-literal">NULL</span>), removed(<span class="hljs-literal">false</span>) {}
+    };
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge&gt; E;
 
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> w)</span> </span>{
-    <span class="hljs-keyword">if</span> (u == v) <span class="hljs-keyword">return</span>;
-    E[_curr] = Edge(&amp;N[u], &amp;N[v], w);
-    N[v].in.push_back(&amp;E[_curr]);
-    N[u].e.push_back(&amp;E[_curr]);
-    _curr++;
-}
-
-<span class="hljs-keyword">namespace</span> OptimumBranching {
-    <span class="hljs-keyword">struct</span> DJS {
-        <span class="hljs-keyword">int</span> f[MAXN];
-
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) f[i] = i;
-        }
-        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-keyword">return</span> x == f[x] ? x : f[x] = find(f[x]); }
-        <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> find(a) == find(b); }
-        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ f[find(b)] = find(a); }
-    } S, W;
-
-    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(Edge *e, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Edge *&gt; &amp;roots)</span> </span>{
-        <span class="hljs-keyword">for</span> (; e; e = e-&gt;pa) {
-            e-&gt;removed = <span class="hljs-literal">true</span>;
-            <span class="hljs-keyword">for</span> (Edge *c : e-&gt;ch) {
-                roots.push(c);
-                c-&gt;pa = <span class="hljs-literal">NULL</span>;
-            }
-            e-&gt;ch.clear();
-        }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addEdge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> u, <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> w)</span> </span>{
+        <span class="hljs-keyword">if</span> (u == v) <span class="hljs-keyword">return</span>;
+        E[eid] = Edge(u, v, w);
+        G[u].push_back(&amp;E[eid]);
+        in[v].push_back(&amp;E[eid]);
+        ++eid;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> rt)</span> </span>{
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) N[i].change = <span class="hljs-number">0</span>;
-        S.init(n), W.init(n);
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; G[MAXN], in[MAXN];
+    <span class="hljs-keyword">int</span> n, eid;
 
-        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Node *&gt; roots;
-        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; F;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> m)</span> </span>{
+        <span class="hljs-keyword">this</span>-&gt;n = n;
+        E.resize(m);
+        <span class="hljs-keyword">this</span>-&gt;eid = <span class="hljs-number">0</span>;
+    }
+} G;
 
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (i != rt) roots.push(&amp;N[i]);
+<span class="hljs-keyword">struct</span> DJS {
+    <span class="hljs-keyword">int</span> f[MAXN];
 
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) f[i] = i;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-keyword">return</span> x == f[x] ? x : f[x] = find(f[x]); }
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{ <span class="hljs-keyword">return</span> find(x) == find(y); }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{ f[find(y)] = find(x); }
+};
+
+<span class="hljs-keyword">class</span> OptimumBranching {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-title">solve</span><span class="hljs-params">(Graph &amp;G, <span class="hljs-keyword">int</span> rt)</span> </span>{
+        <span class="hljs-built_in">std</span>::fill_n(change + <span class="hljs-number">1</span>, G.n, <span class="hljs-number">0</span>);
+        S.init(G.n);
+        W.init(G.n);
+
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;<span class="hljs-keyword">int</span>&gt; roots;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; F;
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= G.n; i++) <span class="hljs-keyword">if</span> (i != rt) roots.push(i);
         <span class="hljs-keyword">while</span> (!roots.empty()) {
-            Node *u = roots.top();
+            <span class="hljs-keyword">int</span> u = roots.top();
             roots.pop();
 
             Edge *min = <span class="hljs-literal">NULL</span>;
-            <span class="hljs-keyword">for</span> (Edge *e : u-&gt;in) <span class="hljs-keyword">if</span> (min == <span class="hljs-literal">NULL</span> || e-&gt;w &lt; min-&gt;w) min = e;
+            <span class="hljs-keyword">for</span> (Edge *e : G.in[u]) <span class="hljs-keyword">if</span> (!min || e-&gt;w &lt; min-&gt;w) min = e;
 
             F.push_back(min);
-            <span class="hljs-keyword">for</span> (Edge *e : u-&gt;cycle) {
+            <span class="hljs-keyword">for</span> (Edge *e : cycle[u]) {
                 e-&gt;pa = min;
                 min-&gt;ch.push_back(e);
             }
 
-            <span class="hljs-keyword">if</span> (u-&gt;cycle.empty()) u-&gt;lambda = min;
+            <span class="hljs-keyword">if</span> (cycle[u].empty()) lambda[u] = min;
 
-            <span class="hljs-keyword">if</span> (!W.test(min-&gt;u - N, min-&gt;v - N)) {
-                u-&gt;enter = min;
-                W.merge(min-&gt;u - N, min-&gt;v - N);
+            <span class="hljs-keyword">if</span> (!W.test(min-&gt;u, min-&gt;v)) {
+                enter[u] = min;
+                W.merge(min-&gt;u, min-&gt;v);
             } <span class="hljs-keyword">else</span> {
-                <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; cycle;
-                <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Node *&gt; cycleRepr;
-                cycle.clear(), cycleRepr.clear();
-                Edge *max = min;
-                u-&gt;enter = <span class="hljs-literal">NULL</span>;
+                <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; cycleEdge;
+                <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; cycleRepr;
 
-                cycle.push_back(min);
-                cycleRepr.push_back(&amp;N[S.find(min-&gt;v - N)]);
-                <span class="hljs-keyword">for</span> (Node *v = &amp;N[S.find(min-&gt;u - N)]; v-&gt;enter; v = &amp;N[S.find(v-&gt;enter-&gt;u - N)]) {
-                    cycle.push_back(v-&gt;enter);
+                Edge *max = min;
+                enter[u] = <span class="hljs-literal">NULL</span>;
+
+                cycleEdge.push_back(min);
+                cycleRepr.push_back(S.find(min-&gt;v));
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v = S.find(min-&gt;u); enter[v]; v = S.find(enter[v]-&gt;u)) {
+                    cycleEdge.push_back(enter[v]);
                     cycleRepr.push_back(v);
-                    <span class="hljs-keyword">if</span> (max-&gt;w &lt; v-&gt;enter-&gt;w) max = v-&gt;enter;
+                    <span class="hljs-keyword">if</span> (max-&gt;w &lt; enter[v]-&gt;w) max = enter[v];
                 }
 
-                <span class="hljs-keyword">for</span> (Edge *e : cycle) N[S.find(e-&gt;v - N)].change = max-&gt;w - e-&gt;w;
+                <span class="hljs-keyword">for</span> (Edge *e : cycleEdge) change[S.find(e-&gt;v)] = max-&gt;w - e-&gt;w;
 
-                Node *nr = cycleRepr.front();
-                <span class="hljs-keyword">for</span> (Node *v : cycleRepr) {
-                    S.merge(v - N, nr - N);
-                    nr = &amp;N[S.find(nr - N)];
+                <span class="hljs-keyword">int</span> nr = cycleRepr.front();
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : cycleRepr) {
+                    S.merge(v, nr);
+                    nr = S.find(nr);
                 }
                 roots.push(nr);
-                nr-&gt;cycle.swap(cycle);
+                cycle[nr].swap(cycleEdge);
 
-                <span class="hljs-keyword">for</span> (Node *v : cycleRepr) <span class="hljs-keyword">for</span> (Edge *e : v-&gt;in) e-&gt;w += v-&gt;change;
+                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> v : cycleRepr) <span class="hljs-keyword">for</span> (Edge *e : G.in[v]) e-&gt;w += change[v];
 
-                <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; nin;
+                <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; nin;
                 <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; cycleRepr.size(); i++) {
-                    <span class="hljs-keyword">auto</span> i1 = cycleRepr[i]-&gt;in.begin();
-                    <span class="hljs-keyword">auto</span> e1 = cycleRepr[i]-&gt;in.end();
-                    <span class="hljs-keyword">auto</span> i2 = cycleRepr[i - <span class="hljs-number">1</span>]-&gt;in.begin();
-                    <span class="hljs-keyword">auto</span> e2 = cycleRepr[i - <span class="hljs-number">1</span>]-&gt;in.end();
+                    <span class="hljs-keyword">auto</span> i1 = G.in[cycleRepr[i]].begin();
+                    <span class="hljs-keyword">auto</span> e1 = G.in[cycleRepr[i]].end();
+                    <span class="hljs-keyword">auto</span> i2 = G.in[cycleRepr[i - <span class="hljs-number">1</span>]].begin();
+                    <span class="hljs-keyword">auto</span> e2 = G.in[cycleRepr[i - <span class="hljs-number">1</span>]].end();
 
                     <span class="hljs-keyword">while</span> (i1 != e1 || i2 != e2) {
-                        <span class="hljs-keyword">while</span> (i1 != e1 &amp;&amp; S.test((*i1)-&gt;u - N, nr - N)) ++i1;
-                        <span class="hljs-keyword">while</span> (i2 != e2 &amp;&amp; S.test((*i2)-&gt;u - N, nr - N)) ++i2;
+                        <span class="hljs-keyword">while</span> (i1 != e1 &amp;&amp; S.test((*i1)-&gt;u, nr)) ++i1;
+                        <span class="hljs-keyword">while</span> (i2 != e2 &amp;&amp; S.test((*i2)-&gt;u, nr)) ++i2;
 
                         <span class="hljs-keyword">if</span> (i1 == e1 &amp;&amp; i2 == e2) <span class="hljs-keyword">break</span>;
                         <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i1 == e1) nin.push_back(*i2++);
@@ -1486,56 +1477,78 @@
                         }
                     }
 
-                    cycleRepr[i]-&gt;in.swap(nin);
+                    G.in[cycleRepr[i]].swap(nin);
                     nin.clear();
                 }
-                nr-&gt;in.swap(cycleRepr.back()-&gt;in);
-                nr-&gt;change = <span class="hljs-number">0</span>;
+                G.in[nr].swap(G.in[cycleRepr.back()]);
+                change[nr] = <span class="hljs-number">0</span>;
             }
         }
 
         <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> res = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Edge *&gt; froots;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Edge *&gt; froots;
         <span class="hljs-keyword">for</span> (Edge *e : F) <span class="hljs-keyword">if</span> (e-&gt;pa == <span class="hljs-literal">NULL</span>) froots.push(e);
         <span class="hljs-keyword">while</span> (!froots.empty()) {
             Edge *e = froots.top();
             froots.pop();
             <span class="hljs-keyword">if</span> (e-&gt;removed) <span class="hljs-keyword">continue</span>;
             res += e-&gt;ow;
-            remove(e-&gt;v-&gt;lambda, froots);
+            remove(lambda[e-&gt;v], froots);
         }
 
         <span class="hljs-keyword">return</span> res;
     }
-}
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">using</span> Edge = Graph::Edge;
+    DJS S, W;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Edge *&gt; cycle[MAXN];
+    Edge *lambda[MAXN], *enter[MAXN];
+    <span class="hljs-keyword">int</span> change[MAXN];
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(Edge *e, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;Edge *&gt; &amp;roots)</span> </span>{
+        <span class="hljs-keyword">for</span> (; e; e = e-&gt;pa) {
+            e-&gt;removed = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (Edge *c : e-&gt;ch) {
+                roots.push(c);
+                c-&gt;pa = <span class="hljs-literal">NULL</span>;
+            }
+            e-&gt;ch.clear();
+        }
+    }
+} ob;
 
 <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rt, <span class="hljs-keyword">int</span> n)</span> </span>{
-    <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;Node *&gt; q;
-    q.push(&amp;N[rt]);
-    N[rt].vis = <span class="hljs-literal">true</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> vis[MAXN];
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; q;
+    q.push(rt);
+    vis[rt] = <span class="hljs-literal">true</span>;
     <span class="hljs-keyword">while</span> (!q.empty()) {
-        Node *u = q.front();
+        <span class="hljs-keyword">int</span> u = q.front();
         q.pop();
-        <span class="hljs-keyword">for</span> (Edge *e : u-&gt;e) <span class="hljs-keyword">if</span> (!e-&gt;v-&gt;vis) {
-            e-&gt;v-&gt;vis = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">for</span> (Graph::Edge *e : G.G[u]) <span class="hljs-keyword">if</span> (!vis[e-&gt;v]) {
+            vis[e-&gt;v] = <span class="hljs-literal">true</span>;
             q.push(e-&gt;v);
         }
     }
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (!N[i].vis) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) <span class="hljs-keyword">if</span> (!vis[i]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
     <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
 }
 
 <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">int</span> n, m, rt;
     <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;n, &amp;m, &amp;rt);
+
+    G.init(n, m);
     <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>, u, v, w; i &lt; m; i++) {
         <span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%d %d %d&quot;</span>, &amp;u, &amp;v, &amp;w);
-        addEdge(u, v, w);
+        G.addEdge(u, v, w);
     }
 
     <span class="hljs-keyword">if</span> (!check(rt, n)) <span class="hljs-keyword">return</span> <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;-1&quot;</span>), <span class="hljs-number">0</span>;
 
-    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ans = OptimumBranching::solve(n, rt);
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> ans = ob.solve(G, rt);
     <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>, ans);
 
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
@@ -1584,7 +1597,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"最小树形图","level":"1.4.14","depth":2,"next":{"title":"虚树","level":"1.4.15","depth":2,"path":"003Graph/vtree.md","ref":"./003Graph/vtree.md","articles":[]},"previous":{"title":"最大团/最大独立集/最小染色","level":"1.4.13","depth":2,"path":"003Graph/maxc.md","ref":"./003Graph/maxc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/cl.md","mtime":"2019-07-26T13:01:44.434Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-14T00:39:59.880Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"最小树形图","level":"1.4.14","depth":2,"next":{"title":"虚树","level":"1.4.15","depth":2,"path":"003Graph/vtree.md","ref":"./003Graph/vtree.md","articles":[]},"previous":{"title":"最大团/最大独立集/最小染色","level":"1.4.13","depth":2,"path":"003Graph/maxc.md","ref":"./003Graph/maxc.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"003Graph/cl.md","mtime":"2019-10-14T01:23:22.044Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-14T01:23:29.855Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
