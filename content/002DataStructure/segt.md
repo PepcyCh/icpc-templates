@@ -7,7 +7,7 @@
 const int MAXN = 100005;
 
 class SegT {
-  private:
+private:
     struct Node {
         Node *lc, *rc;
         int l, r;
@@ -72,7 +72,7 @@ class SegT {
         }
     } *root, _pool[MAXN << 1], *_curr;
 
-  public:
+public:
     Node *build(int l, int r, int *a) {
         if (l == r) return new (_curr++) Node(l, a[l]);
         int mid = l + ((r - l) >> 1);

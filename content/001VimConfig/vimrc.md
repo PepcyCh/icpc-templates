@@ -7,6 +7,7 @@ set backspace=2
 set tabstop=4
 set softtabstop
 set shiftwidth=4
+set expandtab
 set smarttab
 set autoindent
 set cindent
@@ -24,11 +25,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-set printoption=paper:A4,syntax:n,wrap:y
-set printdevice={{printer-name}}
-noremap <C-p> :hardcopy<CR>
-inoremap <C-p> <C-o>:hardcopy<CR>
 
 map <C-a> gg0vG$
 

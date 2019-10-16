@@ -9,7 +9,7 @@ int prime[MAXN], primeCnt, mu[MAXN], phi[MAXN], d[MAXN];
 long long s[MAXN];
 bool notPrime[MAXN];
 
-void eulerSieve() {
+void sieve() {
     static int minFact[MAXN], minPow[MAXN];
 
     notPrime[0] = notPrime[1] = true;
@@ -53,7 +53,7 @@ void eulerSieve() {
 }
 
 int main() {
-    eulerSieve();
+    sieve();
 
     return 0;
 }

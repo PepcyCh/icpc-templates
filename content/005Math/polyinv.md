@@ -24,10 +24,11 @@ struct Complex {
     Complex operator/(double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
-namespace FFT {
-    const int N = 262144;
+class FFT {
+private:
+    static const int N = 262144;
 
-    Complex omega[::MAXN], omegaInv[::MAXN];
+    Complex omega[N + 1], omegaInv[N + 1];
 
     void init() {
         double per = 2 * PI / N;
@@ -35,12 +36,6 @@ namespace FFT {
             omega[i] = Complex(std::cos(i * per), std::sin(i * per));
             omegaInv[i] = omega[i].conj();
         }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
     }
 
     void reverse(Complex *a, int n) {
@@ -65,6 +60,15 @@ namespace FFT {
         }
     }
 
+public:
+    FFT() { init();}
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
     void dft(Complex *a, int n) {
         transform(a, n, omega);
     }
@@ -73,9 +77,9 @@ namespace FFT {
         transform(a, n, omegaInv);
         for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
-}
+} fft;
 
-void modMul(long long *a, long long *b, int n, long long *res) {
+void polyMul(long long *a, long long *b, int n, long long *res) {
     static Complex a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
     static const int M = (1 << 15) - 1;
 
@@ -85,15 +89,15 @@ void modMul(long long *a, long long *b, int n, long long *res) {
         b0[i] = b[i] >> 15;
         b1[i] = b[i] & M;
     }
-    FFT::dft(a0, n), FFT::dft(a1, n);
-    FFT::dft(b0, n), FFT::dft(b1, n);
+    fft.dft(a0, n), fft.dft(a1, n);
+    fft.dft(b0, n), fft.dft(b1, n);
     for (int i = 0; i < n; i++) {
         Complex _a = a0[i], _b = a1[i], _c = b0[i], _d = b1[i];
         a0[i] = _a * _c;
         a1[i] = _a * _d + _b * _c;
         b0[i] = _b * _d;
     }
-    FFT::idft(a0, n), FFT::idft(a1, n), FFT::idft(b0, n);
+    fft.idft(a0, n), fft.idft(a1, n), fft.idft(b0, n);
     for (int i = 0; i < n; i++) {
         res[i] = ((((long long) (a0[i].r + 0.5) % MOD) << 30) % MOD
                 + (((long long) (a1[i].r + 0.5) % MOD) << 15) % MOD
@@ -109,11 +113,11 @@ void polyInverse(long long *a, long long *res, int k) {
     polyInverse(a, res, (k + 1) >> 1);
 
     static long long t1[MAXN], t2[MAXN];
-    int N = FFT::extend(k << 1);
+    int N = fft.extend(k << 1);
     std::copy(a, a + k, t1);
     std::fill(t1 + k, t1 + N, 0);
-    modMul(res, res, N, t2);
-    modMul(t1, t2, N, t1);
+    polyMul(res, res, N, t2);
+    polyMul(t1, t2, N, t1);
     for (int i = 0; i < k; i++) res[i] = (2 * res[i] % MOD - t1[i] + MOD) % MOD;
     std::fill(res + k, res + N, 0);
 }
@@ -121,15 +125,13 @@ void polyInverse(long long *a, long long *res, int k) {
 long long a[MAXN], res[MAXN];
 
 int main() {
-    FFT::init();
-
     int n, k;
     scanf("%d %d", &n, &k);
     for (int i = 0; i <= n; i++) scanf("%lld", &a[i]);
-
+    
     polyInverse(a, res, k);
     for (int i = 0; i < k; i++) printf("%lld%c", res[i], " \n"[i == k - 1]);
-
+    
     return 0;
 }
 ```

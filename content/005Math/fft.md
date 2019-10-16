@@ -4,7 +4,6 @@
 * 两次 DFT 的多项式乘法
 * 拆系数 FFT
 * NTT
-* 三模数 NTT
 * NTT 模数及原根表
 
 ### FFT
@@ -27,25 +26,20 @@ struct Complex {
     Complex operator+(const Complex &rhs) const { return Complex(r + rhs.r, i + rhs.i); }
     Complex operator-(const Complex &rhs) const { return Complex(r - rhs.r, i - rhs.i); }
     Complex operator*(const Complex &rhs) const { return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
-    Complex operator/(const double rhs) const { return Complex(r / rhs, i / rhs); }
+    Complex operator/(double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
-namespace FFT {
+class FFT {
+private:
     static const int N = 262144;
 
-    Complex omega[::MAXN], omegaInv[::MAXN];
+    Complex omega[N + 1], omegaInv[N + 1];
 
     void init() {
         for (int i = 0; i < N; i++) {
             omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
     }
 
     void reverse(Complex *a, int n) {
@@ -70,6 +64,15 @@ namespace FFT {
         }
     }
 
+public:
+    FFT() { init(); }
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
     void dft(Complex *a, int n) {
         transform(a, n, omega);
     }
@@ -78,7 +81,7 @@ namespace FFT {
         transform(a, n, omegaInv);
         for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
-}
+} fft;
 
 int main() {
     int n, m;
@@ -88,13 +91,12 @@ int main() {
     for (int i = 0; i <= n; i++) scanf("%lf", &a[i].r);
     for (int i = 0; i <= m; i++) scanf("%lf", &b[i].r);
 
-    FFT::init();
-    int N = FFT::extend(n + m + 1);
+    int N = fft.extend(n + m + 1);
 
-    FFT::dft(a, N);
-    FFT::dft(b, N);
+    fft.dft(a, N);
+    fft.dft(b, N);
     for (int i = 0; i < N; i++) a[i] = a[i] * b[i];
-    FFT::idft(a, N);
+    fft.idft(a, N);
 
     for (int i = 0; i < n + m + 1; i++)
         printf("%.0lf%c", a[i].r + 0.001, " \n"[i == n + m]);
@@ -123,25 +125,20 @@ struct Complex {
     Complex operator+(const Complex &rhs) const { return Complex(r + rhs.r, i + rhs.i); }
     Complex operator-(const Complex &rhs) const { return Complex(r - rhs.r, i - rhs.i); }
     Complex operator*(const Complex &rhs) const { return Complex(r * rhs.r - i * rhs.i, r * rhs.i + i * rhs.r); }
-    Complex operator/(const double rhs) const { return Complex(r / rhs, i / rhs); }
+    Complex operator/(double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
-namespace FFT {
+class FFT {
+private:
     static const int N = 262144;
 
-    Complex omega[::MAXN], omegaInv[::MAXN];
+    Complex omega[N + 1], omegaInv[N + 1];
 
     void init() {
         for (int i = 0; i < N; i++) {
             omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
     }
 
     void reverse(Complex *a, int n) {
@@ -166,6 +163,15 @@ namespace FFT {
         }
     }
 
+public:
+    FFT() { init(); }
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
     void dft(Complex *a, int n) {
         transform(a, n, omega);
     }
@@ -174,11 +180,9 @@ namespace FFT {
         transform(a, n, omegaInv);
         for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
-}
+} fft;
 
 int main() {
-    FFT::init();
-
     int n, m;
     scanf("%d %d", &n, &m);
 
@@ -195,9 +199,9 @@ int main() {
     }
 
     int len = n + m + 1;
-    int N = FFT::extend(len);
+    int N = fft.extend(len);
 
-    FFT::dft(a, N);
+    fft.dft(a, N);
     for (int i = 1; i < N; i++) {
         double x1 = a[i].r, y1 = a[i].i;
         double x2 = a[N - i].r, y2 = a[N - i].i;
@@ -206,7 +210,7 @@ int main() {
         b[i] = t1 * t2;
     }
     b[0] = a[0].r * a[0].i;
-    FFT::idft(b, N);
+    fft.idft(b, N);
 
     for (int i = 0; i < len; i++)
         printf("%d%c", (int) (round(b[i].r)), " \n"[i == len - 1]);
@@ -239,22 +243,17 @@ struct Complex {
     Complex operator/(double rhs) const { return Complex(r / rhs, i / rhs); }
 };
 
-namespace FFT {
-    const int N = 262144;
+class FFT {
+private:
+    static const int N = 262144;
 
-    Complex omega[::MAXN], omegaInv[::MAXN];
+    Complex omega[N + 1], omegaInv[N + 1];
 
     void init() {
         for (int i = 0; i < N; i++) {
             omega[i] = Complex(std::cos(2 * PI / N * i), std::sin(2 * PI / N * i));
             omegaInv[i] = omega[i].conj();
         }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
     }
 
     void reverse(Complex *a, int n) {
@@ -279,6 +278,15 @@ namespace FFT {
         }
     }
 
+public:
+    FFT() { init(); }
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
     void dft(Complex *a, int n) {
         transform(a, n, omega);
     }
@@ -287,9 +295,9 @@ namespace FFT {
         transform(a, n, omegaInv);
         for (int i = 0; i < n; i++) a[i] = a[i] / n;
     }
-}
+} fft;
 
-void modMul(long long *a, long long *b, int n, long long *res) {
+void polyMul(long long *a, long long *b, int n, long long *res) {
     static Complex a0[MAXN], a1[MAXN], b0[MAXN], b1[MAXN];
     static const int M = (1 << 15) - 1;
 
@@ -299,15 +307,15 @@ void modMul(long long *a, long long *b, int n, long long *res) {
         b0[i] = b[i] >> 15;
         b1[i] = b[i] & M;
     }
-    FFT::dft(a0, n), FFT::dft(a1, n);
-    FFT::dft(b0, n), FFT::dft(b1, n);
+    fft.dft(a0, n), fft.dft(a1, n);
+    fft.dft(b0, n), fft.dft(b1, n);
     for (int i = 0; i < n; i++) {
         Complex _a = a0[i], _b = a1[i], _c = b0[i], _d = b1[i];
         a0[i] = _a * _c;
         a1[i] = _a * _d + _b * _c;
         b0[i] = _b * _d;
     }
-    FFT::idft(a0, n), FFT::idft(a1, n), FFT::idft(b0, n);
+    fft.idft(a0, n), fft.idft(a1, n), fft.idft(b0, n);
     for (int i = 0; i < n; i++) {
         res[i] = ((((long long) (a0[i].r + 0.5) % MOD) << 30) % MOD
                 + (((long long) (a1[i].r + 0.5) % MOD) << 15) % MOD
@@ -316,8 +324,6 @@ void modMul(long long *a, long long *b, int n, long long *res) {
 }
 
 int main() {
-    FFT::init();
-
     int n, m;
     scanf("%d %d", &n, &m);
 
@@ -328,9 +334,10 @@ int main() {
     for (int i = 0; i <= m; i++) b[i] < 0 ? b[i] += MOD : 0;
 
     int len = n + m + 1;
-    int p = FFT::extend(len);
-    modMul(a, b, p, ans);
-    for (int i = 0; i < len; i++) printf("%lld%c", ans[i], " \n"[i == len - 1]);
+    int p = fft.extend(len);
+    polyMul(a, b, p, ans);
+    for (int i = 0; i < len; i++)
+        printf("%lld%c", ans[i], " \n"[i == len - 1]);
 
     return 0;
 }
@@ -342,8 +349,7 @@ int main() {
 #include <cstdio>
 #include <algorithm>
 
-const int MAXN = 100005;
-const int MAXN_EXTEND = 262144;
+const int MAXN = 262144 + 1;
 const int MOD = 998244353;
 const int G = 3;
 
@@ -357,10 +363,10 @@ long long inv(long long x) {
     return qpow(x, MOD - 2);
 }
 
-namespace NTT {
+class NTT {
     static const int N = 262144;
 
-    long long omega[N], omegaInv[N];
+    long long omega[N + 1], omegaInv[N + 1];
 
     void init() {
         long long g = qpow(G, (MOD - 1) / N), ig = inv(g);
@@ -369,12 +375,6 @@ namespace NTT {
             omega[i] = omega[i - 1] * g % MOD;
             omegaInv[i] = omegaInv[i - 1] * ig % MOD;
         }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
     }
 
     void reverse(long long *a, int n) {
@@ -400,6 +400,15 @@ namespace NTT {
         }
     }
 
+public:
+    NTT() { init(); }
+
+    int extend(int n) {
+        int res = 1;
+        while (res < n) res <<= 1;
+        return res;
+    }
+
     void dft(long long *a, int n) {
         transform(a, n, omega);
     }
@@ -409,158 +418,25 @@ namespace NTT {
         long long t = inv(n);
         for (int i = 0; i < n; i++) a[i] = a[i] * t % MOD;
     }
-}
+} ntt;
 
 int main() {
     int n, m;
     scanf("%d %d", &n, &m);
 
-    static long long a[MAXN_EXTEND], b[MAXN_EXTEND];
+    static long long a[MAXN], b[MAXN];
     for (int i = 0; i <= n; i++) scanf("%lld", &a[i]);
     for (int i = 0; i <= m; i++) scanf("%lld", &b[i]);
 
-    NTT::init();
-    int N = NTT::extend(n + m + 1);
+    int N = ntt.extend(n + m + 1);
 
-    NTT::dft(a, N);
-    NTT::dft(b, N);
+    ntt.dft(a, N);
+    ntt.dft(b, N);
     for (int i = 0; i < N; i++) a[i] = a[i] * b[i] % MOD;
-    NTT::idft(a, N);
+    ntt.idft(a, N);
 
-    for (int i = 0; i < n + m + 1; i++)  printf("%lld%c", a[i], " \n"[i == n + m]);
-
-    return 0;
-}
-```
-
-### 三模数 NTT
-
-```c++
-#include <cstdio>
-#include <algorithm>
-
-const int MAXN = 100005;
-const int MAXN_EXTEND = 262144;
-const int MOD[3] = {998244353, 1004535809, 469762049};
-const int G[3] = {3, 3, 3};
-
-long long qpow(long long a, long long n, long long p) {
-    long long res = 1;
-    for (; n; n >>= 1, a = a * a % p) if (n & 1) res = res * a % p;
-    return res;
-}
-
-long long inv(long long x, long long p) {
-    return qpow(x, p - 2, p);
-}
-
-namespace NTT {
-    static const int N = 262144;
-
-    long long omega[3][N], omegaInv[3][N];
-
-    void init() {
-        for (int _ = 0; _ < 3; _++) {
-            long long g = qpow(G[_], (MOD[_] - 1) / N, MOD[_]), ig = inv(g, MOD[_]);
-            omega[_][0] = omegaInv[_][0] = 1;
-            for (int i = 1; i < N; i++) {
-                omega[_][i] = omega[_][i - 1] * g % MOD[_];
-                omegaInv[_][i] = omegaInv[_][i - 1] * ig % MOD[_];
-            }
-        }
-    }
-
-    int extend(int n) {
-        int res = 1;
-        while (res < n) res <<= 1;
-        return res;
-    }
-
-    void reverse(long long *a, int n) {
-        for (int i = 0, j = 0; i < n; i++) {
-            if (i < j) std::swap(a[i], a[j]);
-            for (int l = n >> 1; (j ^= l) < l; l >>= 1) {}
-        }
-    }
-
-    void transform(long long *a, int n, long long *omega, int MOD) {
-        reverse(a, n);
-
-        for (int l = 2; l <= n; l <<= 1) {
-            int hl = l >> 1;
-            for (long long *x = a; x != a + n; x += l) {
-                for (int i = 0; i < hl; i++) {
-                    long long t = omega[N / l * i] * x[i + hl] % MOD;
-                    x[i + hl] = (x[i] - t + MOD) % MOD;
-                    x[i] += t;
-                    x[i] >= MOD ? x[i] -= MOD : 0;
-                }
-            }
-        }
-    }
-
-    void dft(long long *a, int n, int _) {
-        transform(a, n, omega[_], MOD[_]);
-    }
-
-    void idft(long long *a, int n, int _) {
-        transform(a, n, omegaInv[_], MOD[_]);
-        long long t = inv(n, MOD[_]);
-        for (int i = 0; i < n; i++) a[i] = a[i] * t % MOD[_];
-    }
-}
-
-long long mul(long long a, long long b, long long p) {
-    return (a * b - (long long) (a / (long double) p * b + 1e-3) * p + p) % p;
-}
-
-long long a[3][MAXN_EXTEND], b[3][MAXN_EXTEND], ans[MAXN_EXTEND];
-
-void CRT(int N, int P) {
-    long long M = 1ll * MOD[0] * MOD[1];
-
-    for (int i = 0; i < N; i++) {
-        long long temp = 0;
-        temp += mul(a[0][i] * MOD[1] % M, inv(MOD[1], MOD[0]), M);
-        temp >= M ? temp -= M : 0;
-        temp += mul(a[1][i] * MOD[0] % M, inv(MOD[0], MOD[1]), M);
-        temp >= M ? temp -= M : 0;
-
-        a[1][i] = temp;
-    }
-
-    for (int i = 0; i < N; i++){
-        long long temp = (a[2][i] - a[1][i] % MOD[2] + MOD[2]) % MOD[2] * inv(M % MOD[2], MOD[2]) % MOD[2];
-        ans[i] = M % P * temp % P + a[1][i] % P;
-        ans[i] >= P ? ans[i] -= P : 0;
-    }
-}
-
-int main() {
-    int n, m, P;
-    scanf("%d %d %d", &n, &m, &P);
-
-    for (int i = 0, x; i <= n; i++) {
-        scanf("%d", &x);
-        for (int _ = 0; _ < 3; _++) a[_][i] = (x + P) % MOD[_];
-    }
-    for (int i = 0, x; i <= m; i++) {
-        scanf("%d", &x);
-        for (int _ = 0; _ < 3; _++) b[_][i] = (x + P) % MOD[_];
-    }
-
-    NTT::init();
-    int N = NTT::extend(n + m + 1);
-
-    for (int _ = 0; _ < 3; _++) {
-        NTT::dft(a[_], N, _);
-        NTT::dft(b[_], N, _);
-        for (int i = 0; i < N; i++) a[_][i] = a[_][i] * b[_][i] % MOD[_];
-        NTT::idft(a[_], N, _);
-    }
-
-    CRT(N, P);
-    for (int i = 0; i < n + m + 1; i++) printf("%lld%c", ans[i], " \n"[i == n + m]);
+    for (int i = 0; i < n + m + 1; i++)
+        printf("%lld%c", a[i], " \n"[i == n + m]);
 
     return 0;
 }

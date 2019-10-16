@@ -10,7 +10,7 @@ long long phi[MAXNN];
 int prime[MAXNN], primeCnt;
 bool notPrime[MAXNN];
 
-void seive() {
+void sieve() {
     phi[1] = 1;
     notPrime[0] = notPrime[1] = true;
     for (int i = 2; i < MAXNN; i++) {
@@ -24,7 +24,8 @@ void seive() {
             if (i % prime[j] == 0) {
                 phi[i * prime[j]] = phi[i] * prime[j];
                 break;
-            } else phi[i * prime[j]] = phi[i] * (prime[j] - 1);
+            }
+            phi[i * prime[j]] = phi[i] * (prime[j] - 1);
         }
     }
 
@@ -35,27 +36,29 @@ void seive() {
  *  h = f * g
  *  g(1) F(n) = H(n) - \sum_{i = 2}^{n} g(i) F(\lfloor \frac{n}{i} \rfloor)
  */
+
+int n;
+long long phiH[MAXNN];
 long long pSumPhi(int n) {
-    if (n < MAXNN) return ::phi[n];
+    if (n < MAXNN) return phi[n];
 
-    static std::map<int, long long> phi;
-    std::map<int, long long>::iterator it;
+    int id = ::n / n;
 
-    if ((it = phi.find(n)) != phi.end()) return it->second;
+    if (phiH[id] != -1) return phiH[id];
 
     long long res = (long long) n * (n + 1) / 2;
     for (int i = 2, last; i <= n; i = last + 1) {
         last = n / (n / i);
         res -= (last - i + 1) * pSumPhi(n / i);
     }
-    return phi[n] = res;
+    return phiH[id] = res;
 }
 
 int main() {
-    seive();
+    sieve();
 
-    int n;
     scanf("%d", &n);
+    std::fill(phiH, phiH + n / MAXNN + 1, -1);
     printf("%lld\n", pSumPhi(n));
 
     return 0;

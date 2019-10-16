@@ -1,35 +1,36 @@
-# 中国剩余定理（Chinese Remainder Thoerem）
+# 线性同余方程
 
 ```c++
 #include <cstdio>
 
-const int M = 999911658;
-const int m[] = {2, 3, 4679, 35617};
-int a[4];
+const int MAXN = 100005;
 
-long long pow(long long a, long long n, long long p) {
-    long long res = 1;
-    for (; n; n >>= 1, a = a * a % p) if (n & 1) res = res * a % p;
-    return res;
+void exgcd(long long a, long long b, long long &g, long long &x, long long &y) {
+    if (b == 0) x = 1, y = 0, g = a;
+    else exgcd(b, a % b, g, y, x), y -= a / b * x;
 }
 
-long long inv(long long n, long long p) {
-    return pow(n, p - 2, p);
-}
-
-long long ChineseRemainderTheorem() {
-    long long res = 0;
-    for (int i = 0; i < 4; i++) {
-        long long x = inv(M / m[i], m[i]) % M;
-        long long temp = (x * (M / m[i]) % M + M) % M;
-        (res += temp * a[i] % M) %= M;
+int mod[MAXN], rem[MAXN];
+long long solveCongruence(int n) {
+    long long res = 0, K = 1;
+    for (int i = 0; i < n; i++) {
+        long long x, y, g;
+        exgcd(K, mod[i], g, x, y);
+        if ((rem[i] - res) % g) return -1;
+        x = (x * (rem[i] - res) / g + mod[i] / g) % (mod[i] / g);
+        y = (K / g *mod[i]);
+        res = ((x * K + res) % y + y) % y;
+        K = y;
     }
     return res;
 }
 
 int main() {
-    for (int i = 0; i < 4; i++) scanf("%d", &a[i]);
-    printf("%lld\n", ChineseRemainderTheorem());
+    int n;
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d %d", &mod[i], &rem[i]);
+    long long ans = solveCongruence(n);
+    printf("%lld\n", ans);
     
     return 0;
 }

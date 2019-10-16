@@ -25,7 +25,7 @@ struct MemoryPool {
 };
 
 class PSegT {
-  private:
+private:
     struct Node {
         Node *lc, *rc;
         int cnt;
@@ -53,7 +53,7 @@ class PSegT {
     } *root[MAXN];
     int n;
 
-  public:
+public:
     void build(int *a, int n) {
         this->n = n;
         root[0] = new Node();

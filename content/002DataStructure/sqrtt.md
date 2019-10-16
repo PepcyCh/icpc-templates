@@ -17,13 +17,13 @@ inline int log2Up(int n) {
 
 template <typename T, T (*op)(T, T)>
 class SqrtTree {
-  private:
+private:
     int n, lg, indexSz;
     std::vector<T> v;
     std::vector<int> clz, layers, onLayer;
     std::vector<std::vector<T> > pref, suf, between;
 
-    inline void buildBlock(int layer, int l, int r) {
+    void buildBlock(int layer, int l, int r) {
         pref[layer][l] = v[l];
         for (int i = l + 1; i < r; i++) {
             pref[layer][i] = op(pref[layer][i - 1], v[i]);
@@ -34,7 +34,7 @@ class SqrtTree {
         }
     }
 
-    inline void buildBetween(int layer, int lBound, int rBound, int betweenOffs) {
+    void buildBetween(int layer, int lBound, int rBound, int betweenOffs) {
         int bSzLog = (layers[layer] + 1) >> 1;
         int bCntLog = layers[layer] >> 1;
         int bSz = 1 << bSzLog;
@@ -49,7 +49,7 @@ class SqrtTree {
         }
     }
 
-    inline void buildBetweenZero() {
+    void buildBetweenZero() {
         int bSzLog = (lg + 1) >> 1;
         for (int i = 0; i < indexSz; i++) {
             v[n + i] = suf[0][i << bSzLog];
@@ -57,7 +57,7 @@ class SqrtTree {
         build(1, n, n + indexSz, (1 << lg) - n);
     }
 
-    inline void updateBetweenZero(int bid) {
+    void updateBetweenZero(int bid) {
         int bSzLog = (lg + 1) >> 1;
         v[n + bid] = suf[0][bid << bSzLog];
         update(1, n, n + indexSz, (1 << lg) - n, n + bid);
@@ -94,7 +94,7 @@ class SqrtTree {
         update(layer + 1, l, r, betweenOffs, x);
     }
 
-    inline T query(int l, int r, int betweenOffs, int base) {
+    T query(int l, int r, int betweenOffs, int base) {
         if (l == r) return v[l];
         if (l + 1 == r) return op(v[l], v[r]);
         int layer = onLayer[clz[(l - base) ^ (r - base)]];
@@ -114,7 +114,7 @@ class SqrtTree {
         return ans;
     }
 
-  public:
+public:
     inline T query(int l, int r) { return query(l, r, 0, 0); }
 
     inline void update(int x, const T &item) {
